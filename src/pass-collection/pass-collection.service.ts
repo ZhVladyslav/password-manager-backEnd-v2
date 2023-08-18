@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { IPassCollection } from './pass-collection.interface';
+
+export interface IPassCollection {
+  userId: string;
+  name: string;
+  data: string;
+}
 
 @Injectable()
 export class PassCollectionService {

@@ -1,4 +1,4 @@
-import { Controller,Get, UsePipes, ValidationPipe, Post, Body } from '@nestjs/common';
+import { Controller, Get, UsePipes, ValidationPipe, Post, Body, Req } from '@nestjs/common';
 import { CreatePassCollectionDto } from './pass-collection.dto';
 import { PassCollectionService } from './pass-collection.service';
 
@@ -15,7 +15,9 @@ export class PassCollectionController {
   }
 
   @Get()
-  async view() {
-    return {message: ''};
+  async view(@Req() req: Request) {
+    console.log(req['userToken']);
+
+    return { message: '' };
   }
 }

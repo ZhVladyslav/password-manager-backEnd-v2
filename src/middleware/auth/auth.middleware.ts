@@ -14,8 +14,8 @@ export class AuthMiddleware implements NestMiddleware {
       // check user token
       const userToken = jwt.verify(authHeader, process.env.JWT_KEY);
 
-      console.log(req.headers);
-      console.log(userToken);
+      // Write user token in request
+      req['userToken'] = userToken;
 
       next();
     } catch (err) {
