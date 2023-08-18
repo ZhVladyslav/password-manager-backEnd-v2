@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { LoginDto, RegistrationDto } from './auth.dto';
 
+import jwt from 'jsonwebtoken';
+import { v4 } from 'uuid';
+
 @Injectable()
 export class AuthService {
   constructor(private readonly databaseService: DatabaseService) {}
@@ -22,4 +25,23 @@ export class AuthService {
   async view() {
     return this.databaseService.user.findMany();
   }
+
+  
+  /* ----------------    ---------------- */
+
+  generateJwt = ():string => {
+    const accessToken = jwt.sign(
+      {
+        sessionId,
+        type: jwtConfig.access.type,
+      },
+      jwtConfig.access.key,
+      {
+        expiresIn: jwtConfig.access.expTime,
+      },
+    );
+    
+    return ''
+  }
+  
 }
