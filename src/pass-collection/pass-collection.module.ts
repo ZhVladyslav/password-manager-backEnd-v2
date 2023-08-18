@@ -1,10 +1,17 @@
-import { Module } from '@nestjs/common';
-import { DatabaseService } from 'src/database/database.service';
+import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
+import { PassCollectionService } from './pass-collection.service';
+import { PassCollectionController } from './pass-collection.controller';
+import { DatabaseModule } from 'src/database/database.module';
+import { AuthMiddleware } from 'src/middleware/auth/auth.middleware';
 
 @Module({
-  imports: [],
-  exports: [DatabaseService],
-  providers: [DatabaseService],
-  controllers: [],
+  imports: [DatabaseModule],
+  exports: [],
+  providers: [PassCollectionService],
+  controllers: [PassCollectionController],
 })
-export class PassCollectionModule {}
+export class PassCollectionModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes(PassCollectionController);
+  }
+}
