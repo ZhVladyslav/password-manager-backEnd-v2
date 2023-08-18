@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { LoginDto, RegistrationDto } from './auth.dto';
+import { RegistrationDto } from './auth.dto';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import { v4 } from 'uuid';
@@ -22,16 +22,8 @@ export class AuthService {
     });
   }
 
-  /* ----------------  Get all records in database  ---------------- */
-  async view() {
-    return this.databaseService.user.findMany();
-  }
-
   /* ----------------  Check password  ---------------- */
-  async checkPassword({
-    getPassword,
-    userPassword,
-  }: ICheckPassword): Promise<boolean> {
+  async checkPassword({ getPassword, userPassword }: ICheckPassword): Promise<boolean> {
     const result = await bcrypt.compare(getPassword, userPassword);
     return result;
   }

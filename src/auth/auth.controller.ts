@@ -56,13 +56,4 @@ export class AuthController {
 
     return { message: 'User is create' };
   }
-
-  /* ----------------  view  ---------------- */
-  @Get('view')
-  async view() {
-    const res = await this.authService.view();
-    
-
-    return res;
-  }
 }
