@@ -1,5 +1,6 @@
-import { IsString } from "class-validator";
+import { IsString } from 'class-validator';
 
+/* ----------------  Create user  ---------------- */
 export class RegistrationDto {
   @IsString()
   name: string;
@@ -11,9 +12,8 @@ export class RegistrationDto {
   password: string;
 }
 
-// ----------------------------------------------------------------------
-
-export class LoginDto {  
+/* ----------------  Find user by login  ---------------- */
+export class LoginDto {
   @IsString()
   login: string;
 
