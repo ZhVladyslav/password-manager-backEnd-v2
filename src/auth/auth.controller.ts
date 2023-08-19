@@ -43,6 +43,9 @@ export class AuthController {
     // generate user token
     const token = this.authJwtService.generateJwt({ userId: findUser.id, tokenId });
 
+    // create session
+    await this.authDatabaseService.createSession({userId: findUser.id, tokenId})
+
     return token;
   }
 

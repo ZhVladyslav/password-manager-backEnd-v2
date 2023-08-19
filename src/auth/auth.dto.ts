@@ -1,6 +1,41 @@
 import { IsString } from 'class-validator';
 
-/* ----------------  Create user  ---------------- */
+// ----------------------------------------------------------------------
+
+//
+// Login
+//
+
+// ----------------------------------------------------------------------
+
+//  Find user by login
+export class LoginDto {
+  @IsString()
+  login: string;
+
+  @IsString()
+  password: string;
+}
+
+// ----------------------------------------------------------------------
+
+export class CreateSessionDto {
+  @IsString()
+  userId: string;
+
+  @IsString()
+  tokenId: string;
+}
+
+// ----------------------------------------------------------------------
+
+//
+// Registration
+//
+
+// ----------------------------------------------------------------------
+
+// Create user
 export class RegistrationDto {
   @IsString()
   name: string;
@@ -12,11 +47,4 @@ export class RegistrationDto {
   password: string;
 }
 
-/* ----------------  Find user by login  ---------------- */
-export class LoginDto {
-  @IsString()
-  login: string;
-
-  @IsString()
-  password: string;
-}
+// ----------------------------------------------------------------------
