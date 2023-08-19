@@ -6,7 +6,7 @@ export class PassCollectionDatabaseService {
   constructor(private readonly databaseService: DatabaseService) {}
 
   // handler error
-  async handleErrors(promise: Promise<unknown>) {
+  async handleErrors<T>(promise: Promise<T>) {
     try {
       const result = await promise;
       return result;

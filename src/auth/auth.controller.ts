@@ -22,7 +22,14 @@ export class AuthController {
     private readonly authDatabaseService: AuthDatabaseService,
   ) {}
 
-  /* ----------------  login  ---------------- */
+  // ----------------------------------------------------------------------
+
+  //
+  // LOGIN
+  //
+
+  // ----------------------------------------------------------------------
+
   @UsePipes(new ValidationPipe())
   @Post('login')
   async login(@Body() data: LoginDto) {
@@ -31,10 +38,7 @@ export class AuthController {
     if (!findUser) throw new BadRequestException('Invalid user or password');
 
     // check user password
-    const checkPassword = await this.authPasswordService.checkPassword({
-      getPassword: data.password,
-      userPassword: findUser.password,
-    });
+    const checkPassword = await this.authPasswordService.checkPassword(data.password, findUser.password);
     if (!checkPassword) throw new BadRequestException('Invalid user or password');
 
     // generate session id
@@ -44,12 +48,19 @@ export class AuthController {
     const token = this.authJwtService.generateJwt({ userId: findUser.id, tokenId });
 
     // create session
-    await this.authDatabaseService.createSession({userId: findUser.id, tokenId})
+    await this.authDatabaseService.createSession({ userId: findUser.id, tokenId });
 
     return token;
   }
 
-  /* ----------------  registration  ---------------- */
+  // ----------------------------------------------------------------------
+
+  //
+  // REGISTRATION
+  //
+
+  // ----------------------------------------------------------------------
+
   @UsePipes(new ValidationPipe())
   @Post('registration')
   async registration(@Body() data: RegistrationDto) {

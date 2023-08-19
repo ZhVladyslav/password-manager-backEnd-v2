@@ -10,7 +10,7 @@ interface ICheckPassword {
 @Injectable()
 export class AuthPasswordService {
   /* ----------------  Check password  ---------------- */
-  async checkPassword({ getPassword, userPassword }: ICheckPassword): Promise<boolean> {
+  async checkPassword(getPassword: string, userPassword: string): Promise<boolean> {
     const result = await bcrypt.compare(getPassword, userPassword);
     return result;
   }
