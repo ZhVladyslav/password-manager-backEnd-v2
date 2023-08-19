@@ -35,6 +35,12 @@ export class SessionMiddleware implements NestMiddleware {
 
   // ----------------------------------------------------------------------
 
+  //
+  // MIDDLEWARE
+  //
+
+  // ----------------------------------------------------------------------
+
   async use(req: any, res: any, next: () => void) {
     // get userToken
     const userToken = req['userToken'] as IUserToken;

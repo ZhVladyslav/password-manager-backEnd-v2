@@ -1,11 +1,5 @@
 import { Controller, Get, UsePipes, ValidationPipe, Post, Body, Req, Param, Put, Delete } from '@nestjs/common';
-import {
-  CreatePassCollectionDto,
-  DeletePassCollectionDto,
-  EditDataPassCollectionDto,
-  EditNamePassCollectionDto,
-  GetByIdPassCollectionDto,
-} from './pass-collection.dto';
+import { GetByIdDto, CreateDto, EditNameDto, EditDataDto, DeleteDto } from './pass-collection.dto';
 import { PassCollectionDatabaseService } from './pass-collection.service';
 import { IUserToken } from 'src/middleware/auth/auth.interface.middleware';
 
@@ -37,8 +31,8 @@ export class PassCollectionController {
   // ----------------------------------------------------------------------
 
   // get by id passCollection
-  @Get('by-id/:id')
-  async getById(@Req() req: Request, @Param() data: GetByIdPassCollectionDto) {
+  @Get('/:id')
+  async getById(@Req() req: Request, @Param() data: GetByIdDto) {
     // user token
     const userToken = req['userToken'] as IUserToken;
 
@@ -59,7 +53,7 @@ export class PassCollectionController {
   // create passCollection
   @UsePipes(new ValidationPipe())
   @Post('create')
-  async create(@Req() req: Request, @Body() data: CreatePassCollectionDto) {
+  async create(@Req() req: Request, @Body() data: CreateDto) {
     // user token
     const userToken = req['userToken'] as IUserToken;
 
@@ -80,7 +74,7 @@ export class PassCollectionController {
   // edit name passCollection
   @UsePipes(new ValidationPipe())
   @Put('edit-name')
-  async editName(@Req() req: Request, @Body() data: EditNamePassCollectionDto) {
+  async editName(@Req() req: Request, @Body() data: EditNameDto) {
     // user token
     const userToken = req['userToken'] as IUserToken;
 
@@ -95,7 +89,7 @@ export class PassCollectionController {
   // edit data passCollection
   @UsePipes(new ValidationPipe())
   @Put('edit-data')
-  async editData(@Req() req: Request, @Body() data: EditDataPassCollectionDto) {
+  async editData(@Req() req: Request, @Body() data: EditDataDto) {
     // user token
     const userToken = req['userToken'] as IUserToken;
 
@@ -115,8 +109,8 @@ export class PassCollectionController {
 
   // delete passCollection
   @UsePipes(new ValidationPipe())
-  @Delete('delete/:id')
-  async delete(@Req() req: Request, @Param() data: DeletePassCollectionDto) {
+  @Delete('/:id')
+  async delete(@Req() req: Request, @Param() data: DeleteDto) {
     // user token
     const userToken = req['userToken'] as IUserToken;
 

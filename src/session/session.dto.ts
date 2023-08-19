@@ -1,6 +1,7 @@
 import { IsString } from 'class-validator';
 
-export class DeleteSessionDto {
+// DELETE
+export class DeleteDto {
   @IsString()
   id: string;
 }

@@ -1,7 +1,7 @@
 import { Controller, Get, Req, Delete, Param } from '@nestjs/common';
 import { IUserToken } from 'src/middleware/auth/auth.interface.middleware';
 import { SessionDatabaseService } from './session.service';
-import { DeleteSessionDto } from './session.dto';
+import { DeleteDto } from './session.dto';
 
 @Controller('session')
 export class SessionController {
@@ -38,7 +38,7 @@ export class SessionController {
 
   // delete session
   @Delete('/:id')
-  async delete(@Req() req: Request, @Param() data: DeleteSessionDto) {
+  async delete(@Req() req: Request, @Param() data: DeleteDto) {
     // user token
     const userToken = req['userToken'] as IUserToken;
 

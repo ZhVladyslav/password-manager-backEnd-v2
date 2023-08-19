@@ -1,6 +1,13 @@
 import { IsString } from 'class-validator';
 
-export class CreatePassCollectionDto {
+// GET BY ID
+export class GetByIdDto {
+  @IsString()
+  id: string;
+}
+
+// CREATE
+export class CreateDto {
   @IsString()
   name: string;
 
@@ -8,12 +15,8 @@ export class CreatePassCollectionDto {
   data: string;
 }
 
-export class GetByIdPassCollectionDto {
-  @IsString()
-  id: string;
-}
-
-export class EditNamePassCollectionDto {
+// EDIT NAME
+export class EditNameDto {
   @IsString()
   id: string;
 
@@ -21,7 +24,8 @@ export class EditNamePassCollectionDto {
   name: string;
 }
 
-export class EditDataPassCollectionDto {
+// EDIT DATA
+export class EditDataDto {
   @IsString()
   id: string;
 
@@ -29,7 +33,8 @@ export class EditDataPassCollectionDto {
   data: string;
 }
 
-export class DeletePassCollectionDto {
+// DELETE
+export class DeleteDto {
   @IsString()
   id: string;
 }
