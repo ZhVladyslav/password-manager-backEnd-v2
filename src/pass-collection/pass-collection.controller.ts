@@ -1,11 +1,11 @@
 import { Controller, Get, UsePipes, ValidationPipe, Post, Body, Req, Param, Put, Delete } from '@nestjs/common';
 import { GetByIdDto, CreateDto, EditNameDto, EditDataDto, DeleteDto } from './pass-collection.dto';
-import { PassCollectionDatabaseService } from './pass-collection.service';
+import { PassCollectionService } from './pass-collection.service';
 import { IUserToken } from 'src/middleware/auth/auth.interface.middleware';
 
 @Controller('pass-collection')
 export class PassCollectionController {
-  constructor(private readonly databaseService: PassCollectionDatabaseService) {}
+  constructor(private readonly passCollectionService: PassCollectionService) {}
 
   // ----------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ export class PassCollectionController {
     const userToken = req['userToken'] as IUserToken;
 
     // get all passCollection
-    const res = await this.databaseService.findAllByUserId(userToken.userId);
+    const res = await this.passCollectionService.findAllByUserId(userToken.userId);
 
     return res;
   }
@@ -37,7 +37,7 @@ export class PassCollectionController {
     const userToken = req['userToken'] as IUserToken;
 
     // get by id passCollection
-    const res = await this.databaseService.findByPassId(userToken.userId, data.id);
+    const res = await this.passCollectionService.findByPassId(userToken.userId, data.id);
 
     return res;
   }
@@ -58,7 +58,7 @@ export class PassCollectionController {
     const userToken = req['userToken'] as IUserToken;
 
     // create passCollection
-    const res = await this.databaseService.create({ userId: userToken.userId, data: data.data, name: data.name });
+    const res = await this.passCollectionService.create({ userId: userToken.userId, data: data.data, name: data.name });
 
     return res;
   }
@@ -79,7 +79,7 @@ export class PassCollectionController {
     const userToken = req['userToken'] as IUserToken;
 
     // edit name passCollection
-    const res = await this.databaseService.editName({ userId: userToken.userId, id: data.id, name: data.name });
+    const res = await this.passCollectionService.editName({ userId: userToken.userId, id: data.id, name: data.name });
 
     return res;
   }
@@ -94,7 +94,7 @@ export class PassCollectionController {
     const userToken = req['userToken'] as IUserToken;
 
     // edit data passCollection
-    const res = await this.databaseService.editData({ userId: userToken.userId, id: data.id, data: data.data });
+    const res = await this.passCollectionService.editData({ userId: userToken.userId, id: data.id, data: data.data });
 
     return res;
   }
@@ -115,7 +115,7 @@ export class PassCollectionController {
     const userToken = req['userToken'] as IUserToken;
 
     // delete passCollection
-    const res = await this.databaseService.delete({ userId: userToken.userId, id: data.id });
+    const res = await this.passCollectionService.delete({ userId: userToken.userId, id: data.id });
 
     return res;
   }

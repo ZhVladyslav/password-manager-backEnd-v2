@@ -1,11 +1,11 @@
 import { Controller, Get, Req, Delete, Param } from '@nestjs/common';
 import { IUserToken } from 'src/middleware/auth/auth.interface.middleware';
-import { SessionDatabaseService } from './session.service';
+import { SessionService } from './session.service';
 import { DeleteDto } from './session.dto';
 
 @Controller('session')
 export class SessionController {
-  constructor(private readonly databaseService: SessionDatabaseService) {}
+  constructor(private readonly sessionService: SessionService) {}
 
   // ----------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ export class SessionController {
     const userToken = req['userToken'] as IUserToken;
 
     // get all passCollection
-    const res = await this.databaseService.getAll(userToken.userId);
+    const res = await this.sessionService.getAll(userToken.userId);
 
     return res;
   }
@@ -43,7 +43,7 @@ export class SessionController {
     const userToken = req['userToken'] as IUserToken;
 
     // get all passCollection
-    const res = await this.databaseService.delete(userToken.userId, data.id);
+    const res = await this.sessionService.delete(userToken.userId, data.id);
 
     return res;
   }

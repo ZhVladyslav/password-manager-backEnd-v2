@@ -2,7 +2,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
-export class PassCollectionDatabaseService {
+export class PassCollectionService {
   constructor(private readonly databaseService: DatabaseService) {}
 
   // handler error

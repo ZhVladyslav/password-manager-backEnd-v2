@@ -1,9 +1,12 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateSessionDto, RegistrationDto } from './auth.dto';
+import * as jwt from 'jsonwebtoken';
+import * as bcrypt from 'bcrypt';
+import { v4 } from 'uuid';
 
 @Injectable()
-export class AuthDatabaseService {
+export class AuthService {
   constructor(private readonly databaseService: DatabaseService) {}
 
   // handler error
@@ -57,5 +60,45 @@ export class AuthDatabaseService {
         data,
       }),
     );
+  }
+
+  //
+  //
+  //
+
+  /* ----------------  JWT  ---------------- */
+
+  // generate jwt
+  generateJwt = ({ userId, tokenId }: { tokenId: string; userId: string }): string => {
+    const accessToken = jwt.sign(
+      {
+        tokenId,
+        userId,
+      },
+      process.env.JWT_KEY,
+      { expiresIn: '1y' },
+    );
+
+    return accessToken;
+  };
+
+  /* ----------------  Password  ---------------- */
+
+  // Check password
+  async checkPassword(getPassword: string, userPassword: string): Promise<boolean> {
+    const result = await bcrypt.compare(getPassword, userPassword);
+    return result;
+  }
+
+  // Generate password hash
+  async generatePasswordHash(password: string): Promise<string> {
+    return await bcrypt.hash(password, 12);
+  }
+
+  /* ----------------  uuuid v4  ---------------- */
+
+  // Generate uuid V4
+  generateUuid(): string {
+    return v4();
   }
 }

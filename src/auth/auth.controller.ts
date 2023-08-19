@@ -8,18 +8,12 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { LoginDto, RegistrationDto } from './auth.dto';
-import { AuthUuidService } from './auth.uuid.service';
-import { AuthPasswordService } from './auth.password.service';
-import { AuthDatabaseService } from './auth.database.service';
-import { AuthJwtService } from './auth.jwt.service';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
-    private readonly authUuidService: AuthUuidService,
-    private readonly authJwtService: AuthJwtService,
-    private readonly authPasswordService: AuthPasswordService,
-    private readonly authDatabaseService: AuthDatabaseService,
+    private readonly authService: AuthService,
   ) {}
 
   // ----------------------------------------------------------------------
@@ -34,21 +28,21 @@ export class AuthController {
   @Post('login')
   async login(@Body() data: LoginDto) {
     // get user with database and check or user is exist
-    const findUser = await this.authDatabaseService.findUserByLogin(data.login);
+    const findUser = await this.authService.findUserByLogin(data.login);
     if (!findUser) throw new BadRequestException('Invalid user or password');
 
     // check user password
-    const checkPassword = await this.authPasswordService.checkPassword(data.password, findUser.password);
+    const checkPassword = await this.authService.checkPassword(data.password, findUser.password);
     if (!checkPassword) throw new BadRequestException('Invalid user or password');
 
     // generate session id
-    const tokenId = this.authUuidService.generateUuid();
+    const tokenId = this.authService.generateUuid();
 
     // generate user token
-    const token = this.authJwtService.generateJwt({ userId: findUser.id, tokenId });
+    const token = this.authService.generateJwt({ userId: findUser.id, tokenId });
 
     // create session
-    await this.authDatabaseService.createSession({ userId: findUser.id, tokenId });
+    await this.authService.createSession({ userId: findUser.id, tokenId });
 
     return { token };
   }
@@ -65,14 +59,14 @@ export class AuthController {
   @Post('registration')
   async registration(@Body() data: RegistrationDto) {
     // get user with database and check or user is exist
-    const res = await this.authDatabaseService.findUserByLogin(data.login);
+    const res = await this.authService.findUserByLogin(data.login);
     if (res) throw new ConflictException('User with this login already exists.');
 
     // generate user password hash
-    const passwordHash = await this.authPasswordService.generatePasswordHash(data.password);
+    const passwordHash = await this.authService.generatePasswordHash(data.password);
 
     // create user in database
-    await this.authDatabaseService.createUserInDatabase({
+    await this.authService.createUserInDatabase({
       name: data.name,
       login: data.login,
       password: passwordHash,
