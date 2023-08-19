@@ -50,7 +50,7 @@ export class AuthController {
     // create session
     await this.authDatabaseService.createSession({ userId: findUser.id, tokenId });
 
-    return token;
+    return { token };
   }
 
   // ----------------------------------------------------------------------
