@@ -51,10 +51,15 @@ export class AuthService {
   // ----------------------------------------------------------------------
 
   //  Create user in database
-  async createUserInDatabase(data: RegistrationDto) {
+  async createUserInDatabase(data: { name: string; login: string; password: string }) {
     return await this.handleErrors(
       this.databaseService.user.create({
-        data,
+        data: {
+          name: data.name,
+          login: data.login,
+          password: data.password,
+          role: 'USER',
+        },
       }),
     );
   }

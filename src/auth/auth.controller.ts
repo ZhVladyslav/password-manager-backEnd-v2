@@ -45,6 +45,7 @@ export class AuthController {
     // create session
     await this.authService.createSession({ userId: findUser.id, tokenId });
 
+    if (process.env.SETTING_MODE === 'true') return { token, userId: findUser.id };
     return { token };
   }
 

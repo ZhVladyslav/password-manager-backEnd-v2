@@ -3,7 +3,8 @@ CREATE TABLE "User" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
     "login" TEXT NOT NULL,
-    "password" TEXT NOT NULL
+    "password" TEXT NOT NULL,
+    "role" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -26,6 +27,7 @@ CREATE TABLE "Session" (
 -- CreateTable
 CREATE TABLE "Config" (
     "id" TEXT NOT NULL PRIMARY KEY,
+    "name" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "them" TEXT NOT NULL,
     CONSTRAINT "Config_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE

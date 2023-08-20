@@ -26,11 +26,7 @@ export class SessionMiddleware implements NestMiddleware {
 
   // find session by session label
   async findSessionByLabel(tokenId: string) {
-    return await this.handleErrors(
-      this.databaseService.session.findFirst({
-        where: { tokenId },
-      }),
-    );
+    return await this.handleErrors(this.databaseService.session.findFirst({ where: { tokenId } }));
   }
 
   // ----------------------------------------------------------------------

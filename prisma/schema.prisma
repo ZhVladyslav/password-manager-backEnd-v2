@@ -15,6 +15,7 @@ model User {
   name           String
   login          String
   password       String
+  role           String
   PassCollection PassCollection[]
   Session        Session[]
   Config         Config[]
