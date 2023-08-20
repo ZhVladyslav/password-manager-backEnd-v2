@@ -43,8 +43,8 @@ export class SessionController {
     const userToken = req['userToken'] as IUserToken;
 
     // get all passCollection
-    const res = await this.sessionService.delete(data.id);
+    await this.sessionService.delete(data.id);
 
-    return res;
+    return { message: 'Session is deleted' };
   }
 }

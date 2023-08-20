@@ -58,9 +58,9 @@ export class PassCollectionController {
     const userToken = req['userToken'] as IUserToken;
 
     // create passCollection
-    const res = await this.passCollectionService.create({ userId: userToken.userId, data: data.data, name: data.name });
+    await this.passCollectionService.create({ userId: userToken.userId, data: data.data, name: data.name });
 
-    return res;
+    return { message: 'Password collection is created' };
   }
 
   // ----------------------------------------------------------------------
@@ -79,9 +79,9 @@ export class PassCollectionController {
     const userToken = req['userToken'] as IUserToken;
 
     // edit name passCollection
-    const res = await this.passCollectionService.editName({ id: data.id, name: data.name });
+    await this.passCollectionService.editName({ id: data.id, name: data.name });
 
-    return res;
+    return { message: 'Password collection name is edited' };
   }
 
   // ----------------------------------------------------------------------
@@ -94,9 +94,9 @@ export class PassCollectionController {
     const userToken = req['userToken'] as IUserToken;
 
     // edit data passCollection
-    const res = await this.passCollectionService.editData({ id: data.id, data: data.data });
+    await this.passCollectionService.editData({ id: data.id, data: data.data });
 
-    return res;
+    return { message: 'Password collection data is edited' };
   }
 
   // ----------------------------------------------------------------------
@@ -117,6 +117,6 @@ export class PassCollectionController {
     // delete passCollection
     const res = await this.passCollectionService.delete({ id: data.id });
 
-    return res;
+    return { message: 'Password collection is deleted' };
   }
 }
