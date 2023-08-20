@@ -79,7 +79,7 @@ export class PassCollectionController {
     const userToken = req['userToken'] as IUserToken;
 
     // edit name passCollection
-    const res = await this.passCollectionService.editName({ userId: userToken.userId, id: data.id, name: data.name });
+    const res = await this.passCollectionService.editName({ id: data.id, name: data.name });
 
     return res;
   }
@@ -94,7 +94,7 @@ export class PassCollectionController {
     const userToken = req['userToken'] as IUserToken;
 
     // edit data passCollection
-    const res = await this.passCollectionService.editData({ userId: userToken.userId, id: data.id, data: data.data });
+    const res = await this.passCollectionService.editData({ id: data.id, data: data.data });
 
     return res;
   }
@@ -115,7 +115,7 @@ export class PassCollectionController {
     const userToken = req['userToken'] as IUserToken;
 
     // delete passCollection
-    const res = await this.passCollectionService.delete({ userId: userToken.userId, id: data.id });
+    const res = await this.passCollectionService.delete({ id: data.id });
 
     return res;
   }

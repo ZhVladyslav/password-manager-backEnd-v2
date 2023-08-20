@@ -6,7 +6,7 @@ export class SessionService {
   constructor(private readonly databaseService: DatabaseService) {}
 
   // handler error
-  async handleErrors<T>(promise: Promise<T>) {
+  private async handleErrors<T>(promise: Promise<T>) {
     try {
       const result = await promise;
       return result;
@@ -39,10 +39,10 @@ export class SessionService {
 
   // ----------------------------------------------------------------------
 
-  async delete(userId: string, id: string) {
+  async delete(id: string) {
     return await this.handleErrors(
       this.databaseService.session.delete({
-        where: { id, userId },
+        where: { id },
       }),
     );
   }

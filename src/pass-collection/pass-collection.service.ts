@@ -6,7 +6,7 @@ export class PassCollectionService {
   constructor(private readonly databaseService: DatabaseService) {}
 
   // handler error
-  async handleErrors<T>(promise: Promise<T>) {
+  private async handleErrors<T>(promise: Promise<T>) {
     try {
       const result = await promise;
       return result;
@@ -65,10 +65,10 @@ export class PassCollectionService {
   // ----------------------------------------------------------------------
 
   // edit name passCollection in database
-  async editName({ userId, id, name }: { userId: string; id: string; name: string }) {
+  async editName({ id, name }: { id: string; name: string }) {
     return await this.handleErrors(
       this.databaseService.passCollection.update({
-        where: { id, userId },
+        where: { id },
         data: { name },
       }),
     );
@@ -77,10 +77,10 @@ export class PassCollectionService {
   // ----------------------------------------------------------------------
 
   // edit data passCollection in database
-  async editData({ userId, id, data }: { userId: string; id: string; data: string }) {
+  async editData({ id, data }: { id: string; data: string }) {
     return await this.handleErrors(
       this.databaseService.passCollection.update({
-        where: { id, userId },
+        where: { id },
         data: { data },
       }),
     );
@@ -95,10 +95,10 @@ export class PassCollectionService {
   // ----------------------------------------------------------------------
 
   // delete passCollection in database
-  async delete({ userId, id }: { userId: string; id: string }) {
+  async delete({ id }: { id: string }) {
     return await this.handleErrors(
       this.databaseService.passCollection.delete({
-        where: { id, userId },
+        where: { id },
       }),
     );
   }

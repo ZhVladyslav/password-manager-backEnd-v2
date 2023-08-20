@@ -10,7 +10,7 @@ export class AuthService {
   constructor(private readonly databaseService: DatabaseService) {}
 
   // handler error
-  async handleErrors<T>(promise: Promise<T>) {
+  private async handleErrors<T>(promise: Promise<T>) {
     try {
       const result = await promise;
       return result;

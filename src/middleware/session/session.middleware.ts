@@ -13,7 +13,7 @@ export class SessionMiddleware implements NestMiddleware {
   constructor(private readonly databaseService: DatabaseService) {}
 
   // handler error
-  async handleErrors(promise: Promise<unknown>) {
+  private async handleErrors(promise: Promise<unknown>) {
     try {
       const result = await promise;
       return result;
@@ -49,7 +49,7 @@ export class SessionMiddleware implements NestMiddleware {
     if (!('tokenId' in userToken)) throw new BadRequestException('Invalid token');
 
     // find user session
-    const resFindSession = await this.handleErrors(this.findSessionByLabel(userToken.tokenId));
+    const resFindSession = await this.findSessionByLabel(userToken.tokenId);
     if (!resFindSession) throw new NotFoundException('Session not found');
 
     next();
