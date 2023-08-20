@@ -11,6 +11,8 @@ export class UserService {
       const result = await promise;
       return result;
     } catch (error) {
+      console.log(error);
+
       throw new InternalServerErrorException('DB error');
     }
   }
@@ -22,6 +24,14 @@ export class UserService {
   //
 
   // ----------------------------------------------------------------------
+
+  async getUserById(id: string) {
+    return await this.handleErrors(
+      this.databaseService.user.findFirst({
+        where: { id },
+      }),
+    );
+  }
 
   async myAccount(id: string) {
     return await this.handleErrors(
@@ -66,7 +76,19 @@ export class UserService {
   // ----------------------------------------------------------------------
 
   async delete(id: string) {
-    return await this.handleErrors(
+    await this.handleErrors(
+      this.databaseService.passCollection.deleteMany({
+        where: { userId: id },
+      }),
+    );
+
+    await this.handleErrors(
+      this.databaseService.session.deleteMany({
+        where: { userId: id },
+      }),
+    );
+    
+    await this.handleErrors(
       this.databaseService.user.delete({
         where: { id },
       }),

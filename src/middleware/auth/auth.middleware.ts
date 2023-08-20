@@ -1,6 +1,6 @@
 import { Injectable, NestMiddleware, UnauthorizedException, BadRequestException } from '@nestjs/common';
-import * as jwt from 'jsonwebtoken';
 import { IUserToken } from './auth.interface.middleware';
+import { jwt } from 'src/config/jwt';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
@@ -13,7 +13,7 @@ export class AuthMiddleware implements NestMiddleware {
       if (!authHeader) throw new UnauthorizedException('User in not authorization');
 
       // check user token
-      const userToken = jwt.verify(authHeader, process.env.JWT_KEY);
+      const userToken = jwt.verify(authHeader);
 
       // Write user token in request
       req['userToken'] = userToken as IUserToken;

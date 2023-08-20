@@ -1,6 +1,8 @@
-import { Controller, Get, Req, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Req, Put, Delete, Body, BadRequestException } from '@nestjs/common';
 import { UserService } from './user.service';
 import { IUserToken } from 'src/middleware/auth/auth.interface.middleware';
+import { DeleteDto, EditNameDto, EditPasswordDto } from './user.dto';
+import { password } from 'src/config/password';
 
 @Controller('user')
 export class UserController {
@@ -20,7 +22,7 @@ export class UserController {
 
     const user = await this.userService.myAccount(userToken.userId);
 
-    return user;
+    return {name: user.name}
   }
 
   // ----------------------------------------------------------------------
@@ -31,22 +33,31 @@ export class UserController {
 
   // ----------------------------------------------------------------------
 
+  // edit name
   @Put('edit-name')
-  async editName(@Req() req: Request) {
-    const userToken = req['userToken'] as IUserToken
+  async editName(@Req() req: Request, @Body() data: EditNameDto) {
+    const userToken = req['userToken'] as IUserToken;
 
-    const user = await this.userService.editName(userToken.userId, 'NewName');
+    await this.userService.editName(userToken.userId, data.name);
 
-    return user;
+    return { message: 'Name is edited' };
   }
-  
+
+  // edit password
   @Put('edit-password')
-  async editPassword(@Req() req: Request) {
-    const userToken = req['userToken'] as IUserToken
+  async editPassword(@Req() req: Request, @Body() data: EditPasswordDto) {
+    const userToken = req['userToken'] as IUserToken;
 
-    const user = await this.userService.editPassword(userToken.userId, 'NewPass');
+    // get user to check password on correct
+    const user = await this.userService.getUserById(userToken.userId);
+    const checkPassword = await password.verify(data.oldPassword, user.password);
+    if (!checkPassword) throw new BadRequestException('The password is not correct');
 
-    return user;
+    // write new password
+    const newPassword = await password.generateHash(data.password)
+    await this.userService.editPassword(userToken.userId, newPassword);
+
+    return { message: 'Password is edited' };
   }
 
   // ----------------------------------------------------------------------
@@ -58,11 +69,16 @@ export class UserController {
   // ----------------------------------------------------------------------
 
   @Delete()
-  async delete(@Req() req: Request) {
+  async delete(@Req() req: Request, @Body() data: DeleteDto) {
     const userToken = req['userToken'] as IUserToken;
 
-    const user = await this.userService.delete(userToken.userId);
+    // get user to check password on correct
+    const user = await this.userService.getUserById(userToken.userId);
+    const checkPassword = await password.verify(data.password, user.password);
+    if (!checkPassword) throw new BadRequestException('The password is not correct');
 
-    return user;
+    await this.userService.delete(userToken.userId);
+
+    return { message: 'Account is deleted' };
   }
 }
