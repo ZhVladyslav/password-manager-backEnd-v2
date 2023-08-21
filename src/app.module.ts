@@ -9,9 +9,10 @@ import { StatisticsModule } from './statistics/statistics.module';
 import { SettingsServerModule } from './settings-server/settings-server.module';
 import { IssueModule } from './issue/issue.module';
 import { IssueCommentModule } from './issue-comment/issue-comment.module';
+import { RoleModule } from './role/role.module';
 
 @Module({
-  imports: [AuthModule, PassCollectionModule, SessionModule, UserModule, UserConfigModule, StatisticsModule, SettingsServerModule, IssueModule, IssueCommentModule],
+  imports: [AuthModule, PassCollectionModule, SessionModule, UserModule, UserConfigModule, StatisticsModule, SettingsServerModule, IssueModule, IssueCommentModule, RoleModule],
   exports: [],
   controllers: [AppController],
   providers: [],
