@@ -19,6 +19,8 @@ model User {
   PassCollection PassCollection[]
   Session        Session[]
   Config         Config[]
+  Issue          Issue[]
+  IssueComent    IssueComment[]
 }
 
 model PassCollection {
@@ -42,4 +44,25 @@ model Config {
   user   User   @relation(fields: [userId], references: [id])
   userId String
   them   String
+}
+
+model Issue {
+  id           String         @id @default(uuid())
+  user         User?          @relation(fields: [userId], references: [id])
+  userId       String?
+  title        String
+  description  String
+  fixed        Boolean        @default(false)
+  data         DateTime       @default(now())
+  IssueComment IssueComment[]
+}
+
+model IssueComment {
+  id      String   @id @default(uuid())
+  Issue   Issue    @relation(fields: [issueId], references: [id])
+  issueId String
+  user    User?    @relation(fields: [userId], references: [id])
+  userId  String?
+  data    DateTime @default(now())
+  comment String
 }

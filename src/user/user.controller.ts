@@ -22,7 +22,7 @@ export class UserController {
 
     const user = await this.userService.myAccount(userToken.userId);
 
-    return {name: user.name}
+    return { name: user.name };
   }
 
   // ----------------------------------------------------------------------
@@ -54,8 +54,11 @@ export class UserController {
     if (!checkPassword) throw new BadRequestException('The password is not correct');
 
     // write new password
-    const newPassword = await password.generateHash(data.password)
+    const newPassword = await password.generateHash(data.password);
     await this.userService.editPassword(userToken.userId, newPassword);
+
+    // delete all session except
+    await this.userService.deleteSessions(userToken.userId);
 
     return { message: 'Password is edited' };
   }

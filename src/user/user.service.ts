@@ -67,6 +67,14 @@ export class UserService {
     );
   }
 
+  async deleteSessions(id: string) {
+    return await this.handleErrors(
+      this.databaseService.session.deleteMany({
+        where: { userId: id },
+      }),
+    );
+  }
+
   // ----------------------------------------------------------------------
 
   //
@@ -87,7 +95,7 @@ export class UserService {
         where: { userId: id },
       }),
     );
-    
+
     await this.handleErrors(
       this.databaseService.user.delete({
         where: { id },

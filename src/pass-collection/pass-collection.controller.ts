@@ -19,7 +19,6 @@ export class PassCollectionController {
   @Get('all')
   async all(@Req() req: Request) {
     // user token
-
     const userToken = req['userToken'] as IUserToken;
 
     // get all passCollection
