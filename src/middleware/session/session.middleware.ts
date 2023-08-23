@@ -5,8 +5,8 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { IUserToken } from '../auth/auth.interface.middleware';
 import { DatabaseService } from 'src/database/database.service';
+import { IUserToken } from 'src/types/userToken.type';
 
 @Injectable()
 export class SessionMiddleware implements NestMiddleware {

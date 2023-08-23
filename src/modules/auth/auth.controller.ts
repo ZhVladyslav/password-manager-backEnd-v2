@@ -11,13 +11,13 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   @Post('login')
   async login(@Body() data: LoginDto) {
-    await this.authService.login(data);
+    return await this.authService.login(data);
   }
 
   // REGISTRATION
   @UsePipes(new ValidationPipe())
   @Post('registration')
   async registration(@Body() data: RegistrationDto) {
-    await this.authService.registration(data);
+    return await this.authService.registration(data);
   }
 }

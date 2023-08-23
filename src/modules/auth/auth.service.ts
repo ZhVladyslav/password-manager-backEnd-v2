@@ -69,20 +69,14 @@ export class AuthService {
   private async findUserByLogin(login: string) {
     return await databaseHandler.errors(
       this.databaseService.user.findFirst({
-        where: {
-          login: login,
-        },
+        where: { login: login },
       }),
     );
   }
 
   //  create session in database
   private async createSession(data: { userId: string; tokenId: string }) {
-    return await databaseHandler.errors(
-      this.databaseService.session.create({
-        data,
-      }),
-    );
+    return await databaseHandler.errors(this.databaseService.session.create({ data }));
   }
 
   // create user in database

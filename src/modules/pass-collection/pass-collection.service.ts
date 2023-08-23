@@ -116,10 +116,7 @@ export class PassCollectionService {
   private async deleteInDatabase({ id, userId }: IDelete) {
     return await databaseHandler.errors(
       this.databaseService.passCollection.delete({
-        where: {
-          id,
-          userId,
-        },
+        where: { id, userId },
       }),
     );
   }

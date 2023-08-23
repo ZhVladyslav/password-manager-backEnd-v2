@@ -59,9 +59,7 @@ export class IssueService {
   private async findAllFixed() {
     return await databaseHandler.errors(
       this.databaseService.issue.findMany({
-        where: {
-          fixed: true,
-        },
+        where: { fixed: true },
       }),
     );
   }
@@ -70,9 +68,7 @@ export class IssueService {
   private async findMy(userId: string) {
     return await databaseHandler.errors(
       this.databaseService.issue.findMany({
-        where: {
-          userId,
-        },
+        where: { userId },
       }),
     );
   }
@@ -81,10 +77,7 @@ export class IssueService {
   private async findMyFixed(userId: string) {
     return await databaseHandler.errors(
       this.databaseService.issue.findMany({
-        where: {
-          fixed: true,
-          userId,
-        },
+        where: { fixed: true, userId },
       }),
     );
   }
@@ -93,11 +86,7 @@ export class IssueService {
   private async createInDatabase({ title, description, userId }: ICreate) {
     return await databaseHandler.errors(
       this.databaseService.issue.create({
-        data: {
-          userId,
-          title,
-          description,
-        },
+        data: { userId, title, description },
       }),
     );
   }
@@ -105,12 +94,8 @@ export class IssueService {
   private async setFixed(issueId: string) {
     return await databaseHandler.errors(
       this.databaseService.issue.update({
-        where: {
-          id: issueId,
-        },
-        data: {
-          fixed: true,
-        },
+        where: { id: issueId },
+        data: { fixed: true },
       }),
     );
   }

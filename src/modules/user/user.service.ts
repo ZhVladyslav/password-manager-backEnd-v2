@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { databaseHandler } from 'src/database/database.handler';
-import { DatabaseService } from 'src/database/database.service';
-import { password } from 'src/utils/password';
+import { DatabaseService } from '../../database/database.service';
+import { databaseHandler } from '../../database/database.handler';
+import { password } from '../../utils/password';
 
 interface IDeleteUser {
   userId: string;
