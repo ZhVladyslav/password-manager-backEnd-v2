@@ -1,7 +1,7 @@
 import { Controller, Get, Req, Delete, Param, UsePipes, ValidationPipe } from '@nestjs/common';
-import { IUserToken } from 'src/middleware/auth/auth.interface.middleware';
 import { DeleteDto } from './dto/session.dto';
 import { SessionService } from './session.service';
+import { IUserToken } from 'src/types/userToken.type';
 
 @Controller('session')
 export class SessionController {

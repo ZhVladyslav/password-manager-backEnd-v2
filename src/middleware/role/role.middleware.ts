@@ -6,7 +6,7 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { IUserToken } from '../auth/auth.interface.middleware';
+import { IUserToken } from 'src/types/userToken.type';
 
 @Injectable()
 export class RoleMiddleware implements NestMiddleware {

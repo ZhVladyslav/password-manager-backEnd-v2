@@ -1,8 +1,8 @@
 import { Controller, Post, Get, Req, Body, Put } from '@nestjs/common';
-import { IUserToken } from 'src/middleware/auth/auth.interface.middleware';
 import { CreateDto } from './dto/create.dto';
 import { FixedDto } from './dto/fixed.dto';
 import { IssueService } from './issue.service';
+import { IUserToken } from 'src/types/userToken.type';
 
 @Controller('issue')
 export class IssueController {

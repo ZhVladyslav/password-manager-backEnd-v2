@@ -1,11 +1,11 @@
 import { Controller, Get, UsePipes, ValidationPipe, Post, Body, Req, Param, Put, Delete } from '@nestjs/common';
-import { IUserToken } from 'src/middleware/auth/auth.interface.middleware';
 import { GetByIdDto } from './dto/getById.dto';
 import { CreateDto } from './dto/create.dto';
 import { EditNameDto } from './dto/editName.dto';
 import { EditDataDto } from './dto/editData.dto';
 import { DeleteDto } from './dto/delete.dto';
 import { PassCollectionService } from './pass-collection.service';
+import { IUserToken } from 'src/types/userToken.type';
 
 @Controller('pass-collection')
 export class PassCollectionController {

@@ -1,10 +1,9 @@
 import { Controller, Get, Req, Put, Delete, Body } from '@nestjs/common';
-
-import { IUserToken } from 'src/middleware/auth/auth.interface.middleware';
 import { DeleteDto } from './dto/delete.dto';
 import { EditNameDto } from './dto/editName.dto';
 import { EditPasswordDto } from './dto/editPassword.dto';
 import { UserService } from './user.service';
+import { IUserToken } from 'src/types/userToken.type';
 
 @Controller('user')
 export class UserController {
