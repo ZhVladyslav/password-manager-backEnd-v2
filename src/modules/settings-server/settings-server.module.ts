@@ -1,0 +1,12 @@
+import { Module } from '@nestjs/common';
+import { SettingsServerController } from './settings-server.controller';
+import { DatabaseModule } from 'src/database/database.module';
+import { SettingsServerService } from './settings-server.service';
+
+@Module({
+  imports: [DatabaseModule],
+  exports: [],
+  providers: [SettingsServerService],
+  controllers: [SettingsServerController],
+})
+export class SettingsServerModule {}

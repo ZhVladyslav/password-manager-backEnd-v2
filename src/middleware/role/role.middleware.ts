@@ -45,7 +45,7 @@ export class RoleMiddleware implements NestMiddleware {
     const resFindUser = await this.findUser(userToken.userId);
     if (!resFindUser) throw new NotFoundException('User not found');
 
-    if (resFindUser.role !== 'ADMIN') throw new ForbiddenException('Access error');
+    if (resFindUser.roleId !== 'ADMIN') throw new ForbiddenException('Access error');
 
     next();
   }

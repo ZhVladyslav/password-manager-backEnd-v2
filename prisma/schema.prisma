@@ -15,12 +15,13 @@ model User {
   name           String
   login          String
   password       String
-  role           String
   PassCollection PassCollection[]
   Session        Session[]
   Config         Config[]
   Issue          Issue[]
   IssueComent    IssueComment[]
+  Role           Role?            @relation(fields: [roleId], references: [id])
+  roleId         String?
 }
 
 model PassCollection {
@@ -65,4 +66,18 @@ model IssueComment {
   userId  String?
   data    DateTime @default(now())
   comment String
+}
+
+model Role {
+  id    String  @id @default(uuid())
+  name  String
+  Claim Claim[]
+  User  User[]
+}
+
+model Claim {
+  id     String @id @default(uuid())
+  name   String
+  Role   Role   @relation(fields: [roleId], references: [id])
+  roleId String
 }
