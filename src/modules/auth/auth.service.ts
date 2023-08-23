@@ -87,7 +87,7 @@ export class AuthService {
           name: data.name,
           login: data.login,
           password: data.password,
-          roleId: 'USER',
+          roleId: null,
         },
       }),
     );
