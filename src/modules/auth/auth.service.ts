@@ -52,9 +52,6 @@ export class AuthService {
       login: data.login,
       password: passwordHash,
     });
-
-    // response
-    return { message: 'User is create' };
   }
 
   // ----------------------------------------------------------------------
@@ -69,7 +66,7 @@ export class AuthService {
   private async findUserByLogin(login: string) {
     return await databaseHandler.errors(
       this.databaseService.user.findFirst({
-        where: { login: login },
+        where: { login },
       }),
     );
   }

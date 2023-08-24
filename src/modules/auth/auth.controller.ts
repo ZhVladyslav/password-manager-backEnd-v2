@@ -18,6 +18,7 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   @Post('registration')
   async registration(@Body() data: RegistrationDto) {
-    return await this.authService.registration(data);
+    await this.authService.registration(data);
+    return { message: 'User is create' };
   }
 }

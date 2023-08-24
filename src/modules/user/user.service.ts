@@ -56,6 +56,11 @@ export class UserService {
     const checkPassword = await password.verify(data.password, userInDb.password);
     if (!checkPassword) throw new BadRequestException('The password is not correct');
 
+    await this.deleteSessionsInDb(data.userId);
+    await this.deleteUserPassCollectionInDb(data.userId);
+    await this.deleteUserConfigsInDb(data.userId);
+    await this.editIssuesInDb(data.userId);
+    await this.editIssuesCommentInDb(data.userId);
     await this.deleteUserInDb(data.userId);
   }
 
@@ -105,6 +110,40 @@ export class UserService {
     return databaseHandler.errors(
       this.databaseService.user.delete({
         where: { id: userId },
+      }),
+    );
+  }
+
+  private async deleteUserPassCollectionInDb(userId: string) {
+    return databaseHandler.errors(
+      this.databaseService.passCollection.deleteMany({
+        where: { userId },
+      }),
+    );
+  }
+
+  private async deleteUserConfigsInDb(userId: string) {
+    return databaseHandler.errors(
+      this.databaseService.config.deleteMany({
+        where: { userId },
+      }),
+    );
+  }
+
+  private async editIssuesInDb(userId: string) {
+    return databaseHandler.errors(
+      this.databaseService.issue.updateMany({
+        where: { userId },
+        data: { userId: null },
+      }),
+    );
+  }
+
+  private async editIssuesCommentInDb(userId: string) {
+    return databaseHandler.errors(
+      this.databaseService.issueComment.updateMany({
+        where: { userId },
+        data: { userId: null },
       }),
     );
   }
