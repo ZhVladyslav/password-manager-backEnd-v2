@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { databaseHandler } from 'src/database/database.handler';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
+import { handlers } from 'src/handlers/handlers';
 
 interface ICreate {
   userId: string;
@@ -21,7 +21,7 @@ interface IEditData {
 }
 
 interface IDelete {
-  id: string;
+  id: string[];
   userId: string;
 }
 
@@ -32,33 +32,49 @@ export class PassCollectionService {
   /* ----------------  GET  ---------------- */
 
   public async getAll(userId: string) {
-    return await this.findAllByUserId(userId);
+    const resList = await this.findAllByUserId(userId);
+    return resList.map(({ id, name }) => ({ id, name }));
   }
 
   public async getById(userId: string, id: string) {
-    return await this.findByPassId(userId, id);
+    const res = await this.findByPassId(userId, id);
+    if (!res) throw new NotFoundException('Collection not found');
+    return { id: res.id, name: res.name, data: res.data };
   }
 
   /* ----------------  POST  ---------------- */
 
   public async create(data: ICreate) {
-    return await this.createInDatabase(data);
+    await this.createInDatabase(data);
+    return { message: 'passCollection is create' };
   }
 
   /* ----------------  PUT  ---------------- */
 
   public async editName(data: IEditName) {
-    return await this.editNameInDatabase(data);
+    const passCollection = await this.findByPassId(data.userId, data.id);
+    if (passCollection.name === data.name) throw new BadRequestException("The name is already set");
+    await this.editNameInDatabase(data);
+    return { message: 'Name is edit' };
   }
 
   public async editData(data: IEditData) {
-    return await this.editDataInDatabase(data);
+    const passCollection = await this.findByPassId(data.userId, data.id);
+    if (passCollection.data === data.data) throw new BadRequestException("The data is already set");
+    await this.editDataInDatabase(data);
+    return { message: 'Data is edit' };
   }
 
   /* ----------------  DELETE  ---------------- */
 
   public async delete(data: IDelete) {
-    return await this.deleteInDatabase(data);
+    if (data.id.length === 0) throw new BadRequestException('id not passed');
+    const deleted = data.id.map(async (item) => {
+      await this.deleteInDatabase({ id: item, userId: data.userId });
+    });
+    await Promise.all(deleted);
+    if (data.id.length === 1) return { message: 'Pass collection is delete' };
+    return { message: 'Pass collections is delete' };
   }
 
   // ----------------------------------------------------------------------
@@ -71,7 +87,8 @@ export class PassCollectionService {
 
   // get all passCollection by user id
   private async findAllByUserId(userId: string) {
-    return await databaseHandler.errors(
+    if (!userId) throw new BadRequestException();
+    return await handlers.dbError(
       this.databaseService.passCollection.findMany({
         where: { userId },
       }),
@@ -80,7 +97,8 @@ export class PassCollectionService {
 
   // get passCollection by id pass collection
   private async findByPassId(userId: string, id: string) {
-    return await databaseHandler.errors(
+    if (!userId || !id) throw new BadRequestException();
+    return await handlers.dbError(
       this.databaseService.passCollection.findFirst({
         where: { userId, id },
       }),
@@ -88,33 +106,41 @@ export class PassCollectionService {
   }
 
   // add passCollection in database
-  private async createInDatabase(data: ICreate) {
-    return await databaseHandler.errors(this.databaseService.passCollection.create({ data }));
+  private async createInDatabase({ userId, name, data }: ICreate) {
+    if (!userId || !name || !data) throw new BadRequestException();
+    return await handlers.dbError(
+      this.databaseService.passCollection.create({
+        data: { userId, name, data },
+      }),
+    );
   }
 
   // edit name passCollection in database
-  private async editNameInDatabase({ id, name }: IEditName) {
-    return await databaseHandler.errors(
+  private async editNameInDatabase({ id, name, userId }: IEditName) {
+    if (!id || !userId || !name) throw new BadRequestException();
+    return await handlers.dbError(
       this.databaseService.passCollection.update({
-        where: { id },
+        where: { id, userId },
         data: { name },
       }),
     );
   }
 
   // edit data passCollection in database
-  private async editDataInDatabase({ id, data }: IEditData) {
-    return await databaseHandler.errors(
+  private async editDataInDatabase({ id, userId, data }: IEditData) {
+    if (!id || !userId || !data) throw new BadRequestException();
+    return await handlers.dbError(
       this.databaseService.passCollection.update({
-        where: { id },
+        where: { id, userId },
         data: { data },
       }),
     );
   }
 
   // delete passCollection in database
-  private async deleteInDatabase({ id, userId }: IDelete) {
-    return await databaseHandler.errors(
+  private async deleteInDatabase({ id, userId }: { id: string; userId: string }) {
+    if (!id || !userId) throw new BadRequestException();
+    return await handlers.dbError(
       this.databaseService.passCollection.delete({
         where: { id, userId },
       }),

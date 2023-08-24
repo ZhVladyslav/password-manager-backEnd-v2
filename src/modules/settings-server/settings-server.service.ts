@@ -1,13 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { databaseHandler } from 'src/database/database.handler';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
+import { handlers } from 'src/handlers/handlers';
 
 @Injectable()
 export class SettingsServerService {
   constructor(private readonly databaseService: DatabaseService) {}
 
   public async addAdmin(userId: string) {
-    return await this.addAdminInDatabase(userId);
+    await this.addAdminInDatabase(userId);
+    return { message: 'Admin user add' };
   }
 
   // ----------------------------------------------------------------------
@@ -19,7 +20,8 @@ export class SettingsServerService {
   // ----------------------------------------------------------------------
 
   private async addAdminInDatabase(userId: string) {
-    return await databaseHandler.errors(
+    if (!userId) throw new BadRequestException();
+    return await handlers.dbError(
       this.databaseService.user.update({
         where: { id: userId },
         data: { roleId: 'ADMIN' },

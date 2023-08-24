@@ -1,9 +1,10 @@
-import { Controller, Get, Req, Put, Delete, Body } from '@nestjs/common';
+import { Controller, Get, Put, Delete, Body } from '@nestjs/common';
 import { DeleteDto } from './dto/delete.dto';
 import { EditNameDto } from './dto/editName.dto';
 import { EditPasswordDto } from './dto/editPassword.dto';
 import { UserService } from './user.service';
 import { IUserToken } from 'src/types/userToken.type';
+import { UserToken } from 'src/decorators/userToken';
 
 @Controller('user')
 export class UserController {
@@ -12,38 +13,26 @@ export class UserController {
   /* ----------------  GET  ---------------- */
 
   @Get('my-account')
-  async myAccount(@Req() req: Request) {
-    const userToken = req['userToken'] as IUserToken;
-    const user = await this.userService.myAccount(userToken.userId);
-    return {
-      id: user.id,
-      name: user.name,
-      roleId: user.roleId,
-    };
+  async myAccount(@UserToken() userToken: IUserToken) {
+    return await this.userService.myAccount(userToken.userId);
   }
 
   /* ----------------  PUT  ---------------- */
 
   @Put('edit-name')
-  async editName(@Req() req: Request, @Body() data: EditNameDto) {
-    const userToken = req['userToken'] as IUserToken;
-    await this.userService.editName(userToken.userId, data.name);
-    return { message: 'Name is edit' };
+  async editName(@UserToken() userToken: IUserToken, @Body() data: EditNameDto) {
+    return await this.userService.editName(userToken.userId, data.name);
   }
 
   @Put('edit-password')
-  async editPassword(@Req() req: Request, @Body() data: EditPasswordDto) {
-    const userToken = req['userToken'] as IUserToken;
-    await this.userService.editPassword({ userId: userToken.userId, ...data });
-    return { message: 'Password is edit' };
+  async editPassword(@UserToken() userToken: IUserToken, @Body() data: EditPasswordDto) {
+    return await this.userService.editPassword({ userId: userToken.userId, ...data });
   }
 
   /* ----------------  DELETE  ---------------- */
 
   @Delete('delete')
-  async delete(@Req() req: Request, @Body() data: DeleteDto) {
-    const userToken = req['userToken'] as IUserToken;
-    await this.userService.delete({ password: data.password, userId: userToken.userId });
-    return { message: 'User is delete' };
+  async delete(@UserToken() userToken: IUserToken, @Body() data: DeleteDto) {
+    return await this.userService.delete({ password: data.password, userId: userToken.userId });
   }
 }

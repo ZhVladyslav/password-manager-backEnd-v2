@@ -1,7 +1,7 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 export class DeleteDto {
+  @IsArray()
   @IsNotEmpty()
-  @IsString()
-  id: string;
+  id: string[];
 }

@@ -1,7 +1,9 @@
-import { Body, Controller, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Post, UsePipes, ValidationPipe, Response } from '@nestjs/common';
+import { Response as ExpressResponse } from 'express';
 import { RegistrationDto } from './dto/registration.dto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
+import { handlers } from 'src/handlers/handlers';
 
 @Controller('auth')
 export class AuthController {
@@ -18,7 +20,6 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   @Post('registration')
   async registration(@Body() data: RegistrationDto) {
-    await this.authService.registration(data);
-    return { message: 'User is create' };
+    return await this.authService.registration(data);
   }
 }

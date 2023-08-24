@@ -1,7 +1,7 @@
 import { InternalServerErrorException } from '@nestjs/common';
 
-class DatabaseHandler {
-  public async errors<T>(promise: Promise<T>) {
+class Handlers {
+  public async dbError<T>(promise: Promise<T>) {
     try {
       const result = await promise;
       return result;
@@ -11,4 +11,4 @@ class DatabaseHandler {
   }
 }
 
-export const databaseHandler = new DatabaseHandler()
+export const handlers = new Handlers();

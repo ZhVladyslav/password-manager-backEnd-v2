@@ -1,6 +1,6 @@
 import { Injectable, NestMiddleware, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
-import { IUserToken } from '../../types/userToken.type';
+import { IUserToken } from '../types/userToken.type';
 import { jwt } from 'src/utils/jwt';
 
 @Injectable()

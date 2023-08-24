@@ -1,11 +1,20 @@
 import { BadRequestException, Injectable, ConflictException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { databaseHandler } from 'src/database/database.handler';
-import { LoginDto } from './dto/login.dto';
 import { password } from 'src/utils/password';
 import { uuid } from 'src/utils/uuid';
 import { jwt } from 'src/utils/jwt';
-import { RegistrationDto } from './dto/registration.dto';
+import { handlers } from 'src/handlers/handlers';
+
+interface ILogin {
+  login: string;
+  password: string;
+}
+
+interface IRegistration {
+  name: string;
+  login: string;
+  password: string;
+}
 
 @Injectable()
 export class AuthService {
@@ -13,35 +22,33 @@ export class AuthService {
 
   /* ----------------  LOGIN  ---------------- */
 
-  public async login(req: LoginDto) {
-    // get user with database and check or user is exist
-    const findUser = await this.findUserByLogin(req.login);
-    if (!findUser) throw new BadRequestException('Invalid user or password');
+  public async login(data: ILogin) {
+    // find  user in database and check in user exist
+    const userInDb = await this.findUserByLogin(data.login);
+    if (!userInDb) throw new BadRequestException('Invalid user or password');
 
-    // check user password
-    const checkPassword = await password.verify(req.password, findUser.password);
+    // check password
+    const checkPassword = await password.verify(data.password, userInDb.password);
     if (!checkPassword) throw new BadRequestException('Invalid user or password');
 
     // generate token id
     const tokenId = uuid.v4();
 
     // generate user token
-    const token = jwt.generate({ userId: findUser.id, tokenId });
+    const token = jwt.generate({ userId: userInDb.id, tokenId });
 
     // create session
-    await this.createSession({ userId: findUser.id, tokenId });
+    await this.createSession({ userId: userInDb.id, tokenId });
 
-    // response
-    if (process.env.SETTING_MODE === 'true') return { token, userId: findUser.id };
     return { token };
   }
 
   /* ----------------  REGISTRATION  ---------------- */
 
-  public async registration(data: RegistrationDto) {
+  public async registration(data: IRegistration) {
     // get user with database and check or user is exist
-    const res = await this.findUserByLogin(data.login);
-    if (res) throw new ConflictException('User with this login already exists.');
+    const userInDb = await this.findUserByLogin(data.login);
+    if (userInDb) throw new ConflictException('User with this login already exists.');
 
     // generate user password hash
     const passwordHash = await password.generateHash(data.password);
@@ -52,6 +59,8 @@ export class AuthService {
       login: data.login,
       password: passwordHash,
     });
+
+    return { message: 'User is create' };
   }
 
   // ----------------------------------------------------------------------
@@ -64,7 +73,8 @@ export class AuthService {
 
   //  Find user by login in database
   private async findUserByLogin(login: string) {
-    return await databaseHandler.errors(
+    if (!login) throw new BadRequestException();
+    return await handlers.dbError(
       this.databaseService.user.findFirst({
         where: { login },
       }),
@@ -72,20 +82,21 @@ export class AuthService {
   }
 
   //  create session in database
-  private async createSession(data: { userId: string; tokenId: string }) {
-    return await databaseHandler.errors(this.databaseService.session.create({ data }));
+  private async createSession({ tokenId, userId }: { userId: string; tokenId: string }) {
+    if (!tokenId || !userId) throw new BadRequestException();
+    return await handlers.dbError(
+      this.databaseService.session.create({
+        data: { tokenId, userId },
+      }),
+    );
   }
 
   // create user in database
-  private async createUserInDatabase(data: { name: string; login: string; password: string }) {
-    return await databaseHandler.errors(
+  private async createUserInDatabase({ login, name, password }: { name: string; login: string; password: string }) {
+    if (!login || !name || !password) throw new BadRequestException();
+    return await handlers.dbError(
       this.databaseService.user.create({
-        data: {
-          name: data.name,
-          login: data.login,
-          password: data.password,
-          roleId: null,
-        },
+        data: { login, name, password, roleId: null },
       }),
     );
   }
