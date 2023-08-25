@@ -1,10 +1,13 @@
-import { Controller, Get, Put, Delete, Body } from '@nestjs/common';
+import { Controller, Get, Put, Delete, Body, UseGuards, SetMetadata, NotFoundException } from '@nestjs/common';
 import { DeleteDto } from './dto/delete.dto';
 import { EditNameDto } from './dto/editName.dto';
 import { EditPasswordDto } from './dto/editPassword.dto';
 import { UserService } from './user.service';
 import { IUserToken } from 'src/types/userToken.type';
 import { UserToken } from 'src/decorators/userToken';
+import { ClaimsGuard } from 'src/guards/claims.guard';
+import { Claims } from 'src/config/claims';
+import { EditRoleDto } from './dto/editRole.dto';
 
 @Controller('user')
 export class UserController {
@@ -27,6 +30,19 @@ export class UserController {
   @Put('edit-password')
   async editPassword(@UserToken() userToken: IUserToken, @Body() data: EditPasswordDto) {
     return await this.userService.editPassword({ userId: userToken.userId, ...data });
+  }
+
+  @Put('edit-role')
+  @UseGuards(ClaimsGuard)
+  @SetMetadata('claims', [Claims.SET_USER_ROLE])
+  async editRole(@Body() { userId, roleId }: EditRoleDto) {
+    return await this.userService.editRole({ userId, roleId });
+  }
+
+  @Put('edit-role-setting')
+  async editRoleSetting(@Body() { userId, roleId }: EditRoleDto) {
+    if (process.env.SETTING_MODE !== 'true') throw new NotFoundException();
+    return await this.userService.editRole({ userId, roleId });
   }
 
   /* ----------------  DELETE  ---------------- */

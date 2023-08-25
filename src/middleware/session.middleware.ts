@@ -1,32 +1,15 @@
-import {
-  Injectable,
-  NestMiddleware,
-  BadRequestException,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NestMiddleware, BadRequestException, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
+import { handlers } from 'src/handlers/handlers';
 import { IUserToken } from 'src/types/userToken.type';
 
 @Injectable()
 export class SessionMiddleware implements NestMiddleware {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  // handler error
-  private async handleErrors(promise: Promise<unknown>) {
-    try {
-      const result = await promise;
-      return result;
-    } catch (error) {
-      throw new InternalServerErrorException('DB error');
-    }
-  }
-
-  // ----------------------------------------------------------------------
-
   // find session by session label
   async findSessionByLabel(tokenId: string) {
-    return await this.handleErrors(this.databaseService.session.findFirst({ where: { tokenId } }));
+    return await handlers.dbError(this.databaseService.session.findFirst({ where: { tokenId } }));
   }
 
   // ----------------------------------------------------------------------

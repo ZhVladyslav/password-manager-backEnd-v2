@@ -29,8 +29,8 @@ export class UserService {
 
   // edit name
   async editName(userId: string, name: string) {
-    const userInDb = await this.findUserById(userId)
-    if (userInDb.name === name) throw new BadRequestException('Error edit user name')
+    const userInDb = await this.findUserById(userId);
+    if (userInDb.name === name) throw new BadRequestException('Error edit user name');
     await this.editNameInDb({ userId, newName: name });
     return { message: 'Name is edit' };
   }
@@ -51,6 +51,12 @@ export class UserService {
     await this.deleteSessionsInDb(data.userId);
 
     return { message: 'Password is edit' };
+  }
+
+  // user role edit
+  public async editRole({ userId, roleId }: { userId: string; roleId: string | null }) {
+    await this.editUserRole({ userId, roleId });
+    return { message: 'user role is edit' };
   }
 
   /* ----------------  DELETE  ---------------- */
@@ -104,6 +110,16 @@ export class UserService {
       this.databaseService.user.update({
         where: { id: userId },
         data: { password: newPassword },
+      }),
+    );
+  }
+
+  private async editUserRole({ userId, roleId }: { userId: string; roleId: string | null }) {
+    if (!userId) throw new BadRequestException();
+    return handlers.dbError(
+      this.databaseService.user.update({
+        where: { id: userId },
+        data: { roleId: roleId },
       }),
     );
   }
