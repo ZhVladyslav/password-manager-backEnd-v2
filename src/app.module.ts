@@ -6,6 +6,7 @@ import { SessionModule } from './modules/session/session.module';
 import { UserModule } from './modules/user/user.module';
 import { SettingsServerModule } from './modules/settings-server/settings-server.module';
 import { ErrorMiddleware } from './middleware/error.middleware';
+import { RoleModule } from './modules/role/role.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ErrorMiddleware } from './middleware/error.middleware';
     SessionModule,
     UserModule,
     SettingsServerModule,
+    RoleModule,
   ],
   exports: [],
   controllers: [AppController],
