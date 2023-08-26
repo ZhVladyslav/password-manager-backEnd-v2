@@ -1,11 +1,10 @@
-import { Body, Controller, Post, UsePipes, ValidationPipe, Response, Get } from '@nestjs/common';
-import { Response as ExpressResponse } from 'express';
+import { Body, Controller, Post, UsePipes, ValidationPipe, Get, UseGuards, Req } from '@nestjs/common';
 import { RegistrationDto } from './dto/registration.dto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { handlers } from 'src/handlers/handlers';
 import { rsa } from 'src/utils/rsa';
 import { aes } from 'src/utils/aes';
+import { DecryptGuard } from 'src/guards/decrypt.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -35,15 +34,9 @@ export class AuthController {
   }
 
   @Get('crypt-info')
-  async getCryptInfo(@Body() body: { iv: string; key: string; data: string }) {
-    aes.generateKeys();
-    const viDecrypt = Buffer.from(JSON.parse(rsa.decrypt(body.iv)), 'utf-8');
-    const keyDecrypt = Buffer.from(JSON.parse(rsa.decrypt(body.key)), 'utf-8');
-    aes.setKeys({ key: keyDecrypt, iv: viDecrypt });
-
-    const dataDecrypt = JSON.parse(aes.decrypt(body.data));
-
-    return dataDecrypt;
+  @UseGuards(DecryptGuard)
+  async getCryptInfo(@Req() req: { login: string; password: string }) {
+    return req['decryptedData'];
   }
 
   //
