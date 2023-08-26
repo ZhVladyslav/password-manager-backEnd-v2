@@ -1,6 +1,6 @@
 import * as crypto from 'crypto';
 
-export class AES {
+class AES {
   private aesKey: Buffer;
   private iv: Buffer;
 
@@ -12,11 +12,20 @@ export class AES {
   public generateKeys() {
     this.aesKey = crypto.randomBytes(32);
     this.iv = crypto.randomBytes(16);
+    
   }
 
-  public setKeys(key: Buffer, iv: Buffer) {
+  public setKeys({ key, iv }: { key: Buffer; iv: Buffer }) {    
     this.aesKey = key;
     this.iv = iv;
+  }
+
+  // for demo
+  public getKeys() {
+    return {
+      aesKey: this.aesKey,
+      iv: this.iv,
+    };
   }
 
   public encrypt(message: string) {
@@ -33,3 +42,5 @@ export class AES {
     return decryptedMessage;
   }
 }
+
+export const aes = new AES();
