@@ -9,6 +9,8 @@ import {
   Put,
   SetMetadata,
   UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { Claims } from 'src/config/claims';
@@ -17,6 +19,7 @@ import { CreateDto } from './dto/Create.dto';
 import { DeleteDto } from './dto/delete.dto';
 import { EditDto } from './dto/edit.dto';
 import { ClaimsGuard } from 'src/guards/claims.guard';
+import { SettingsGuard } from 'src/guards/settings.guard';
 
 @Controller('role')
 export class RoleController {
@@ -31,6 +34,7 @@ export class RoleController {
     return await this.roleService.getAll();
   }
   
+  @UsePipes(new ValidationPipe())
   @Get('byId:id')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.VIEW_ROLE])
@@ -46,19 +50,20 @@ export class RoleController {
   }
   
   @Get('all-setting')
+  @UseGuards(SettingsGuard)
   async allSetting() {
-    if (process.env.SETTING_MODE !== 'true') throw new NotFoundException();
     return await this.roleService.getAll();
   }
 
   @Get('claims-setting')
+  @UseGuards(SettingsGuard)
   async allClaimsSetting() {
-    if (process.env.SETTING_MODE !== 'true') throw new NotFoundException();
     return Object.keys(Claims).map((item) => Claims[item]);
   }
 
   /* ----------------  POST  ---------------- */
 
+  @UsePipes(new ValidationPipe())
   @Post('create')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.CREATE_ROLE])
@@ -66,14 +71,16 @@ export class RoleController {
     return await this.roleService.create(data);
   }
 
+  @UsePipes(new ValidationPipe())
   @Post('create-setting')
+  @UseGuards(SettingsGuard)
   async createSetting(@Body() data: CreateDto) {
-    if (process.env.SETTING_MODE !== 'true') throw new NotFoundException();
     return await this.roleService.create(data);
   }
 
   /* ----------------  PUT  ---------------- */
 
+  @UsePipes(new ValidationPipe())
   @Put('edit')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.EDIT_ROLE])
@@ -83,6 +90,7 @@ export class RoleController {
 
   /* ----------------  DELETE  ---------------- */
 
+  @UsePipes(new ValidationPipe())
   @Delete(':id')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.DELETE_ROLE])
