@@ -11,11 +11,10 @@ class AES {
 
   public generateKeys() {
     this.aesKey = crypto.randomBytes(32);
-    this.iv = crypto.randomBytes(16);
-    
+    this.iv = crypto.randomBytes(16);    
   }
 
-  public setKeys({ key, iv }: { key: Buffer; iv: Buffer }) {    
+  public setKeys({ key, iv }: { key: Buffer; iv: Buffer }) {
     this.aesKey = key;
     this.iv = iv;
   }

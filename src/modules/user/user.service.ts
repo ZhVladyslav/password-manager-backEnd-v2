@@ -69,9 +69,9 @@ export class UserService {
 
     await this.deleteSessionsInDb(data.userId);
     await this.deleteUserPassCollectionInDb(data.userId);
-    await this.deleteUserConfigsInDb(data.userId);
-    await this.editIssuesInDb(data.userId);
-    await this.editIssuesCommentInDb(data.userId);
+    // await this.deleteUserConfigsInDb(data.userId);
+    // await this.editIssuesInDb(data.userId);
+    // await this.editIssuesCommentInDb(data.userId);
     await this.deleteUserInDb(data.userId);
 
     return { message: 'User is delete' };
@@ -151,32 +151,32 @@ export class UserService {
     );
   }
 
-  private async deleteUserConfigsInDb(userId: string) {
-    if (!userId) throw new BadRequestException();
-    return handlers.dbError(
-      this.databaseService.config.deleteMany({
-        where: { userId },
-      }),
-    );
-  }
+  // private async deleteUserConfigsInDb(userId: string) {
+  //   if (!userId) throw new BadRequestException();
+  //   return handlers.dbError(
+  //     this.databaseService.config.deleteMany({
+  //       where: { userId },
+  //     }),
+  //   );
+  // }
 
-  private async editIssuesInDb(userId: string) {
-    if (!userId) throw new BadRequestException();
-    return handlers.dbError(
-      this.databaseService.issue.updateMany({
-        where: { userId },
-        data: { userId: null },
-      }),
-    );
-  }
+  // private async editIssuesInDb(userId: string) {
+  //   if (!userId) throw new BadRequestException();
+  //   return handlers.dbError(
+  //     this.databaseService.issue.updateMany({
+  //       where: { userId },
+  //       data: { userId: null },
+  //     }),
+  //   );
+  // }
 
-  private async editIssuesCommentInDb(userId: string) {
-    if (!userId) throw new BadRequestException();
-    return handlers.dbError(
-      this.databaseService.issueComment.updateMany({
-        where: { userId },
-        data: { userId: null },
-      }),
-    );
-  }
+  // private async editIssuesCommentInDb(userId: string) {
+  //   if (!userId) throw new BadRequestException();
+  //   return handlers.dbError(
+  //     this.databaseService.issueComment.updateMany({
+  //       where: { userId },
+  //       data: { userId: null },
+  //     }),
+  //   );
+  // }
 }
