@@ -18,7 +18,6 @@ import { UserToken } from 'src/decorators/userToken';
 import { ClaimsGuard } from 'src/guards/claims.guard';
 import { Claims } from 'src/config/claims';
 import { EditRoleDto } from './dto/editRole.dto';
-import { DecryptRequest } from 'src/decorators/decryptRequest';
 import { SettingsGuard } from 'src/guards/settings.guard';
 
 @Controller('user')
@@ -42,7 +41,7 @@ export class UserController {
 
   @UsePipes(new ValidationPipe())
   @Put('edit-password')
-  async editPassword(@UserToken() userToken: IUserToken, @DecryptRequest() data: EditPasswordDto) {
+  async editPassword(@UserToken() userToken: IUserToken, @Body() data: EditPasswordDto) {
     return await this.userService.editPassword({ userId: userToken.userId, ...data });
   }
 

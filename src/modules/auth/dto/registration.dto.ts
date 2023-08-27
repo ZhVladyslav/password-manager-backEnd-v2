@@ -12,8 +12,4 @@ export class RegistrationDto {
   @IsNotEmpty()
   @IsString()
   password: string;
-
-  @IsNotEmpty()
-  @IsDate()
-  date: Date;
 }

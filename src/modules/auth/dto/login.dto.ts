@@ -8,8 +8,4 @@ export class LoginDto {
   @IsNotEmpty()
   @IsString()
   password: string;
-
-  @IsNotEmpty()
-  @IsDate()
-  date: Date
 }
