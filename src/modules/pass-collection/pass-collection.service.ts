@@ -33,18 +33,25 @@ export class PassCollectionService {
 
   public async getAll(userId: string) {
     const resList = await this.findAllByUserId(userId);
-    return resList.map(({ id, name }) => ({ id, name }));
+    return resList.map((item) => {
+      if (userId === item.userId) return { id: item.id, name: item.name };
+    });
   }
 
   public async getById(userId: string, id: string) {
     const res = await this.findByPassId(userId, id);
     if (!res) throw new NotFoundException('Collection not found');
+    if (res.userId !== userId) throw new NotFoundException('Collection not found');
     return { id: res.id, name: res.name, data: res.data };
   }
 
   /* ----------------  POST  ---------------- */
 
   public async create(data: ICreate) {
+    const userListPassCollection = await this.findAllByUserId(data.userId);
+    userListPassCollection.map((item) => {
+      if (item.userId === data.userId && item.name === data.name) throw new BadRequestException('The name is used');
+    });
     await this.createInDatabase(data);
     return { message: 'passCollection is create' };
   }
@@ -52,15 +59,22 @@ export class PassCollectionService {
   /* ----------------  PUT  ---------------- */
 
   public async editName(data: IEditName) {
-    const passCollection = await this.findByPassId(data.userId, data.id);
-    if (passCollection.name === data.name) throw new BadRequestException("The name is already set");
+    const userListPassCollection = await this.findAllByUserId(data.userId);
+    let passCollectionIsExist: boolean = false;
+    userListPassCollection.map((item) => {
+      if (item.id === data.id && item.name === data.name) throw new BadRequestException('The name is already set');
+      if (item.id !== data.id && item.name === data.name) throw new BadRequestException('The name is used');
+      if (item.id === data.id && item.userId === data.userId) passCollectionIsExist = true;
+    });
+    if (!passCollectionIsExist) throw new BadRequestException('Collection not found');
     await this.editNameInDatabase(data);
     return { message: 'Name is edit' };
   }
 
   public async editData(data: IEditData) {
     const passCollection = await this.findByPassId(data.userId, data.id);
-    if (passCollection.data === data.data) throw new BadRequestException("The data is already set");
+    if (!passCollection) throw new BadRequestException('Collection not found');
+    if (passCollection.userId !== data.userId) throw new BadRequestException('Collection not found');
     await this.editDataInDatabase(data);
     return { message: 'Data is edit' };
   }
