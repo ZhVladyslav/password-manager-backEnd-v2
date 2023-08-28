@@ -33,6 +33,7 @@ export class PassCollectionService {
 
   public async getAll(userId: string) {
     const resList = await this.findAllByUserId(userId);
+
     return resList.map((item) => {
       if (userId === item.userId) return { id: item.id, name: item.name };
     });
@@ -40,8 +41,10 @@ export class PassCollectionService {
 
   public async getById(userId: string, id: string) {
     const res = await this.findByPassId(userId, id);
+
     if (!res) throw new NotFoundException('Collection not found');
     if (res.userId !== userId) throw new NotFoundException('Collection not found');
+
     return { id: res.id, name: res.name, data: res.data };
   }
 
@@ -49,9 +52,13 @@ export class PassCollectionService {
 
   public async create(data: ICreate) {
     const userListPassCollection = await this.findAllByUserId(data.userId);
-    userListPassCollection.map((item) => {
-      if (item.userId === data.userId && item.name === data.name) throw new BadRequestException('The name is used');
-    });
+
+    for (const item of userListPassCollection) {
+      if (item.userId !== data.userId) continue;
+
+      if (item.name === data.name) throw new BadRequestException('The name is used');
+    }
+
     await this.createInDatabase(data);
     return { message: 'passCollection is create' };
   }
@@ -61,20 +68,29 @@ export class PassCollectionService {
   public async editName(data: IEditName) {
     const userListPassCollection = await this.findAllByUserId(data.userId);
     let passCollectionIsExist: boolean = false;
-    userListPassCollection.map((item) => {
-      if (item.id === data.id && item.name === data.name) throw new BadRequestException('The name is already set');
-      if (item.id !== data.id && item.name === data.name) throw new BadRequestException('The name is used');
-      if (item.id === data.id && item.userId === data.userId) passCollectionIsExist = true;
-    });
+
+    for (const item of userListPassCollection) {
+      if (item.userId !== data.userId) continue;
+      if (item.id === data.id) passCollectionIsExist = true;
+
+      if (item.name === data.name) {
+        if (item.id === data.id) throw new BadRequestException('The name is already set');
+        if (item.id !== data.id) throw new BadRequestException('The name is used');
+      }
+    }
+
     if (!passCollectionIsExist) throw new BadRequestException('Collection not found');
+
     await this.editNameInDatabase(data);
     return { message: 'Name is edit' };
   }
 
   public async editData(data: IEditData) {
     const passCollection = await this.findByPassId(data.userId, data.id);
+
     if (!passCollection) throw new BadRequestException('Collection not found');
     if (passCollection.userId !== data.userId) throw new BadRequestException('Collection not found');
+
     await this.editDataInDatabase(data);
     return { message: 'Data is edit' };
   }
@@ -83,10 +99,16 @@ export class PassCollectionService {
 
   public async delete(data: IDelete) {
     if (data.id.length === 0) throw new BadRequestException('id not passed');
-    const deleted = data.id.map(async (item) => {
-      await this.deleteInDatabase({ id: item, userId: data.userId });
-    });
-    await Promise.all(deleted);
+    const toDeleteArray = [...new Set(data.id)];
+    const userListPassCollection = await this.findAllByUserId(data.userId);
+
+    for (const item of userListPassCollection) {
+      if (!toDeleteArray.includes(item.id)) continue;
+      if (item.userId !== data.userId) continue;
+
+      await this.deleteInDatabase({ id: item.id, userId: data.userId });
+    }
+
     if (data.id.length === 1) return { message: 'Pass collection is delete' };
     return { message: 'Pass collections is delete' };
   }
