@@ -1,20 +1,38 @@
 import { BadRequestException, Injectable, ConflictException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { password } from 'src/utils/password';
+import { password as passCheck } from 'src/utils/password';
 import { uuid } from 'src/utils/uuid';
 import { jwt } from 'src/utils/jwt';
 import { handlers } from 'src/handlers/handlers';
 
-interface ILogin {
-  login: string;
-  password: string;
-}
-
-interface IRegistration {
+interface IUserRequest {
   name: string;
   login: string;
   password: string;
 }
+
+interface IUserResponse {
+  token: string;
+  message: string;
+}
+
+interface ISessionResponse {
+  tokenId: string;
+  userId: string;
+}
+
+// LOGIN
+interface ILoginReq extends Omit<IUserRequest, 'name'> {}
+export interface ILoginRes extends Omit<IUserResponse, 'message'> {}
+
+interface ILoginReqDb extends Omit<IUserRequest, 'name' | 'password'> {}
+export interface ILoginResDb extends Omit<IUserRequest, 'name'> {
+  id: string;
+}
+
+// REGISTRATION
+interface IRegistrationReq extends IUserRequest {}
+export interface IRegistrationRes extends Omit<IUserResponse, 'token'> {}
 
 @Injectable()
 export class AuthService {
@@ -22,13 +40,13 @@ export class AuthService {
 
   /* ----------------  LOGIN  ---------------- */
 
-  public async login(data: ILogin) {
+  public async login({ login, password }: ILoginReq): Promise<ILoginRes> {
     // find  user in database and check in user exist
-    const userInDb = await this.findUserByLogin(data.login);
+    const userInDb = await this.findUserByLogin({ login });
     if (!userInDb) throw new BadRequestException('Invalid user or password');
 
     // check password
-    const checkPassword = await password.verify(data.password, userInDb.password);
+    const checkPassword = await passCheck.verify(password, userInDb.password);
     if (!checkPassword) throw new BadRequestException('Invalid user or password');
 
     // generate token id
@@ -45,46 +63,48 @@ export class AuthService {
 
   /* ----------------  REGISTRATION  ---------------- */
 
-  public async registration(data: IRegistration) {
+  public async registration({ name, login, password }: IRegistrationReq): Promise<IRegistrationRes> {
     // get user with database and check or user is exist
-    const userInDb = await this.findUserByLogin(data.login);
+    const userInDb = await this.findUserByLogin({ login });
     if (userInDb) throw new ConflictException('User with this login already exists.');
 
     // generate user password hash
-    const passwordHash = await password.generateHash(data.password);
+    const passwordHash = await passCheck.generateHash(password);
 
     // create user in database
-    await this.createUserInDatabase({
-      name: data.name,
-      login: data.login,
-      password: passwordHash,
-    });
+    await this.createUserInDatabase({ name, login, password: passwordHash });
 
     return { message: 'User is create' };
   }
 
+  /** 
+  
   // ----------------------------------------------------------------------
 
-  //
-  // private
-  //
-
+  private methods
+   
   // ----------------------------------------------------------------------
+
+  */
 
   //  Find user by login in database
-  private async findUserByLogin(login: string) {
+  private async findUserByLogin({ login }: ILoginReqDb): Promise<ILoginResDb> {
     if (!login) throw new BadRequestException();
-    return await handlers.dbError(
+
+    const user = await handlers.dbError(
       this.databaseService.user.findFirst({
         where: { login },
       }),
     );
+
+    return { id: user.id, login: user.login, password: user.password };
   }
 
   //  create session in database
-  private async createSession({ tokenId, userId }: { userId: string; tokenId: string }) {
+  private async createSession({ tokenId, userId }: ISessionResponse): Promise<void> {
     if (!tokenId || !userId) throw new BadRequestException();
-    return await handlers.dbError(
+
+    await handlers.dbError(
       this.databaseService.session.create({
         data: { tokenId, userId },
       }),
@@ -92,9 +112,10 @@ export class AuthService {
   }
 
   // create user in database
-  private async createUserInDatabase({ login, name, password }: { name: string; login: string; password: string }) {
+  private async createUserInDatabase({ login, name, password }: IRegistrationReq): Promise<void> {
     if (!login || !name || !password) throw new BadRequestException();
-    return await handlers.dbError(
+
+    await handlers.dbError(
       this.databaseService.user.create({
         data: { login, name, password, roleId: null },
       }),

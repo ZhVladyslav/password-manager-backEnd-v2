@@ -15,43 +15,60 @@ export class PassCollectionController {
   /* ----------------  GET  ---------------- */
 
   @Get('all')
-  async all(@UserToken() userToken: IUserToken) {
-    return await this.passCollectionService.getAll(userToken.userId);
+  async all(
+    @UserToken() { userId }: IUserToken, //
+  ) {
+    return await this.passCollectionService.getAll({ userId });
   }
 
   @UsePipes(new ValidationPipe())
   @Get('/:id')
-  async getById(@Param() data: GetByIdDto, @UserToken() userToken: IUserToken) {
-    return await this.passCollectionService.getById(userToken.userId, data.id);
+  async getById(
+    @UserToken() { userId }: IUserToken, //
+    @Param() { id }: GetByIdDto, //
+  ) {
+    return await this.passCollectionService.getById({ id, userId });
   }
 
   /* ----------------  POST  ---------------- */
 
   @UsePipes(new ValidationPipe())
   @Post('create')
-  async create(@UserToken() userToken: IUserToken, @Body() data: CreateDto) {
-    return await this.passCollectionService.create({ userId: userToken.userId, data: data.data, name: data.name });
+  async create(
+    @UserToken() { userId }: IUserToken, //
+    @Body() { name, data }: CreateDto, //
+  ) {
+    return await this.passCollectionService.create({ userId, name, data });
   }
 
   /* ----------------  PUT  ---------------- */
 
   @UsePipes(new ValidationPipe())
   @Put('edit-name')
-  async editName(@UserToken() userToken: IUserToken, @Body() data: EditNameDto) {
-    return await this.passCollectionService.editName({ userId: userToken.userId, id: data.id, name: data.name });
+  async editName(
+    @UserToken() { userId }: IUserToken, //
+    @Body() { id, name }: EditNameDto, //
+  ) {
+    return await this.passCollectionService.editName({ id, userId, name });
   }
 
   @UsePipes(new ValidationPipe())
   @Put('edit-data')
-  async editData(@UserToken() userToken: IUserToken, @Body() data: EditDataDto) {
-    return await this.passCollectionService.editData({ userId: userToken.userId, id: data.id, data: data.data });
+  async editData(
+    @UserToken() { userId }: IUserToken, //
+    @Body() { id, data }: EditDataDto, //
+  ) {
+    return await this.passCollectionService.editData({ id, userId, data });
   }
 
   /* ----------------  DELETE  ---------------- */
 
   @UsePipes(new ValidationPipe())
   @Delete('delete')
-  async delete(@UserToken() userToken: IUserToken, @Body() data: DeleteDto) {
-    return await this.passCollectionService.delete({ id: data.id, userId: userToken.userId });
+  async delete(
+    @UserToken() { userId }: IUserToken, //
+    @Body() { id }: DeleteDto, //
+  ) {
+    return await this.passCollectionService.delete({ id, userId });
   }
 }

@@ -2,28 +2,58 @@ import { Injectable, BadRequestException, NotFoundException } from '@nestjs/comm
 import { DatabaseService } from 'src/database/database.service';
 import { handlers } from 'src/handlers/handlers';
 
-interface ICreate {
+/* ----------------  INTERFACES  ---------------- */
+
+interface IPassCollection {
   userId: string;
+  id: string;
   name: string;
   data: string;
 }
 
-interface IEditName {
-  userId: string;
-  id: string;
-  name: string;
+export interface IRes {
+  message: string;
 }
 
-interface IEditData {
-  userId: string;
-  id: string;
-  data: string;
-}
+// Service
 
-interface IDelete {
+// Get all
+interface IGetAllReq extends Pick<IPassCollection, 'userId'> {} // { userId }
+export interface IGetAllRes extends Pick<IPassCollection, 'id' | 'name'> {} // { id, name };
+// Get by id
+interface IGetByIdReq extends Pick<IPassCollection, 'id' | 'userId'> {} // { id, userId }
+export interface IGetByIdRes extends Pick<IPassCollection, 'id' | 'name' | 'data'> {} // { id, name, data }
+// Create
+interface ICreateReq extends Omit<IPassCollection, 'id'> {} // { userId, name, data }
+export interface ICreateRes extends Pick<IPassCollection, 'id'> {} // { id }
+// Edit name
+interface IEditNameReq extends Pick<IPassCollection, 'id' | 'userId' | 'name'> {} // { id, userId, name }
+// Edit data
+interface IEditDataReq extends Pick<IPassCollection, 'id' | 'userId' | 'data'> {} // { id, userId, data }
+// Delete
+interface IDeleteReq extends Pick<IPassCollection, 'userId'> {
+  // { id, userId }
   id: string[];
-  userId: string;
 }
+
+// DB
+
+// Find all
+interface IDbFindAllReq extends Pick<IPassCollection, 'userId'> {} // { userId }
+interface IDbFindAllRes extends Pick<IPassCollection, 'id' | 'name'> {} // { id, name };
+// Find by id
+interface IDbFindByIdReq extends Pick<IPassCollection, 'id' | 'userId'> {} // { id, userId }
+interface IDbFindByIdRes extends Pick<IPassCollection, 'id' | 'name' | 'data'> {} // { id, name, data };
+// Create
+interface IDbCreateReq extends Pick<IPassCollection, 'userId' | 'name' | 'data'> {} // { userId, name, data }
+interface IDbCreateRes extends Pick<IPassCollection, 'id'> {} // { id };
+// Edit name
+interface IDbEditNameReq extends Pick<IPassCollection, 'id' | 'userId' | 'name'> {} // { id, userId, name }
+// Edit data
+interface IDbEditDataReq extends Pick<IPassCollection, 'id' | 'userId' | 'data'> {} // { id, userId, data }
+// Delete
+interface IDbDeleteReq extends Pick<IPassCollection, 'id' | 'userId'> {} // { id, userId }
+/* ----------------  SERVICE  ---------------- */
 
 @Injectable()
 export class PassCollectionService {
@@ -31,130 +61,216 @@ export class PassCollectionService {
 
   /* ----------------  GET  ---------------- */
 
-  public async getAll(userId: string) {
-    const resList = await this.findAllByUserId(userId);
-
-    return resList.map((item) => {
-      if (userId === item.userId) return { id: item.id, name: item.name };
-    });
+  /**
+   @------------- req -----------------
+    @userId string;
+   @------------- res [ ] -----------------
+    @id string;
+    @name string;
+  */
+  public async getAll({ userId }: IGetAllReq): Promise<IGetAllRes[]> {
+    return await this.findAll({ userId });
   }
 
-  public async getById(userId: string, id: string) {
-    const res = await this.findByPassId(userId, id);
+  /**
+   @------------- req -----------------
+    @id string;
+    @userId string;
+   @------------- res -----------------
+    @id string;
+    @name string;
+    @data string;
+  */
+  public async getById({ id, userId }: IGetByIdReq): Promise<IGetByIdRes> {
+    const res = await this.findById({ id, userId });
 
     if (!res) throw new NotFoundException('Collection not found');
-    if (res.userId !== userId) throw new NotFoundException('Collection not found');
 
     return { id: res.id, name: res.name, data: res.data };
   }
 
   /* ----------------  POST  ---------------- */
 
-  public async create(data: ICreate) {
-    const userListPassCollection = await this.findAllByUserId(data.userId);
+  /**
+   @------------- req -----------------
+    @userId string;
+    @name string;
+    @data string;
+   @------------- res -----------------
+    @id string;
+  */
+  public async create({ userId, name, data }: ICreateReq): Promise<ICreateRes> {
+    const userListPassCollection = await this.findAll({ userId });
 
     for (const item of userListPassCollection) {
-      if (item.userId !== data.userId) continue;
-
-      if (item.name === data.name) throw new BadRequestException('The name is used');
+      if (item.name === name) throw new BadRequestException('The name is used');
     }
 
-    await this.createInDatabase(data);
-    return { message: 'passCollection is create' };
+    const res = await this.createDb({ userId, name, data });
+
+    return { id: res.id };
   }
 
   /* ----------------  PUT  ---------------- */
 
-  public async editName(data: IEditName) {
-    const userListPassCollection = await this.findAllByUserId(data.userId);
+  /**
+   @------------- req -----------------
+    @id string;
+    @userId string;
+    @name string;
+   @------------- res -----------------
+    @message string;
+  */
+  public async editName({ userId, id, name }: IEditNameReq): Promise<IRes> {
+    const userListPassCollection = await this.findAll({ userId });
     let passCollectionIsExist: boolean = false;
 
     for (const item of userListPassCollection) {
-      if (item.userId !== data.userId) continue;
-      if (item.id === data.id) passCollectionIsExist = true;
+      if (item.id === id) passCollectionIsExist = true;
 
-      if (item.name === data.name) {
-        if (item.id === data.id) throw new BadRequestException('The name is already set');
-        if (item.id !== data.id) throw new BadRequestException('The name is used');
+      if (item.name === name) {
+        if (item.id === id) throw new BadRequestException('The name is already set');
+        if (item.id !== id) throw new BadRequestException('The name is used');
       }
     }
 
     if (!passCollectionIsExist) throw new BadRequestException('Collection not found');
 
-    await this.editNameInDatabase(data);
+    await this.editNameDb({ id, name, userId });
+
     return { message: 'Name is edit' };
   }
 
-  public async editData(data: IEditData) {
-    const passCollection = await this.findByPassId(data.userId, data.id);
+  /**
+   @------------- req -----------------
+    @id string;
+    @userId string;
+    @data string;
+   @------------- res -----------------
+    @message string;
+  */
+  public async editData({ id, userId, data }: IEditDataReq): Promise<IRes> {
+    const passCollection = await this.findById({ id, userId });
 
     if (!passCollection) throw new BadRequestException('Collection not found');
-    if (passCollection.userId !== data.userId) throw new BadRequestException('Collection not found');
 
-    await this.editDataInDatabase(data);
+    await this.editDataDb({ id, userId, data });
+
     return { message: 'Data is edit' };
   }
 
   /* ----------------  DELETE  ---------------- */
 
-  public async delete(data: IDelete) {
-    if (data.id.length === 0) throw new BadRequestException('id not passed');
-    const toDeleteArray = [...new Set(data.id)];
-    const userListPassCollection = await this.findAllByUserId(data.userId);
+  /**
+   @------------- req -----------------
+    @id string;
+    @userId string;
+   @------------- res -----------------
+    @message string;
+  */
+  public async delete({ id, userId }: IDeleteReq): Promise<IRes> {
+    if (id.length === 0) throw new BadRequestException('id not passed');
+
+    let calculating = 0;
+
+    const toDeleteArray = [...new Set(id)];
+    const userListPassCollection = await this.findAll({ userId });
 
     for (const item of userListPassCollection) {
       if (!toDeleteArray.includes(item.id)) continue;
-      if (item.userId !== data.userId) continue;
-
-      await this.deleteInDatabase({ id: item.id, userId: data.userId });
+      calculating += 1;
+      await this.deleteDb({ id: item.id, userId: userId });
     }
 
-    if (data.id.length === 1) return { message: 'Pass collection is delete' };
-    return { message: 'Pass collections is delete' };
+    if (id.length === 1) return { message: 'Pass collection is delete' };
+    return { message: `Delete ${calculating} pass collections` };
   }
 
   // ----------------------------------------------------------------------
-
-  //
-  // private
-  //
-
+  // private methods
   // ----------------------------------------------------------------------
 
-  // get all passCollection by user id
-  private async findAllByUserId(userId: string) {
+  /* ----------------  FIND  ---------------- */
+
+  /**
+   @------------- req -----------------
+    @userId string;
+   @------------- res -----------------
+    @id string;
+    @name string;
+  */
+  private async findAll({ userId }: IDbFindAllReq): Promise<IDbFindAllRes[]> {
     if (!userId) throw new BadRequestException();
-    return await handlers.dbError(
+
+    const res = await handlers.dbError(
       this.databaseService.passCollection.findMany({
         where: { userId },
       }),
     );
+
+    return res.map((item) => {
+      if (userId === item.userId) return { id: item.id, name: item.name };
+    });
   }
 
-  // get passCollection by id pass collection
-  private async findByPassId(userId: string, id: string) {
+  /**
+   @------------- req -----------------
+    @id string;
+    @userId string;
+   @------------- res -----------------
+    @id string;
+    @name string;
+    @data string;
+  */
+  private async findById({ id, userId }: IDbFindByIdReq): Promise<IDbFindByIdRes> {
     if (!userId || !id) throw new BadRequestException();
-    return await handlers.dbError(
+
+    const res = await handlers.dbError(
       this.databaseService.passCollection.findFirst({
         where: { userId, id },
       }),
     );
+
+    if (res.userId === userId) return { id: res.id, name: res.name, data: res.data };
+    return null;
   }
 
-  // add passCollection in database
-  private async createInDatabase({ userId, name, data }: ICreate) {
+  /* ----------------  CREATE  ---------------- */
+
+  /**
+   @------------- req -----------------
+    @userId string;
+    @name string;
+    @data string;
+   @------------- res -----------------
+    @id string;
+  */
+  private async createDb({ userId, name, data }: IDbCreateReq): Promise<IDbCreateRes> {
     if (!userId || !name || !data) throw new BadRequestException();
-    return await handlers.dbError(
+
+    const res = await handlers.dbError(
       this.databaseService.passCollection.create({
         data: { userId, name, data },
       }),
     );
+
+    return { id: res.id };
   }
 
-  // edit name passCollection in database
-  private async editNameInDatabase({ id, name, userId }: IEditName) {
+  /* ----------------  EDIT  ---------------- */
+
+  /**
+   @------------- req -----------------
+    @id string;
+    @userId string;
+    @name string;
+   @------------- res -----------------
+    @void
+  */
+  private async editNameDb({ id, userId, name }: IDbEditNameReq): Promise<void> {
     if (!id || !userId || !name) throw new BadRequestException();
-    return await handlers.dbError(
+
+    await handlers.dbError(
       this.databaseService.passCollection.update({
         where: { id, userId },
         data: { name },
@@ -162,10 +278,18 @@ export class PassCollectionService {
     );
   }
 
-  // edit data passCollection in database
-  private async editDataInDatabase({ id, userId, data }: IEditData) {
+  /**
+   @------------- req -----------------
+    @id string;
+    @userId string;
+    @data string;
+   @------------- res -----------------
+    @void
+  */
+  private async editDataDb({ id, userId, data }: IDbEditDataReq): Promise<void> {
     if (!id || !userId || !data) throw new BadRequestException();
-    return await handlers.dbError(
+
+    await handlers.dbError(
       this.databaseService.passCollection.update({
         where: { id, userId },
         data: { data },
@@ -173,10 +297,19 @@ export class PassCollectionService {
     );
   }
 
-  // delete passCollection in database
-  private async deleteInDatabase({ id, userId }: { id: string; userId: string }) {
+  /* ----------------  DELETE  ---------------- */
+
+  /**
+   @------------- req -----------------
+    @id string;
+    @userId string;
+   @------------- res -----------------
+    @void
+  */
+  private async deleteDb({ id, userId }: IDbDeleteReq): Promise<void> {
     if (!id || !userId) throw new BadRequestException();
-    return await handlers.dbError(
+
+    await handlers.dbError(
       this.databaseService.passCollection.delete({
         where: { id, userId },
       }),

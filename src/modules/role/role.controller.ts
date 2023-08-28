@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Post,
   Put,
@@ -33,7 +32,7 @@ export class RoleController {
   async all() {
     return await this.roleService.getAll();
   }
-  
+
   @UsePipes(new ValidationPipe())
   @Get('byId:id')
   @UseGuards(ClaimsGuard)
@@ -41,14 +40,14 @@ export class RoleController {
   async byId(@Param() data: ByIdDto) {
     return await this.roleService.getById(data.id);
   }
-  
+
   @Get('claims')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.VIEW_CLAIMS])
   async allClaims() {
     return Object.keys(Claims).map((item) => Claims[item]);
   }
-  
+
   @Get('all-setting')
   @UseGuards(SettingsGuard)
   async allSetting() {

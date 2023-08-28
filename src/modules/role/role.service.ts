@@ -83,13 +83,15 @@ export class RoleService {
     return { message: 'Role is delete' };
   }
 
+  /** 
+  
   // ----------------------------------------------------------------------
 
-  //
-  // private
-  //
-
+  private methods
+   
   // ----------------------------------------------------------------------
+
+  */
 
   // get all roles
   private async findAllRoles() {

@@ -11,15 +11,20 @@ export class SessionController {
   /* ----------------  GET  ---------------- */
 
   @Get('all')
-  async all(@UserToken() userToken: IUserToken) {
-    return await this.sessionService.getAll(userToken.userId);
+  async all(
+    @UserToken() { userId }: IUserToken, //
+  ) {
+    return await this.sessionService.getAll({ userId });
   }
 
   /* ----------------  DELETE  ---------------- */
 
   @UsePipes(new ValidationPipe())
   @Delete('delete/:id')
-  async delete(@UserToken() userToken: IUserToken, @Param() data: DeleteDto) {
-    return await this.sessionService.delete(data.id, userToken.userId);
+  async delete(
+    @UserToken() { userId }: IUserToken, //
+    @Param() { id }: DeleteDto, //
+  ) {
+    return await this.sessionService.delete({ userId, id });
   }
 }
