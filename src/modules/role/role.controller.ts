@@ -37,8 +37,8 @@ export class RoleController {
   @Get('byId:id')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.VIEW_ROLE])
-  async byId(@Param() data: ByIdDto) {
-    return await this.roleService.getById(data.id);
+  async byId(@Param() { id }: ByIdDto) {
+    return await this.roleService.getById({ id });
   }
 
   @Get('claims')
@@ -66,15 +66,15 @@ export class RoleController {
   @Post('create')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.CREATE_ROLE])
-  async create(@Body() data: CreateDto) {
-    return await this.roleService.create(data);
+  async create(@Body() { name, claims }: CreateDto) {
+    return await this.roleService.create({ name, claims });
   }
 
   @UsePipes(new ValidationPipe())
   @Post('create-setting')
   @UseGuards(SettingsGuard)
-  async createSetting(@Body() data: CreateDto) {
-    return await this.roleService.create(data);
+  async createSetting(@Body() { name, claims }: CreateDto) {
+    return await this.roleService.create({ name, claims });
   }
 
   /* ----------------  PUT  ---------------- */
@@ -83,8 +83,8 @@ export class RoleController {
   @Put('edit')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.EDIT_ROLE])
-  async edit(@Body() data: EditDto) {
-    return await this.roleService.editRole(data);
+  async edit(@Body() { id, name, claims }: EditDto) {
+    return await this.roleService.edit({ id, name, claims });
   }
 
   /* ----------------  DELETE  ---------------- */
@@ -93,7 +93,7 @@ export class RoleController {
   @Delete(':id')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.DELETE_ROLE])
-  async delete(@Param() data: DeleteDto) {
-    return await this.roleService.delete(data.id);
+  async delete(@Param() { id }: DeleteDto) {
+    return await this.roleService.delete({ id });
   }
 }

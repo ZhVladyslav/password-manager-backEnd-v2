@@ -20,11 +20,19 @@ export class SessionController {
   /* ----------------  DELETE  ---------------- */
 
   @UsePipes(new ValidationPipe())
+  @Delete('delete')
+  async deleteAll(
+    @UserToken() { userId }: IUserToken, //
+  ) {
+    return await this.sessionService.deleteAll({ userId });
+  }
+
+  @UsePipes(new ValidationPipe())
   @Delete('delete/:id')
-  async delete(
+  async deleteById(
     @UserToken() { userId }: IUserToken, //
     @Param() { id }: DeleteDto, //
   ) {
-    return await this.sessionService.delete({ userId, id });
+    return await this.sessionService.deleteById({ userId, id });
   }
 }

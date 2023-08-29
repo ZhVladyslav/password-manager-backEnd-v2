@@ -1,48 +1,32 @@
 import { BadRequestException, Injectable, ConflictException } from '@nestjs/common';
-import { DatabaseService } from 'src/database/database.service';
 import { password as passCheck } from 'src/utils/password';
 import { uuid } from 'src/utils/uuid';
 import { jwt } from 'src/utils/jwt';
-import { handlers } from 'src/handlers/handlers';
+import { AuthDbService, IUser } from './auth.db.service';
 
-interface IUserRequest {
-  name: string;
-  login: string;
-  password: string;
-}
+// REQ
+interface ILoginReq extends Pick<IUser, 'login' | 'password'> {}
+interface IRegistrationReq extends Pick<IUser, 'name' | 'login' | 'password'> {}
 
-interface IUserResponse {
+// RES
+export interface ILoginRes {
   token: string;
+}
+export interface IRegistrationRes {
   message: string;
 }
 
-interface ISessionResponse {
-  tokenId: string;
-  userId: string;
-}
-
-// LOGIN
-interface ILoginReq extends Omit<IUserRequest, 'name'> {}
-export interface ILoginRes extends Omit<IUserResponse, 'message'> {}
-
-interface ILoginReqDb extends Omit<IUserRequest, 'name' | 'password'> {}
-export interface ILoginResDb extends Omit<IUserRequest, 'name'> {
-  id: string;
-}
-
-// REGISTRATION
-interface IRegistrationReq extends IUserRequest {}
-export interface IRegistrationRes extends Omit<IUserResponse, 'token'> {}
+// SERVICE
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly databaseService: DatabaseService) {}
+  constructor(private readonly databaseService: AuthDbService) {}
 
   /* ----------------  LOGIN  ---------------- */
 
   public async login({ login, password }: ILoginReq): Promise<ILoginRes> {
     // find  user in database and check in user exist
-    const userInDb = await this.findUserByLogin({ login });
+    const userInDb = await this.databaseService.findByLogin({ login });
     if (!userInDb) throw new BadRequestException('Invalid user or password');
 
     // check password
@@ -56,7 +40,7 @@ export class AuthService {
     const token = jwt.generate({ userId: userInDb.id, tokenId });
 
     // create session
-    await this.createSession({ userId: userInDb.id, tokenId });
+    await this.databaseService.createSession({ userId: userInDb.id, tokenId });
 
     return { token };
   }
@@ -65,60 +49,15 @@ export class AuthService {
 
   public async registration({ name, login, password }: IRegistrationReq): Promise<IRegistrationRes> {
     // get user with database and check or user is exist
-    const userInDb = await this.findUserByLogin({ login });
+    const userInDb = await this.databaseService.findByLogin({ login });
     if (userInDb) throw new ConflictException('User with this login already exists.');
 
     // generate user password hash
     const passwordHash = await passCheck.generateHash(password);
 
     // create user in database
-    await this.createUserInDatabase({ name, login, password: passwordHash });
+    await this.databaseService.create({ name, login, password: passwordHash });
 
     return { message: 'User is create' };
-  }
-
-  /** 
-  
-  // ----------------------------------------------------------------------
-
-  private methods
-   
-  // ----------------------------------------------------------------------
-
-  */
-
-  //  Find user by login in database
-  private async findUserByLogin({ login }: ILoginReqDb): Promise<ILoginResDb> {
-    if (!login) throw new BadRequestException();
-
-    const user = await handlers.dbError(
-      this.databaseService.user.findFirst({
-        where: { login },
-      }),
-    );
-
-    return { id: user.id, login: user.login, password: user.password };
-  }
-
-  //  create session in database
-  private async createSession({ tokenId, userId }: ISessionResponse): Promise<void> {
-    if (!tokenId || !userId) throw new BadRequestException();
-
-    await handlers.dbError(
-      this.databaseService.session.create({
-        data: { tokenId, userId },
-      }),
-    );
-  }
-
-  // create user in database
-  private async createUserInDatabase({ login, name, password }: IRegistrationReq): Promise<void> {
-    if (!login || !name || !password) throw new BadRequestException();
-
-    await handlers.dbError(
-      this.databaseService.user.create({
-        data: { login, name, password, roleId: null },
-      }),
-    );
   }
 }

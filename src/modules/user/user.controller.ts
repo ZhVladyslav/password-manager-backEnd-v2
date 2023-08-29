@@ -1,14 +1,4 @@
-import {
-  Controller,
-  Get,
-  Put,
-  Delete,
-  Body,
-  UseGuards,
-  SetMetadata,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Controller, Get, Put, Delete, Body, UseGuards, SetMetadata, UsePipes, ValidationPipe } from '@nestjs/common';
 import { DeleteDto } from './dto/delete.dto';
 import { EditNameDto } from './dto/editName.dto';
 import { EditPasswordDto } from './dto/editPassword.dto';
@@ -27,44 +17,59 @@ export class UserController {
   /* ----------------  GET  ---------------- */
 
   @Get('my-account')
-  async myAccount(@UserToken() userToken: IUserToken) {
-    return await this.userService.myAccount(userToken.userId);
+  async myAccount(
+    @UserToken() { userId }: IUserToken, //
+  ) {
+    return await this.userService.myAccount({ id: userId });
   }
 
   /* ----------------  PUT  ---------------- */
 
   @UsePipes(new ValidationPipe())
   @Put('edit-name')
-  async editName(@UserToken() userToken: IUserToken, @Body() data: EditNameDto) {
-    return await this.userService.editName(userToken.userId, data.name);
+  async editName(
+    @UserToken() { userId }: IUserToken, //
+    @Body() { name }: EditNameDto, //
+  ) {
+    return await this.userService.editName({ id: userId, name });
   }
 
   @UsePipes(new ValidationPipe())
   @Put('edit-password')
-  async editPassword(@UserToken() userToken: IUserToken, @Body() data: EditPasswordDto) {
-    return await this.userService.editPassword({ userId: userToken.userId, ...data });
+  async editPassword(
+    @UserToken() { userId }: IUserToken, //
+    @Body() { password, newPassword }: EditPasswordDto, //
+  ) {
+    return await this.userService.editPassword({ id: userId, password, newPassword });
   }
 
   @UsePipes(new ValidationPipe())
   @Put('edit-role')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.SET_USER_ROLE])
-  async editRole(@Body() { userId, roleId }: EditRoleDto) {
-    return await this.userService.editRole({ userId, roleId });
+  async editRole(
+    @Body() { userId, roleId }: EditRoleDto, //
+  ) {
+    return await this.userService.editRole({ id: userId, roleId });
   }
 
   @UsePipes(new ValidationPipe())
   @Put('edit-role-setting')
   @UseGuards(SettingsGuard)
-  async editRoleSetting(@Body() { userId, roleId }: EditRoleDto) {
-    return await this.userService.editRole({ userId, roleId });
+  async editRoleSetting(
+    @Body() { userId, roleId }: EditRoleDto, //
+  ) {
+    return await this.userService.editRole({ id: userId, roleId });
   }
 
   /* ----------------  DELETE  ---------------- */
 
   @UsePipes(new ValidationPipe())
   @Delete('delete')
-  async delete(@UserToken() userToken: IUserToken, @Body() data: DeleteDto) {
-    return await this.userService.delete({ password: data.password, userId: userToken.userId });
+  async delete(
+    @UserToken() { userId }: IUserToken, //
+    @Body() { password }: DeleteDto, //
+  ) {
+    return await this.userService.delete({ id: userId, password });
   }
 }

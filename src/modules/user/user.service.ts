@@ -1,182 +1,85 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { DatabaseService } from '../../database/database.service';
-import { password } from '../../utils/password';
-import { handlers } from 'src/handlers/handlers';
+import { password as passCheck } from '../../utils/password';
+import { IUser, UserDbService } from './user.db.service';
 
-interface IDeleteUser {
-  userId: string;
-  password: string;
-}
-
-interface IEditPassword {
-  userId: string;
+// REQ
+interface IFindByIdReq extends Pick<IUser, 'id'> {}
+interface IEditNameReq extends Pick<IUser, 'id' | 'name'> {}
+interface IEditPasswordReq extends Pick<IUser, 'id' | 'password'> {
   newPassword: string;
-  oldPassword: string;
 }
+interface IEditRoleReq extends Pick<IUser, 'id' | 'roleId'> {}
+interface IDeleteReq extends Pick<IUser, 'id' | 'password'> {}
+
+// RES
+export interface IFindByIdRes extends Pick<IUser, 'id' | 'name' | 'roleId'> {}
+export interface IRes {
+  message: string;
+}
+
+// SERVICE
 
 @Injectable()
 export class UserService {
-  constructor(private readonly databaseService: DatabaseService) {}
+  constructor(private readonly databaseService: UserDbService) {}
 
   /* ----------------  GET  ---------------- */
 
-  async myAccount(userId: string) {
-    const { id, name, roleId } = await this.findUserById(userId);
-    return { id, name, roleId };
+  async myAccount({ id }: IFindByIdReq): Promise<IFindByIdRes> {
+    const user = await this.databaseService.findUserById({ id });
+
+    return { id: user.id, name: user.name, roleId: user.roleId };
   }
 
   /* ----------------  PUT  ---------------- */
 
   // edit name
-  async editName(userId: string, name: string) {
-    const userInDb = await this.findUserById(userId);
-    if (userInDb.name === name) throw new BadRequestException('Error edit user name');
-    await this.editNameInDb({ userId, newName: name });
+  async editName({ id, name }: IEditNameReq): Promise<IRes> {
+    const user = await this.databaseService.findUserById({ id });
+
+    if (user.name === name) throw new BadRequestException('Error edit user name');
+
+    await this.databaseService.editName({ id, name });
+
     return { message: 'Name is edit' };
   }
 
   // edit password
-  async editPassword(data: IEditPassword) {
-    const userInDb = await this.findUserById(data.userId);
+  async editPassword({ id, password, newPassword }: IEditPasswordReq): Promise<IRes> {
+    const user = await this.databaseService.findUserById({ id });
 
     // check user password
-    const checkPassword = await password.verify(data.oldPassword, userInDb.password);
-    const checkPasswordDuplicate = await password.verify(data.newPassword, userInDb.password);
-    if (!checkPassword) throw new BadRequestException('The password is not correct');
-    if (checkPasswordDuplicate) throw new BadRequestException('The password is already set');
+    if (!(await passCheck.verify(password, user.password)))
+      throw new BadRequestException('The password is not correct');
+    if (!(await passCheck.verify(password, newPassword)))
+      throw new BadRequestException('The password is already set');
 
-    const newPassword = await password.generateHash(data.newPassword);
-
-    await this.editPasswordInDb({ newPassword, userId: data.userId });
-    await this.deleteSessionsInDb(data.userId);
+    await this.databaseService.editPassword({ id, password, newPassword });
 
     return { message: 'Password is edit' };
   }
 
   // user role edit
-  public async editRole({ userId, roleId }: { userId: string; roleId: string | null }) {
-    await this.editUserRole({ userId, roleId });
+  public async editRole({ id, roleId }: IEditRoleReq): Promise<IRes> {
+    const user = await this.databaseService.findUserById({ id });
+
+    if (user.roleId === roleId) throw new BadRequestException('This role is already set');
+
+    await this.databaseService.editRole({ id, roleId });
+
     return { message: 'user role is edit' };
   }
 
   /* ----------------  DELETE  ---------------- */
 
-  async delete(data: IDeleteUser) {
-    const userInDb = await this.findUserById(data.userId);
+  async delete({ id, password }: IDeleteReq): Promise<IRes> {
+    const user = await this.databaseService.findUserById({ id });
 
-    const checkPassword = await password.verify(data.password, userInDb.password);
-    if (!checkPassword) throw new BadRequestException('The password is not correct');
+    if (!(await passCheck.verify(password, user.password)))
+      throw new BadRequestException('The password is not correct');
 
-    await this.deleteSessionsInDb(data.userId);
-    await this.deleteUserPassCollectionInDb(data.userId);
-    // await this.deleteUserConfigsInDb(data.userId);
-    // await this.editIssuesInDb(data.userId);
-    // await this.editIssuesCommentInDb(data.userId);
-    await this.deleteUserInDb(data.userId);
+    await this.databaseService.delete({ id });
 
     return { message: 'User is delete' };
   }
-
-  // ----------------------------------------------------------------------
-
-  //
-  // private
-  //
-
-  // ----------------------------------------------------------------------
-
-  private async findUserById(userId: string) {
-    if (!userId) throw new BadRequestException();
-    return handlers.dbError(
-      this.databaseService.user.findFirst({
-        where: { id: userId },
-      }),
-    );
-  }
-
-  private async editNameInDb({ userId, newName }: { userId: string; newName: string }) {
-    if (!userId || !newName) throw new BadRequestException();
-    return handlers.dbError(
-      this.databaseService.user.update({
-        where: { id: userId },
-        data: { name: newName },
-      }),
-    );
-  }
-
-  private async editPasswordInDb({ userId, newPassword }: { userId: string; newPassword: string }) {
-    if (!userId || !newPassword) throw new BadRequestException();
-    return handlers.dbError(
-      this.databaseService.user.update({
-        where: { id: userId },
-        data: { password: newPassword },
-      }),
-    );
-  }
-
-  private async editUserRole({ userId, roleId }: { userId: string; roleId: string | null }) {
-    if (!userId) throw new BadRequestException();
-    return handlers.dbError(
-      this.databaseService.user.update({
-        where: { id: userId },
-        data: { roleId: roleId },
-      }),
-    );
-  }
-
-  private async deleteSessionsInDb(userId: string) {
-    if (!userId) throw new BadRequestException();
-    return handlers.dbError(
-      this.databaseService.session.deleteMany({
-        where: { userId },
-      }),
-    );
-  }
-
-  private async deleteUserInDb(userId: string) {
-    if (!userId) throw new BadRequestException();
-    return handlers.dbError(
-      this.databaseService.user.delete({
-        where: { id: userId },
-      }),
-    );
-  }
-
-  private async deleteUserPassCollectionInDb(userId: string) {
-    if (!userId) throw new BadRequestException();
-    return handlers.dbError(
-      this.databaseService.passCollection.deleteMany({
-        where: { userId },
-      }),
-    );
-  }
-
-  // private async deleteUserConfigsInDb(userId: string) {
-  //   if (!userId) throw new BadRequestException();
-  //   return handlers.dbError(
-  //     this.databaseService.config.deleteMany({
-  //       where: { userId },
-  //     }),
-  //   );
-  // }
-
-  // private async editIssuesInDb(userId: string) {
-  //   if (!userId) throw new BadRequestException();
-  //   return handlers.dbError(
-  //     this.databaseService.issue.updateMany({
-  //       where: { userId },
-  //       data: { userId: null },
-  //     }),
-  //   );
-  // }
-
-  // private async editIssuesCommentInDb(userId: string) {
-  //   if (!userId) throw new BadRequestException();
-  //   return handlers.dbError(
-  //     this.databaseService.issueComment.updateMany({
-  //       where: { userId },
-  //       data: { userId: null },
-  //     }),
-  //   );
-  // }
 }
