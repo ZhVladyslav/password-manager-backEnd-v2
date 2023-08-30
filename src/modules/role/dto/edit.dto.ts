@@ -1,5 +1,6 @@
 import { IsArray, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 import { regexConfig } from 'src/config/reg';
+import { IsValidClaim } from 'src/pipes/claims.pipe';
 import { IsRegexMatch } from 'src/pipes/regex.pipe';
 
 export class EditDto {
@@ -16,6 +17,6 @@ export class EditDto {
   @IsArray()
   @IsNotEmpty()
   @IsString({ each: true })
-  @IsUUID('4', { each: true })
+  @IsValidClaim()
   claims: string[];
 }

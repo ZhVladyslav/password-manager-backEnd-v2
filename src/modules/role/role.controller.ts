@@ -57,7 +57,7 @@ export class RoleController {
   @Get('claims-setting')
   @UseGuards(SettingsGuard)
   async allClaimsSetting() {
-    return Object.keys(Claims).map((item) => Claims[item]);
+    return Object.values(Claims);
   }
 
   @UsePipes(new ValidationPipe())
