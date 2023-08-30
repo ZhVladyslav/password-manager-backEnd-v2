@@ -1,6 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Claims } from 'src/config/claims';
-import { IClaim, IRole, RoleDbService } from './role.db.service';
+import { RoleDbService } from './role.db.service';
+import { IClaim, IRole } from 'src/types/role.type';
+import { IMessageRes } from 'src/types/defaultRes.type';
 
 // REQ
 interface IGetByIdReq extends Pick<IRole, 'id'> {}
@@ -12,9 +14,6 @@ interface IDeleteReq extends Pick<IRole, 'id'> {}
 export interface IGetAllRes extends Pick<IRole, 'id' | 'name'> {}
 export interface IGetByIdRes extends Pick<IRole, 'id' | 'name'> {
   claims: IClaim[];
-}
-export interface IRes {
-  message: string;
 }
 
 @Injectable()
@@ -35,7 +34,7 @@ export class RoleService {
 
   /* ----------------  POST  ---------------- */
 
-  public async create({ name, claims }: ICreateReq): Promise<IRes> {
+  public async create({ name, claims }: ICreateReq): Promise<IMessageRes> {
     if (!name) throw new BadRequestException();
 
     await this.databaseService.create({ name, claims });
@@ -45,7 +44,7 @@ export class RoleService {
 
   /* ----------------  PUT  ---------------- */
 
-  public async edit({ id, name, claims }: IEditReq): Promise<IRes> {
+  public async edit({ id, name, claims }: IEditReq): Promise<IMessageRes> {
     const serverClaims = Object.keys(Claims).map((item) => Claims[item]);
 
     for (const claimName of claims) {
@@ -59,7 +58,7 @@ export class RoleService {
 
   /* ----------------  DELETE  ---------------- */
 
-  public async delete({ id }: IDeleteReq): Promise<IRes> {
+  public async delete({ id }: IDeleteReq): Promise<IMessageRes> {
     const findRole = this.databaseService.findById({ id });
     if (!findRole) throw new NotFoundException('Role not found');
 

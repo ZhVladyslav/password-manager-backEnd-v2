@@ -2,21 +2,15 @@ import { BadRequestException, Injectable, ConflictException } from '@nestjs/comm
 import { password as passCheck } from 'src/utils/password';
 import { uuid } from 'src/utils/uuid';
 import { jwt } from 'src/utils/jwt';
-import { AuthDbService, IUser } from './auth.db.service';
+import { AuthDbService } from './auth.db.service';
+import { IUser } from 'src/types/user.type';
+import { IMessageRes } from 'src/types/defaultRes.type';
 
-// REQ
 interface ILoginReq extends Pick<IUser, 'login' | 'password'> {}
 interface IRegistrationReq extends Pick<IUser, 'name' | 'login' | 'password'> {}
-
-// RES
 export interface ILoginRes {
   token: string;
 }
-export interface IRegistrationRes {
-  message: string;
-}
-
-// SERVICE
 
 @Injectable()
 export class AuthService {
@@ -47,7 +41,7 @@ export class AuthService {
 
   /* ----------------  REGISTRATION  ---------------- */
 
-  public async registration({ name, login, password }: IRegistrationReq): Promise<IRegistrationRes> {
+  public async registration({ name, login, password }: IRegistrationReq): Promise<IMessageRes> {
     // get user with database and check or user is exist
     const userInDb = await this.databaseService.findByLogin({ login });
     if (userInDb) throw new ConflictException('User with this login already exists.');

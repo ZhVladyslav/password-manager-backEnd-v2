@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ISession, SessionDbService } from './session.db.service';
+import { SessionDbService } from './session.db.service';
+import { IMessageRes } from 'src/types/defaultRes.type';
+import { ISession } from 'src/types/session.type';
 
 // REQ
 interface IGetAllReq extends Pick<ISession, 'userId'> {}
@@ -8,9 +10,6 @@ interface IDeleteByIdReq extends Pick<ISession, 'id' | 'userId'> {}
 
 // RES
 export interface IGetAllRes extends Pick<ISession, 'id' | 'tokenId'> {}
-export interface IRes {
-  message: string;
-}
 
 // SERVICE
 
@@ -26,7 +25,7 @@ export class SessionService {
 
   /* ----------------  DELETE  ---------------- */
 
-  public async deleteAll({ userId }: IDeleteAllReq): Promise<IRes> {
+  public async deleteAll({ userId }: IDeleteAllReq): Promise<IMessageRes> {
     if (!userId) throw new NotFoundException('Session is not found');
 
     await this.databaseService.deleteAll({ userId });
@@ -34,7 +33,7 @@ export class SessionService {
     return { message: 'Session is delete' };
   }
 
-  public async deleteById({ id, userId }: IDeleteByIdReq): Promise<IRes> {
+  public async deleteById({ id, userId }: IDeleteByIdReq): Promise<IMessageRes> {
     const resFindSession = await this.databaseService.getById({ id, userId });
 
     if (!resFindSession) throw new NotFoundException('Session is not found');

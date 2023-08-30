@@ -1,12 +1,7 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { handlers } from 'src/handlers/handlers';
-
-export interface ISession {
-  id: string;
-  tokenId: string;
-  userId: string;
-}
+import { ISession } from 'src/types/session.type';
 
 // REQ
 interface IGetAllReq extends Pick<ISession, 'userId'> {}

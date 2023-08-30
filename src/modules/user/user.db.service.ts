@@ -1,14 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { handlers } from 'src/handlers/handlers';
-
-export interface IUser {
-  id: string;
-  name: string;
-  login: string;
-  password: string;
-  roleId: string | null;
-}
+import { IUser } from 'src/types/user.type';
 
 // REQ
 interface IFindByIdReq extends Pick<IUser, 'id'> {}

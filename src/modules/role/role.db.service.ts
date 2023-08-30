@@ -1,18 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { handlers } from 'src/handlers/handlers';
-
-export interface IRole {
-  id: string;
-  name: string;
-  claims: string[];
-}
-
-export interface IClaim {
-  id: string;
-  roleId: string;
-  name: string;
-}
+import { IClaim, IRole } from 'src/types/role.type';
 
 // REQ
 interface IGetByIdReq extends Pick<IRole, 'id'> {}
