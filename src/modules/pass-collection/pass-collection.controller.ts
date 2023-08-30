@@ -12,10 +12,8 @@ import { UserToken } from 'src/decorators/userToken';
 export class PassCollectionController {
   constructor(private readonly passCollectionService: PassCollectionService) {}
 
-  /* ----------------  GET  ---------------- */
-
   @Get('all')
-  async all(
+  async getAll(
     @UserToken() { userId }: IUserToken, //
   ) {
     return await this.passCollectionService.getAll({ userId });
@@ -30,8 +28,6 @@ export class PassCollectionController {
     return await this.passCollectionService.getById({ id, userId });
   }
 
-  /* ----------------  POST  ---------------- */
-
   @UsePipes(new ValidationPipe())
   @Post('create')
   async create(
@@ -40,8 +36,6 @@ export class PassCollectionController {
   ) {
     return await this.passCollectionService.create({ userId, name, data });
   }
-
-  /* ----------------  PUT  ---------------- */
 
   @UsePipes(new ValidationPipe())
   @Put('edit-name')
@@ -60,8 +54,6 @@ export class PassCollectionController {
   ) {
     return await this.passCollectionService.editData({ id, userId, data });
   }
-
-  /* ----------------  DELETE  ---------------- */
 
   @UsePipes(new ValidationPipe())
   @Delete('delete')

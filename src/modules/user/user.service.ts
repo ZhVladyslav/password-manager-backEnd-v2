@@ -2,37 +2,26 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { password as passCheck } from '../../utils/password';
 import { UserDbService } from './user.db.service';
 import { IMessageRes } from 'src/types/defaultRes.type';
-import { IUser } from 'src/types/user.type';
+import { IDeleteReq, IEditNameReq, IEditPasswordReq, IEditRoleReq, IGetByIdReq, IGetByIdRes } from './user.type';
 
-// REQ
-interface IFindByIdReq extends Pick<IUser, 'id'> {}
-interface IEditNameReq extends Pick<IUser, 'id' | 'name'> {}
-interface IEditPasswordReq extends Pick<IUser, 'id' | 'password'> {
-  newPassword: string;
+interface IUserService {
+  myAccount(data: IGetByIdReq): Promise<IGetByIdRes>;
+  editName(data: IEditNameReq): Promise<IMessageRes>;
+  editPassword(data: IEditPasswordReq): Promise<IMessageRes>;
+  editRole(data: IEditRoleReq): Promise<IMessageRes>;
+  delete(data: IDeleteReq): Promise<IMessageRes>;
 }
-interface IEditRoleReq extends Pick<IUser, 'id' | 'roleId'> {}
-interface IDeleteReq extends Pick<IUser, 'id' | 'password'> {}
-
-// RES
-export interface IFindByIdRes extends Pick<IUser, 'id' | 'name' | 'roleId'> {}
-
-// SERVICE
 
 @Injectable()
-export class UserService {
+export class UserService implements IUserService {
   constructor(private readonly databaseService: UserDbService) {}
 
-  /* ----------------  GET  ---------------- */
-
-  async myAccount({ id }: IFindByIdReq): Promise<IFindByIdRes> {
+  async myAccount({ id }: IGetByIdReq): Promise<IGetByIdRes> {
     const user = await this.databaseService.findUserById({ id });
 
     return { id: user.id, name: user.name, roleId: user.roleId };
   }
 
-  /* ----------------  PUT  ---------------- */
-
-  // edit name
   async editName({ id, name }: IEditNameReq): Promise<IMessageRes> {
     const user = await this.databaseService.findUserById({ id });
 
@@ -43,21 +32,18 @@ export class UserService {
     return { message: 'Name is edit' };
   }
 
-  // edit password
   async editPassword({ id, password, newPassword }: IEditPasswordReq): Promise<IMessageRes> {
     const user = await this.databaseService.findUserById({ id });
 
-    // check user password
     if (!(await passCheck.verify(password, user.password)))
       throw new BadRequestException('The password is not correct');
     if (!(await passCheck.verify(password, newPassword))) throw new BadRequestException('The password is already set');
 
-    await this.databaseService.editPassword({ id, password, newPassword });
+    await this.databaseService.editPassword({ id, newPassword });
 
     return { message: 'Password is edit' };
   }
 
-  // user role edit
   public async editRole({ id, roleId }: IEditRoleReq): Promise<IMessageRes> {
     const user = await this.databaseService.findUserById({ id });
 
@@ -67,8 +53,6 @@ export class UserService {
 
     return { message: 'user role is edit' };
   }
-
-  /* ----------------  DELETE  ---------------- */
 
   async delete({ id, password }: IDeleteReq): Promise<IMessageRes> {
     const user = await this.databaseService.findUserById({ id });

@@ -14,16 +14,12 @@ import { SettingsGuard } from 'src/guards/settings.guard';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  /* ----------------  GET  ---------------- */
-
   @Get('my-account')
   async myAccount(
     @UserToken() { userId }: IUserToken, //
   ) {
     return await this.userService.myAccount({ id: userId });
   }
-
-  /* ----------------  PUT  ---------------- */
 
   @UsePipes(new ValidationPipe())
   @Put('edit-name')
@@ -61,8 +57,6 @@ export class UserController {
   ) {
     return await this.userService.editRole({ id: userId, roleId });
   }
-
-  /* ----------------  DELETE  ---------------- */
 
   @UsePipes(new ValidationPipe())
   @Delete('delete')

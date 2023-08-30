@@ -37,25 +37,29 @@ export class PassCollectionService implements IPassCollectionService {
   }
 
   public async create({ userId, name, data }: ICreateReq): Promise<ICreateRes> {
-    const userListPassCollection = await this.databaseService.findAll({ userId });
-    for (const item of userListPassCollection) {
-      if (item.name === name) throw new BadRequestException('The name is used');
-    }
+    const userPassCollectionList = await this.databaseService.findAll({ userId });
+    userPassCollectionList.forEach((passCollection) => {
+      if (passCollection.name === name) throw new BadRequestException('The name is used');
+    })
+
     const res = await this.databaseService.create({ userId, name, data });
     return { id: res.id };
   }
 
   public async editName({ userId, id, name }: IEditNameReq): Promise<IMessageRes> {
-    const userListPassCollection = await this.databaseService.findAll({ userId });
+    const userPassCollectionList = await this.databaseService.findAll({ userId });
+
+    // this const set true if in db exist 'id' which in req
     let passCollectionIsExist: boolean = false;
-    for (const item of userListPassCollection) {
-      if (item.id === id) passCollectionIsExist = true;
-      if (item.name === name) {
-        if (item.id === id) throw new BadRequestException('The name is already set');
-        if (item.id !== id) throw new BadRequestException('The name is used');
+    for (const passCollection of userPassCollectionList) {
+      if (passCollection.id === id) passCollectionIsExist = true;
+      if (passCollection.name === name) {
+        if (passCollection.id === id) throw new BadRequestException('The name is already set');
+        if (passCollection.id !== id) throw new BadRequestException('The name is used');
       }
     }
     if (!passCollectionIsExist) throw new BadRequestException('Collection not found');
+
     await this.databaseService.editName({ id, name, userId });
     return { message: 'Name is edit' };
   }
@@ -69,15 +73,15 @@ export class PassCollectionService implements IPassCollectionService {
 
   public async delete({ id, userId }: IDeleteReq): Promise<IMessageRes> {
     if (id.length === 0) throw new BadRequestException('id not passed');
-    let calculating = 0;
-    const toDeleteArray = [...new Set(id)];
-    const userListPassCollection = await this.databaseService.findAll({ userId });
-    for (const item of userListPassCollection) {
-      if (!toDeleteArray.includes(item.id)) continue;
-      calculating += 1;
-      await this.databaseService.delete({ id: item.id, userId: userId });
-    }
+
+    const userPassCollectionList = await this.databaseService.findAll({ userId });
+    const deletePassCollectionPromise = userPassCollectionList.map(async (passCollection) => {
+      if (!id.includes(passCollection.id)) return;
+      await this.databaseService.delete({ id: passCollection.id, userId: userId });
+    });
+    await Promise.all(deletePassCollectionPromise);
+
     if (id.length === 1) return { message: 'Pass collection is delete' };
-    return { message: `Delete ${calculating} pass collections` };
+    return { message: 'Pass collections is delete' };
   }
 }

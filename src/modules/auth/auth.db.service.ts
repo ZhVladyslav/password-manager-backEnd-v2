@@ -1,51 +1,29 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { handlers } from 'src/handlers/handlers';
-import { ISession } from 'src/types/session.type';
-import { IUser } from 'src/types/user.type';
+import { handlerErrorDb } from 'src/handlers/handlerError.db';
+import { ICreateSessionReq, ICreateUserReq, IGetByLoginReq, IGetByLoginRes } from './auth.type';
 
-interface IFindByLoginReq extends Pick<IUser, 'login'> {}
-interface ICreateReq extends Pick<IUser, 'name' | 'login' | 'password'> {}
-interface ICreateSession extends Pick<ISession, 'userId' | 'tokenId'> {}
-interface IFindByLoginRes extends Pick<IUser, 'id' | 'login' | 'password'> {}
-
+interface IAuthDbService {
+  findByLogin(data: IGetByLoginReq): Promise<IGetByLoginRes>;
+  createSession(data: ICreateSessionReq): Promise<void>;
+  createUser(data: ICreateUserReq): Promise<void>;
+}
 
 @Injectable()
-export class AuthDbService {
+export class AuthDbService implements IAuthDbService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  //  Find user by login in database
-  public async findByLogin({ login }: IFindByLoginReq): Promise<IFindByLoginRes> {
-    if (!login) throw new BadRequestException();
-
-    const user = await handlers.dbError(
-      this.databaseService.user.findFirst({
-        where: { login },
-      }),
-    );
-
+  public async findByLogin({ login }: IGetByLoginReq): Promise<IGetByLoginRes> {
+    const user = await handlerErrorDb(this.databaseService.user.findFirst({ where: { login } }));
+    if (!user) return null;
     return { id: user.id, login: user.login, password: user.password };
   }
 
-  //  create session in database
-  public async createSession({ tokenId, userId }: ICreateSession): Promise<void> {
-    if (!tokenId || !userId) throw new BadRequestException();
-
-    await handlers.dbError(
-      this.databaseService.session.create({
-        data: { tokenId, userId },
-      }),
-    );
+  public async createSession({ tokenId, userId }: ICreateSessionReq): Promise<void> {
+    await handlerErrorDb(this.databaseService.session.create({ data: { tokenId, userId } }));
   }
 
-  // create user in database
-  public async create({ login, name, password }: ICreateReq): Promise<void> {
-    if (!login || !name || !password) throw new BadRequestException();
-
-    await handlers.dbError(
-      this.databaseService.user.create({
-        data: { login, name, password, roleId: null },
-      }),
-    );
+  public async createUser({ login, name, password }: ICreateUserReq): Promise<void> {
+    await handlerErrorDb(this.databaseService.user.create({ data: { login, name, password, roleId: null } }));
   }
 }

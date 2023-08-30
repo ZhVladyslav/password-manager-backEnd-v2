@@ -8,16 +8,12 @@ import { UserToken } from 'src/decorators/userToken';
 export class SessionController {
   constructor(private readonly sessionService: SessionService) {}
 
-  /* ----------------  GET  ---------------- */
-
   @Get('all')
   async all(
     @UserToken() { userId }: IUserToken, //
   ) {
     return await this.sessionService.getAll({ userId });
   }
-
-  /* ----------------  DELETE  ---------------- */
 
   @UsePipes(new ValidationPipe())
   @Delete('delete')

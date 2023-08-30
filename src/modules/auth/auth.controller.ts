@@ -7,7 +7,6 @@ import { LoginDto } from './dto/login.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // LOGIN
   @UsePipes(new ValidationPipe())
   @Post('login')
   async login(
@@ -16,7 +15,6 @@ export class AuthController {
     return await this.authService.login({ login, password });
   }
 
-  // REGISTRATION
   @UsePipes(new ValidationPipe())
   @Post('registration')
   async registration(

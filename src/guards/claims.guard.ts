@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { DatabaseService } from 'src/database/database.service';
-import { handlers } from 'src/handlers/handlers';
+import { handlerErrorDb } from 'src/handlers/handlerError.db';
 
 @Injectable()
 export class ClaimsGuard implements CanActivate {
@@ -12,12 +12,12 @@ export class ClaimsGuard implements CanActivate {
 
   // find claims by role id
   async getClaimsByRoleId(roleId: string) {
-    return await handlers.dbError(this.databaseService.claim.findMany({ where: { roleId } }));
+    return await handlerErrorDb(this.databaseService.claim.findMany({ where: { roleId } }));
   }
 
   // find claims by role id
   async userByUserId(userId: string) {
-    return await handlers.dbError(this.databaseService.user.findFirst({ where: { id: userId } }));
+    return await handlerErrorDb(this.databaseService.user.findFirst({ where: { id: userId } }));
   }
 
   // ----------------------------------------------------------------------

@@ -1,11 +1,16 @@
-import { IsArray, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { regexConfig } from 'src/config/reg';
+import { IsRegexMatch } from 'src/pipes/regex.pipe';
 
 export class CreateDto {
-  @IsString()
   @IsNotEmpty()
+  @IsString()
+  @IsRegexMatch(regexConfig.role.name, 'name')
   name: string;
 
   @IsArray()
   @IsNotEmpty()
+  @IsString({ each: true })
+  @IsUUID('4', { each: true })
   claims: string[];
 }

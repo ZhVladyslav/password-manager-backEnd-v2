@@ -1,48 +1,33 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Claims } from 'src/config/claims';
 import { RoleDbService } from './role.db.service';
-import { IClaim, IRole } from 'src/types/role.type';
 import { IMessageRes } from 'src/types/defaultRes.type';
+import { ICreateReq, IDeleteReq, IEditReq, IGetAllRes, IGetByIdReq, IGetByIdRes } from './role.type';
 
-// REQ
-interface IGetByIdReq extends Pick<IRole, 'id'> {}
-interface ICreateReq extends Pick<IRole, 'name' | 'claims'> {}
-interface IEditReq extends IRole {}
-interface IDeleteReq extends Pick<IRole, 'id'> {}
-
-// RES
-export interface IGetAllRes extends Pick<IRole, 'id' | 'name'> {}
-export interface IGetByIdRes extends Pick<IRole, 'id' | 'name'> {
-  claims: IClaim[];
+interface IRoleService {
+  getAll(): Promise<IGetAllRes[]>;
+  getById(data: IGetByIdReq): Promise<IGetByIdRes>;
+  create(data: ICreateReq): Promise<IMessageRes>;
+  edit(data: IEditReq): Promise<IMessageRes>;
+  delete(data: IDeleteReq): Promise<IMessageRes>;
 }
 
 @Injectable()
-export class RoleService {
+export class RoleService implements IRoleService {
   constructor(private readonly databaseService: RoleDbService) {}
-
-  /* ----------------  GET  ---------------- */
 
   public async getAll(): Promise<IGetAllRes[]> {
     return await this.databaseService.findAll();
   }
 
   public async getById({ id }: IGetByIdReq): Promise<IGetByIdRes> {
-    if (!id) throw new BadRequestException();
-
     return await this.databaseService.findById({ id });
   }
 
-  /* ----------------  POST  ---------------- */
-
   public async create({ name, claims }: ICreateReq): Promise<IMessageRes> {
-    if (!name) throw new BadRequestException();
-
     await this.databaseService.create({ name, claims });
-
     return { message: 'Role is create' };
   }
-
-  /* ----------------  PUT  ---------------- */
 
   public async edit({ id, name, claims }: IEditReq): Promise<IMessageRes> {
     const serverClaims = Object.keys(Claims).map((item) => Claims[item]);
@@ -55,8 +40,6 @@ export class RoleService {
 
     return { message: 'role is edit' };
   }
-
-  /* ----------------  DELETE  ---------------- */
 
   public async delete({ id }: IDeleteReq): Promise<IMessageRes> {
     const findRole = this.databaseService.findById({ id });

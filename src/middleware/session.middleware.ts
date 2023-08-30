@@ -1,6 +1,6 @@
 import { Injectable, NestMiddleware, BadRequestException, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { handlers } from 'src/handlers/handlers';
+import { handlerErrorDb } from 'src/handlers/handlerError.db';
 import { IUserToken } from 'src/types/userToken.type';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class SessionMiddleware implements NestMiddleware {
 
   // find session by session label
   async findSessionByLabel(tokenId: string) {
-    return await handlers.dbError(this.databaseService.session.findFirst({ where: { tokenId } }));
+    return await handlerErrorDb(this.databaseService.session.findFirst({ where: { tokenId } }));
   }
 
   // ----------------------------------------------------------------------

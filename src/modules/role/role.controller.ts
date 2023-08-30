@@ -24,8 +24,6 @@ import { SettingsGuard } from 'src/guards/settings.guard';
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
-  /* ----------------  GET  ---------------- */
-
   @Get('all')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.VIEW_ROLE])
@@ -37,7 +35,9 @@ export class RoleController {
   @Get('byId:id')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.VIEW_ROLE])
-  async byId(@Param() { id }: ByIdDto) {
+  async byId(
+    @Param() { id }: ByIdDto, //
+  ) {
     return await this.roleService.getById({ id });
   }
 
@@ -60,40 +60,42 @@ export class RoleController {
     return Object.keys(Claims).map((item) => Claims[item]);
   }
 
-  /* ----------------  POST  ---------------- */
-
   @UsePipes(new ValidationPipe())
   @Post('create')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.CREATE_ROLE])
-  async create(@Body() { name, claims }: CreateDto) {
+  async create(
+    @Body() { name, claims }: CreateDto, //
+  ) {
     return await this.roleService.create({ name, claims });
   }
 
   @UsePipes(new ValidationPipe())
   @Post('create-setting')
   @UseGuards(SettingsGuard)
-  async createSetting(@Body() { name, claims }: CreateDto) {
+  async createSetting(
+    @Body() { name, claims }: CreateDto, //
+  ) {
     return await this.roleService.create({ name, claims });
   }
-
-  /* ----------------  PUT  ---------------- */
 
   @UsePipes(new ValidationPipe())
   @Put('edit')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.EDIT_ROLE])
-  async edit(@Body() { id, name, claims }: EditDto) {
+  async edit(
+    @Body() { id, name, claims }: EditDto, //
+  ) {
     return await this.roleService.edit({ id, name, claims });
   }
-
-  /* ----------------  DELETE  ---------------- */
 
   @UsePipes(new ValidationPipe())
   @Delete(':id')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.DELETE_ROLE])
-  async delete(@Param() { id }: DeleteDto) {
+  async delete(
+    @Param() { id }: DeleteDto, //
+  ) {
     return await this.roleService.delete({ id });
   }
 }
