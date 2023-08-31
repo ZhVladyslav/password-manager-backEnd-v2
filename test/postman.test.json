@@ -1,0 +1,3869 @@
+{
+  "collection": {
+    "info": {
+      "_postman_id": "d4f43f92-7c02-4810-a816-c8bc40323291",
+      "name": "passManager (test)",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+      "updatedAt": "2023-08-31T12:45:00.000Z",
+      "uid": "29146163-d4f43f92-7c02-4810-a816-c8bc40323291"
+    },
+    "item": [
+      {
+        "name": "auth",
+        "item": [
+          {
+            "name": "registration",
+            "item": [
+              {
+                "name": "registration (valid) (1)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "b4f15694-bf29-4a8b-8e74-21718c766aa4",
+                      "exec": [
+                        "const checkRes = new CheckRes(201)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'message', data: 'User is create', });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "11d24b7b-2fc8-47fe-b946-886b2726a3fb",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userName_1}}\",\r\n    \"login\": \"{{userLogin_1}}\",\r\n    \"password\": \"{{userPassword_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/registration",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "registration"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-11d24b7b-2fc8-47fe-b946-886b2726a3fb"
+              },
+              {
+                "name": "registration (valid) (2)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "856fe850-cb1b-4bd8-91df-af115804d68e",
+                      "exec": [
+                        "const checkRes = new CheckRes(201)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'message', data: 'User is create', });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "20aa64a3-8c6c-461c-be7c-c7c65711fb0d",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userName_2}}\",\r\n    \"login\": \"{{userLogin_2}}\",\r\n    \"password\": \"{{userPassword_2}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/registration",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "registration"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-20aa64a3-8c6c-461c-be7c-c7c65711fb0d"
+              },
+              {
+                "name": "registration (valid) (3)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "c9329f75-6e3b-425e-8f21-7a29f9f0bbe9",
+                      "exec": [
+                        "const checkRes = new CheckRes(201)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'message', data: 'User is create', });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "4afe4683-e6c1-410c-83e2-bf261da8f3e7",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userName_3}}\",\r\n    \"login\": \"{{userLogin_3}}\",\r\n    \"password\": \"{{userPassword_3}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/registration",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "registration"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-4afe4683-e6c1-410c-83e2-bf261da8f3e7"
+              },
+              {
+                "name": "registration (valid) (4)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "9402e08a-ead2-48e8-8f27-2254896855ac",
+                      "exec": [
+                        "const checkRes = new CheckRes(201)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'message', data: 'User is create', });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "868cb299-99cc-4a64-8b2f-f4f7d49d02a5",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userName_4}}\",\r\n    \"login\": \"{{userLogin_4}}\",\r\n    \"password\": \"{{userPassword_4}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/registration",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "registration"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-868cb299-99cc-4a64-8b2f-f4f7d49d02a5"
+              },
+              {
+                "name": "registration (valid) (5)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "e3c696f4-d015-4edf-9da9-589591f244b4",
+                      "exec": [
+                        "const checkRes = new CheckRes(201)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'message', data: 'User is create', });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "1fc00707-718a-42a6-8b4e-eae2aee20161",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userName_5}}\",\r\n    \"login\": \"{{userLogin_5}}\",\r\n    \"password\": \"{{userPassword_5}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/registration",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "registration"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-1fc00707-718a-42a6-8b4e-eae2aee20161"
+              },
+              {
+                "name": "registration (invalid data)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "243a35a4-cacb-49a3-a39d-50db13766151",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: \"Incorrectly entered data for: name\",\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "bc4e8dd2-5993-4be7-a982-49163780bf5d",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userName_Invalid_1}}\",\r\n    \"login\": \"{{userLogin_Invalid_1}}\",\r\n    \"password\": \"{{userPassword_Invalid_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/registration",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "registration"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-bc4e8dd2-5993-4be7-a982-49163780bf5d"
+              },
+              {
+                "name": "registration (invalid login)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "a3c87b97-7eef-47f7-994d-b1b1f4ec94a8",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: \"Incorrectly entered data for: login\",\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "a6d7b0dc-9d03-402e-a9d8-bc4d9e2bd49b",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userName_IsNotExist_1}}\",\r\n    \"login\": \"{{userLogin_Invalid_1}}\",\r\n    \"password\": \"{{userPassword_IsNotExist_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/registration",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "registration"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-a6d7b0dc-9d03-402e-a9d8-bc4d9e2bd49b"
+              },
+              {
+                "name": "registration (invalid name)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "a3c87b97-7eef-47f7-994d-b1b1f4ec94a8",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: \"Incorrectly entered data for: name\",\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "88ab40ba-7c2f-4d0d-881e-ab51f8c12dc8",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userName_Invalid_1}}\",\r\n    \"login\": \"{{userLogin_IsNotExist_1}}\",\r\n    \"password\": \"{{userPassword_IsNotExist_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/registration",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "registration"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-88ab40ba-7c2f-4d0d-881e-ab51f8c12dc8"
+              },
+              {
+                "name": "registration (invalid password)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "a3c87b97-7eef-47f7-994d-b1b1f4ec94a8",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: \"Incorrectly entered data for: password\",\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "41fceea3-f133-4648-bca5-9e1199644027",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userName_IsNotExist_1}}\",\r\n    \"login\": \"{{userLogin_IsNotExist_1}}\",\r\n    \"password\": \"{{userPassword_Invalid_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/registration",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "registration"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-41fceea3-f133-4648-bca5-9e1199644027"
+              },
+              {
+                "name": "registration (user is exist)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "343f64b5-bd17-4ef4-9bfe-fa7144e95e71",
+                      "exec": [
+                        "const checkRes = new CheckRes(409)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: \"User with this login already exists\",\r",
+                        "    error: 'Conflict'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "7353010c-3150-4801-abcc-98f86ab66a48",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userName_1}}\",\r\n    \"login\": \"{{userLogin_1}}\",\r\n    \"password\": \"{{userPassword_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/registration",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "registration"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-7353010c-3150-4801-abcc-98f86ab66a48"
+              },
+              {
+                "name": "registration (not name)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "343f64b5-bd17-4ef4-9bfe-fa7144e95e71",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: [\r",
+                        "        \"name must be a string\",\r",
+                        "        \"name should not be empty\"\r",
+                        "    ],\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "aba8ab35-7606-449c-aec3-2382a3608cc6",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"login\": \"{{userLogin_1}}\",\r\n    \"password\": \"{{userPassword_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/registration",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "registration"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-aba8ab35-7606-449c-aec3-2382a3608cc6"
+              },
+              {
+                "name": "registration (not login)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "343f64b5-bd17-4ef4-9bfe-fa7144e95e71",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: [\r",
+                        "        \"login must be a string\",\r",
+                        "        \"login should not be empty\"\r",
+                        "    ],\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "e9521075-a07f-4593-a4aa-8fe4033624b1",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userName_1}}\",\r\n    \"password\": \"{{userPassword_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/registration",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "registration"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-e9521075-a07f-4593-a4aa-8fe4033624b1"
+              },
+              {
+                "name": "registration (not password)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "343f64b5-bd17-4ef4-9bfe-fa7144e95e71",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: [\r",
+                        "        \"password must be a string\",\r",
+                        "        \"password should not be empty\",\r",
+                        "    ],\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "2d3951a3-7840-4fd8-87b7-fa015df79f47",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userName_1}}\",\r\n    \"login\": \"{{userLogin_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/registration",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "registration"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-2d3951a3-7840-4fd8-87b7-fa015df79f47"
+              }
+            ],
+            "id": "1fda24ea-6c19-4bc6-84c5-d5e61d51e23f",
+            "uid": "29146163-1fda24ea-6c19-4bc6-84c5-d5e61d51e23f"
+          },
+          {
+            "name": "login",
+            "item": [
+              {
+                "name": "login (valid) (1)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "22bd37de-edbb-47f2-84c5-e85d83283038",
+                      "exec": [
+                        "const checkRes = new CheckRes(201)\r",
+                        "\r",
+                        "pm.environment.set('token_1', pm.response.json()['token']);\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'token', data: '', randomData: true });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "bc3cf7ba-c360-448b-b549-d0548e1c2ce5",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"login\": \"{{userLogin_1}}\",\r\n    \"password\": \"{{userPassword_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/login",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "login"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-bc3cf7ba-c360-448b-b549-d0548e1c2ce5"
+              },
+              {
+                "name": "login (valid) (2)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "22bd37de-edbb-47f2-84c5-e85d83283038",
+                      "exec": [
+                        "const checkRes = new CheckRes(201)\r",
+                        "\r",
+                        "pm.environment.set('token_2', pm.response.json()['token']);\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'token', data: '', randomData: true });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "0ee03f85-f602-4ba3-b388-262de228fcdf",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"login\": \"{{userLogin_2}}\",\r\n    \"password\": \"{{userPassword_2}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/login",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "login"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-0ee03f85-f602-4ba3-b388-262de228fcdf"
+              },
+              {
+                "name": "login (valid) (3)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "22bd37de-edbb-47f2-84c5-e85d83283038",
+                      "exec": [
+                        "const checkRes = new CheckRes(201)\r",
+                        "\r",
+                        "pm.environment.set('token_3', pm.response.json()['token']);\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'token', data: '', randomData: true });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "9e518135-bf92-4530-b4f4-2a264fdbbe7c",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"login\": \"{{userLogin_3}}\",\r\n    \"password\": \"{{userPassword_3}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/login",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "login"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-9e518135-bf92-4530-b4f4-2a264fdbbe7c"
+              },
+              {
+                "name": "login (valid) (4)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "22bd37de-edbb-47f2-84c5-e85d83283038",
+                      "exec": [
+                        "const checkRes = new CheckRes(201)\r",
+                        "\r",
+                        "pm.environment.set('token_4', pm.response.json()['token']);\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'token', data: '', randomData: true });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "29e559d0-e3ec-4a28-9d0d-e1530d0f3620",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"login\": \"{{userLogin_4}}\",\r\n    \"password\": \"{{userPassword_4}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/login",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "login"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-29e559d0-e3ec-4a28-9d0d-e1530d0f3620"
+              },
+              {
+                "name": "login (valid) (5)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "22bd37de-edbb-47f2-84c5-e85d83283038",
+                      "exec": [
+                        "const checkRes = new CheckRes(201)\r",
+                        "\r",
+                        "pm.environment.set('token_5', pm.response.json()['token']);\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'token', data: '', randomData: true });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "a8f9c5e7-9baa-41f2-87b2-f038e2af0bd7",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"login\": \"{{userLogin_5}}\",\r\n    \"password\": \"{{userPassword_5}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/login",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "login"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-a8f9c5e7-9baa-41f2-87b2-f038e2af0bd7"
+              },
+              {
+                "name": "login (invalid data req)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "c7aba654-a579-498f-b347-21a560fb7757",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Incorrectly entered data for: login',\r",
+                        "    error: 'Bad Request',\r",
+                        "})"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "6578fbaf-713c-478b-8ec2-9a12e3611e48",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"login\": \"{{userLogin_Invalid_1}}\",\r\n    \"password\": \"{{userPassword_Invalid_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/login",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "login"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-6578fbaf-713c-478b-8ec2-9a12e3611e48"
+              },
+              {
+                "name": "login (not exist in db)",
+                "event": [
+                  {
+                    "listen": "prerequest",
+                    "script": {
+                      "id": "51e3cf2f-3c7f-49af-81ff-3c64ed302c7a",
+                      "exec": [
+                        ""
+                      ],
+                      "type": "text/javascript"
+                    }
+                  },
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "a117c30a-7f74-4809-9377-c2972eeb6011",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Invalid user or password',\r",
+                        "    error: 'Bad Request',\r",
+                        "})"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "01f43be0-00ed-46d9-9ed8-0050ee523075",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"login\": \"{{userLogin_IsNotExist_1}}\",\r\n    \"password\": \"{{userPassword_IsNotExist_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/login",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "login"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-01f43be0-00ed-46d9-9ed8-0050ee523075"
+              },
+              {
+                "name": "login (incorrect password)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "376dff5c-6ff0-4e2c-9391-ba6777a12112",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Invalid user or password',\r",
+                        "    error: 'Bad Request',\r",
+                        "})"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "4a912e37-96c5-4c28-b898-af1bcc23cb09",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"login\": \"{{userLogin_1}}\",\r\n    \"password\": \"{{userPassword_2}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/login",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "login"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-4a912e37-96c5-4c28-b898-af1bcc23cb09"
+              },
+              {
+                "name": "login (not exist login)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "e6bde577-a92d-4085-ba4c-42a2aaea3541",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Invalid user or password',\r",
+                        "    error: 'Bad Request',\r",
+                        "})"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "ba3d1301-eccf-4889-a6c6-637fca60d256",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"login\": \"{{userLogin_IsNotExist_1}}\",\r\n    \"password\": \"{{userPassword_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/login",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "login"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-ba3d1301-eccf-4889-a6c6-637fca60d256"
+              },
+              {
+                "name": "login (not login field)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "72a595fc-152c-4e76-85df-4274b6f88e7b",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.testError({\r",
+                        "    message: [\r",
+                        "        \"login must be a string\",\r",
+                        "        \"login should not be empty\",\r",
+                        "    ],\r",
+                        "    error: 'Bad Request',\r",
+                        "})"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "47da3d22-1781-4070-928e-b3e49d226bae",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"password\": \"{{userPassword_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/login",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "login"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-47da3d22-1781-4070-928e-b3e49d226bae"
+              },
+              {
+                "name": "login (not password field)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "fb94935e-5b36-4ce2-92a1-294b4b99883c",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.testError({\r",
+                        "    message: [\r",
+                        "        \"password must be a string\",\r",
+                        "        \"password should not be empty\"\r",
+                        "    ],\r",
+                        "    error: 'Bad Request',\r",
+                        "})"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "976e89d9-e550-4709-b522-0f083fc5fbb4",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"login\": \"{{userLogin_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/login",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "login"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-976e89d9-e550-4709-b522-0f083fc5fbb4"
+              }
+            ],
+            "id": "b5d72792-5eb2-4aaf-b231-f0701b87ad2e",
+            "uid": "29146163-b5d72792-5eb2-4aaf-b231-f0701b87ad2e"
+          }
+        ],
+        "id": "a0e21ae7-3800-473b-a3af-8c5292aa5bf6",
+        "uid": "29146163-a0e21ae7-3800-473b-a3af-8c5292aa5bf6"
+      },
+      {
+        "name": "user",
+        "item": [
+          {
+            "name": "my account",
+            "item": [
+              {
+                "name": "my account (valid) (1)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(200)\r",
+                        "\r",
+                        "pm.environment.set('userId_1', pm.response.json()['id']);\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'id', data: '', randomData: true });\r",
+                        "checkRes.testRes({ key: 'name', data: pm.environment.get(\"userName_1\") });\r",
+                        "checkRes.testRes({ key: 'roleId', data: null, });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "e904d664-3844-4085-b37f-83c7030bec83",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/my-account",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "my-account"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-e904d664-3844-4085-b37f-83c7030bec83"
+              },
+              {
+                "name": "my account (valid) (2)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(200)\r",
+                        "\r",
+                        "pm.environment.set('userId_2', pm.response.json()['id']);\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'id', data: '', randomData: true });\r",
+                        "checkRes.testRes({ key: 'name', data: pm.environment.get(\"userName_2\") });\r",
+                        "checkRes.testRes({ key: 'roleId', data: null, });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "b19ce766-b6fb-4ab3-ab33-a67105722edc",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_2}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/my-account",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "my-account"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-b19ce766-b6fb-4ab3-ab33-a67105722edc"
+              },
+              {
+                "name": "my account (valid) (3)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(200)\r",
+                        "\r",
+                        "pm.environment.set('userId_3', pm.response.json()['id']);\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'id', data: '', randomData: true });\r",
+                        "checkRes.testRes({ key: 'name', data: pm.environment.get(\"userName_3\") });\r",
+                        "checkRes.testRes({ key: 'roleId', data: null, });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "889ec825-3bc4-4143-80b8-475f15b90b2d",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_3}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/my-account",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "my-account"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-889ec825-3bc4-4143-80b8-475f15b90b2d"
+              },
+              {
+                "name": "my account (valid) (4)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(200)\r",
+                        "\r",
+                        "pm.environment.set('userId_4', pm.response.json()['id']);\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'id', data: '', randomData: true });\r",
+                        "checkRes.testRes({ key: 'name', data: pm.environment.get(\"userName_4\") });\r",
+                        "checkRes.testRes({ key: 'roleId', data: null, });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "b2dcd609-bbd4-4cd6-9b10-4472000dd32d",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_4}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/my-account",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "my-account"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-b2dcd609-bbd4-4cd6-9b10-4472000dd32d"
+              },
+              {
+                "name": "my account (valid) (5)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(200)\r",
+                        "\r",
+                        "pm.environment.set('userId_5', pm.response.json()['id']);\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'id', data: '', randomData: true });\r",
+                        "checkRes.testRes({ key: 'name', data: pm.environment.get(\"userName_5\") });\r",
+                        "checkRes.testRes({ key: 'roleId', data: null, });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "6bdd6b27-caeb-4a2c-b333-6cecb2ba1ba7",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_5}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/my-account",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "my-account"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-6bdd6b27-caeb-4a2c-b333-6cecb2ba1ba7"
+              },
+              {
+                "name": "my account (not auth)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(401)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'User is not authorized',\r",
+                        "    error: 'Unauthorized'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "09485f78-85a7-49cf-ac8c-456d1a05b9ba",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "GET",
+                  "header": [],
+                  "url": {
+                    "raw": "{{url}}/user/my-account",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "my-account"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-09485f78-85a7-49cf-ac8c-456d1a05b9ba"
+              },
+              {
+                "name": "my account (invalid token)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Invalid token',\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "3ba1eef7-829f-46c4-9f29-2a674be1e3da",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_invalid_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/my-account",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "my-account"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-3ba1eef7-829f-46c4-9f29-2a674be1e3da"
+              },
+              {
+                "name": "my account (incorrect token)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Invalid token',\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "4fc3f95a-bc05-4f48-8df8-eb4c3dad0436",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_incorect_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/my-account",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "my-account"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-4fc3f95a-bc05-4f48-8df8-eb4c3dad0436"
+              },
+              {
+                "name": "my account (close session)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(404)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Session not found',\r",
+                        "    error: 'Not Found'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "c650265c-5220-420c-881a-40b2bec055a0",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_close_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/my-account",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "my-account"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-c650265c-5220-420c-881a-40b2bec055a0"
+              }
+            ],
+            "id": "2111a193-4c76-48cf-b721-10bf73547328",
+            "uid": "29146163-2111a193-4c76-48cf-b721-10bf73547328"
+          },
+          {
+            "name": "edit name",
+            "item": [
+              {
+                "name": "edit name (valid) (1)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(200)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'message', data: 'Name is edit' });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "69e3c660-813b-4062-bd7b-82c5d9b82672",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userName_edit_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/edit-name",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-name"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-69e3c660-813b-4062-bd7b-82c5d9b82672"
+              },
+              {
+                "name": "check edit name (1)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(200)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'id', data: '', data: pm.environment.get(\"userId_1\") });\r",
+                        "checkRes.testRes({ key: 'name', data: pm.environment.get(\"userName_edit_1\") });\r",
+                        "checkRes.testRes({ key: 'roleId', data: null, });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "59708a84-1d0e-4093-8563-e15958cff801",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/my-account",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "my-account"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-59708a84-1d0e-4093-8563-e15958cff801"
+              },
+              {
+                "name": "edit name (name is set) (1)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.testError({\r",
+                        "    message: \"This name is already set\",\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "43d9e853-738b-4693-a412-b378bdd2598f",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userName_edit_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/edit-name",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-name"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-43d9e853-738b-4693-a412-b378bdd2598f"
+              },
+              {
+                "name": "return name (1)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(200)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'message', data: 'Name is edit' });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "c035036d-4fb7-4cf2-9d3c-413fd32aaa51",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userName_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/edit-name",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-name"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-c035036d-4fb7-4cf2-9d3c-413fd32aaa51"
+              },
+              {
+                "name": "edit name (invalid name)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: \"Incorrectly entered data for: name\",\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "eff4c83e-a868-477e-88fe-c96296a64302",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"{{userNameInvalid_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/edit-name",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-name"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-eff4c83e-a868-477e-88fe-c96296a64302"
+              },
+              {
+                "name": "edit name (name in not exist)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: [\r",
+                        "        \"name must be a string\",\r",
+                        "        \"name should not be empty\",\r",
+                        "    ],\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "919b7f62-d291-4adf-b990-8dea464c46b9",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/edit-name",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-name"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-919b7f62-d291-4adf-b990-8dea464c46b9"
+              },
+              {
+                "name": "edit name (not auth)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(401)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'User is not authorized',\r",
+                        "    error: 'Unauthorized'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "3aff8320-4267-4036-ac36-b3a8b8ae7491",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [],
+                  "url": {
+                    "raw": "{{url}}/user/edit-name",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-name"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-3aff8320-4267-4036-ac36-b3a8b8ae7491"
+              },
+              {
+                "name": "edit name (invalid token)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Invalid token',\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "01586d75-5e1c-4631-9a71-765affb65902",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_invalid_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/edit-name",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-name"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-01586d75-5e1c-4631-9a71-765affb65902"
+              },
+              {
+                "name": "edit name (incorrect token)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Invalid token',\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "18fd3fbc-73fe-4da3-8339-3addc640a4c0",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_incorect_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/edit-name",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-name"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-18fd3fbc-73fe-4da3-8339-3addc640a4c0"
+              },
+              {
+                "name": "edit name (close session)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(404)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Session not found',\r",
+                        "    error: 'Not Found'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "1f424ff6-b50d-4788-ba57-0bb1ca71f51a",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_close_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/edit-name",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-name"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-1f424ff6-b50d-4788-ba57-0bb1ca71f51a"
+              }
+            ],
+            "id": "6b11c9dc-585b-4615-8abe-b2989e6d1876",
+            "uid": "29146163-6b11c9dc-585b-4615-8abe-b2989e6d1876"
+          },
+          {
+            "name": "edit password",
+            "item": [
+              {
+                "name": "edit password (valid) (1)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(200)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'message', data: 'Password is edit' });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "485f72cd-73df-4644-9d76-58fa4ba9be5c",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"password\": \"{{userPassword_1}}\",\r\n    \"newPassword\": \"{{userPassword_edit_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/edit-password",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-password"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-485f72cd-73df-4644-9d76-58fa4ba9be5c"
+              },
+              {
+                "name": "check edit password (1)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "22bd37de-edbb-47f2-84c5-e85d83283038",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Invalid user or password',\r",
+                        "    error: 'Bad Request',\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "8f534762-187b-4021-b4ab-66581d1bd36a",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"login\": \"{{userLogin_1}}\",\r\n    \"password\": \"{{userPassword_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/login",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "login"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-8f534762-187b-4021-b4ab-66581d1bd36a"
+              },
+              {
+                "name": "check edit password (1)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(404)\r",
+                        "\r",
+                        "checkRes.testError(\r",
+                        "    {\r",
+                        "        message: 'Session not found',\r",
+                        "        error: 'Not Found',\r",
+                        "    });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "31421979-fa83-4ec3-b7a0-8d323aed95ad",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/my-account",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "my-account"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-31421979-fa83-4ec3-b7a0-8d323aed95ad"
+              },
+              {
+                "name": "login (valid) (1)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "22bd37de-edbb-47f2-84c5-e85d83283038",
+                      "exec": [
+                        "const checkRes = new CheckRes(201)\r",
+                        "\r",
+                        "pm.environment.set('token_1', pm.response.json()['token']);\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'token', data: '', randomData: true });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "0c1ab6da-25f1-4013-b468-e65079c0b632",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"login\": \"{{userLogin_1}}\",\r\n    \"password\": \"{{userPassword_edit_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/login",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "login"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-0c1ab6da-25f1-4013-b468-e65079c0b632"
+              },
+              {
+                "name": "return password (1)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(200)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'message', data: 'Password is edit' });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "ac82b8ac-263f-4a86-a8b1-365038d02cea",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"password\": \"{{userPassword_edit_1}}\",\r\n    \"newPassword\": \"{{userPassword_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/edit-password",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-password"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-ac82b8ac-263f-4a86-a8b1-365038d02cea"
+              },
+              {
+                "name": "login (valid) (1)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "22bd37de-edbb-47f2-84c5-e85d83283038",
+                      "exec": [
+                        "const checkRes = new CheckRes(201)\r",
+                        "\r",
+                        "pm.environment.set('token_1', pm.response.json()['token']);\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'token', data: '', randomData: true });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "54c7ff5b-92a8-4912-9d0c-9c3fb4ca8e2b",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"login\": \"{{userLogin_1}}\",\r\n    \"password\": \"{{userPassword_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/auth/login",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "auth",
+                      "login"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-54c7ff5b-92a8-4912-9d0c-9c3fb4ca8e2b"
+              },
+              {
+                "name": "edit password (incorrect)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.testError({\r",
+                        "    message: 'The password is not correct',\r",
+                        "    error: 'Bad Request',\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "124f681f-1962-453c-a212-70d70140f20e",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"password\": \"{{userPassword_edit_1}}\",\r\n    \"newPassword\": \"{{userPassword_edit_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/edit-password",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-password"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-124f681f-1962-453c-a212-70d70140f20e"
+              },
+              {
+                "name": "edit password (invalid newPassword)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Incorrectly entered data for: newPassword',\r",
+                        "    error: 'Bad Request',\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "91cb1fc3-0bb8-4487-b92a-be7992b56acb",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"password\": \"{{userPassword_1}}\",\r\n    \"newPassword\": \"{{userPassword_Invalid_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/edit-password",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-password"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-91cb1fc3-0bb8-4487-b92a-be7992b56acb"
+              },
+              {
+                "name": "edit password (invalid password)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Incorrectly entered data for: password',\r",
+                        "    error: 'Bad Request',\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "cdcbb4ff-c11f-4b7e-9764-77dc892f38e9",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"password\": \"{{userPassword_Invalid_1}}\",\r\n    \"newPassword\": \"{{userPassword_edit_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/edit-password",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-password"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-cdcbb4ff-c11f-4b7e-9764-77dc892f38e9"
+              },
+              {
+                "name": "edit password (is already set)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.testError({\r",
+                        "    message: 'The password is already set',\r",
+                        "    error: 'Bad Request',\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "3c85cd0c-d8f6-4e09-8232-5120591b932f",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"password\": \"{{userPassword_1}}\",\r\n    \"newPassword\": \"{{userPassword_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/edit-password",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-password"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-3c85cd0c-d8f6-4e09-8232-5120591b932f"
+              },
+              {
+                "name": "edit password (password is empty)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.testError({\r",
+                        "    message: [\r",
+                        "        \"password must be a string\",\r",
+                        "        \"password should not be empty\",\r",
+                        "    ],\r",
+                        "    error: 'Bad Request',\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "98c0b870-f039-47c7-a612-fe5817057f2d",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"newPassword\": \"{{userPassword_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/edit-password",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-password"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-98c0b870-f039-47c7-a612-fe5817057f2d"
+              },
+              {
+                "name": "edit password (newPassword is empty)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.testError({\r",
+                        "    message: [\r",
+                        "        \"newPassword must be a string\",\r",
+                        "        \"newPassword should not be empty\"\r",
+                        "    ],\r",
+                        "    error: 'Bad Request',\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "6047e494-e9a5-45b7-a772-f351f1b31efd",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"password\": \"{{userPassword_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/edit-password",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-password"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-6047e494-e9a5-45b7-a772-f351f1b31efd"
+              },
+              {
+                "name": "edit password (empty data)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.testError({\r",
+                        "    message: [\r",
+                        "        \"password must be a string\",\r",
+                        "        \"password should not be empty\",\r",
+                        "        \"newPassword must be a string\",\r",
+                        "        \"newPassword should not be empty\"\r",
+                        "    ],\r",
+                        "    error: 'Bad Request',\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "750672c3-770a-4584-86cc-3376776d6fe1",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/edit-password",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-password"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-750672c3-770a-4584-86cc-3376776d6fe1"
+              },
+              {
+                "name": "edit password (not auth)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(401)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'User is not authorized',\r",
+                        "    error: 'Unauthorized'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "aaa2f4df-7acc-4c8b-a290-26c5165b18d0",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [],
+                  "url": {
+                    "raw": "{{url}}/user/edit-password",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-password"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-aaa2f4df-7acc-4c8b-a290-26c5165b18d0"
+              },
+              {
+                "name": "edit password (invalid token)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Invalid token',\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "8952a0e2-9591-437c-a7c4-77e528834889",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_invalid_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/edit-password",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-password"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-8952a0e2-9591-437c-a7c4-77e528834889"
+              },
+              {
+                "name": "edit password (incorrect token)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Invalid token',\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "0be49453-fa6a-4693-9c57-b6fd8507cbd8",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_incorect_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/edit-password",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-password"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-0be49453-fa6a-4693-9c57-b6fd8507cbd8"
+              },
+              {
+                "name": "edit password (close session)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(404)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Session not found',\r",
+                        "    error: 'Not Found'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "118cbdde-8687-4961-88b2-e6d6680d1698",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_close_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/edit-password",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "edit-password"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-118cbdde-8687-4961-88b2-e6d6680d1698"
+              }
+            ],
+            "id": "17b541a6-3f8e-4b83-a292-9c0ce7590ce5",
+            "uid": "29146163-17b541a6-3f8e-4b83-a292-9c0ce7590ce5"
+          },
+          {
+            "name": "delete",
+            "item": [
+              {
+                "name": "delete (incorect password)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "251c11dc-4c09-4a09-8f76-da226d108091",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'The password is not correct',\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "76019d57-fd60-45cc-8db6-55893523bbab",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "DELETE",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"password\": \"{{userPassword_edit_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/delete",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "delete"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-76019d57-fd60-45cc-8db6-55893523bbab"
+              },
+              {
+                "name": "delete (valid) (1)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "251c11dc-4c09-4a09-8f76-da226d108091",
+                      "exec": [
+                        "const checkRes = new CheckRes(200)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'message', data: 'User is delete' });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "b9c9a486-a43f-449d-b0c0-0d0d263528ba",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "DELETE",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"password\": \"{{userPassword_1}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/delete",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "delete"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-b9c9a486-a43f-449d-b0c0-0d0d263528ba"
+              },
+              {
+                "name": "delete (valid) (2)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "251c11dc-4c09-4a09-8f76-da226d108091",
+                      "exec": [
+                        "const checkRes = new CheckRes(200)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'message', data: 'User is delete' });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "b2fd9d31-06d1-4379-a13d-d955d9c77f95",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "DELETE",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_2}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"password\": \"{{userPassword_2}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/delete",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "delete"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-b2fd9d31-06d1-4379-a13d-d955d9c77f95"
+              },
+              {
+                "name": "delete (valid) (3)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "251c11dc-4c09-4a09-8f76-da226d108091",
+                      "exec": [
+                        "const checkRes = new CheckRes(200)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'message', data: 'User is delete' });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "b6f8494f-eb3c-4d0f-aa45-a4d0d0f43fd4",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "DELETE",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_3}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"password\": \"{{userPassword_3}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/delete",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "delete"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-b6f8494f-eb3c-4d0f-aa45-a4d0d0f43fd4"
+              },
+              {
+                "name": "delete (valid) (4)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "251c11dc-4c09-4a09-8f76-da226d108091",
+                      "exec": [
+                        "const checkRes = new CheckRes(200)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'message', data: 'User is delete' });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "6684393e-4b01-484c-9793-86a7a6dfcb88",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "DELETE",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_4}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"password\": \"{{userPassword_4}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/delete",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "delete"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-6684393e-4b01-484c-9793-86a7a6dfcb88"
+              },
+              {
+                "name": "delete (valid) (5)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "251c11dc-4c09-4a09-8f76-da226d108091",
+                      "exec": [
+                        "const checkRes = new CheckRes(200)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testRes({ key: 'message', data: 'User is delete' });"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "84bfa410-890a-4e71-b0a7-a9ce251a10fb",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "DELETE",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_5}}",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"password\": \"{{userPassword_5}}\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{url}}/user/delete",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "delete"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-84bfa410-890a-4e71-b0a7-a9ce251a10fb"
+              },
+              {
+                "name": "delete (not auth)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(401)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'User is not authorized',\r",
+                        "    error: 'Unauthorized'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "fd2f5dc8-06f6-48d0-a14d-5b74bb12e48a",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "DELETE",
+                  "header": [],
+                  "url": {
+                    "raw": "{{url}}/user/delete",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "delete"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-fd2f5dc8-06f6-48d0-a14d-5b74bb12e48a"
+              },
+              {
+                "name": "delete (invalid token)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Invalid token',\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "ca7fe7f3-1e03-4600-ba47-a22eede21bf3",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "DELETE",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_invalid_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/delete",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "delete"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-ca7fe7f3-1e03-4600-ba47-a22eede21bf3"
+              },
+              {
+                "name": "delete (incorrect token)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(400)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Invalid token',\r",
+                        "    error: 'Bad Request'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "149be94e-02b4-4243-bdcc-d6927cab3a5a",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "DELETE",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_incorect_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/delete",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "delete"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-149be94e-02b4-4243-bdcc-d6927cab3a5a"
+              },
+              {
+                "name": "delete (close session)",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "10deeebf-60b7-4542-9ed6-98b2e9329c49",
+                      "exec": [
+                        "const checkRes = new CheckRes(404)\r",
+                        "\r",
+                        "checkRes.status();\r",
+                        "checkRes.testError({\r",
+                        "    message: 'Session not found',\r",
+                        "    error: 'Not Found'\r",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "id": "9ca9fe2a-4328-4563-ac5f-70eda86d250d",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "DELETE",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "{{token_close_1}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{url}}/user/delete",
+                    "host": [
+                      "{{url}}"
+                    ],
+                    "path": [
+                      "user",
+                      "delete"
+                    ]
+                  }
+                },
+                "response": [],
+                "uid": "29146163-9ca9fe2a-4328-4563-ac5f-70eda86d250d"
+              }
+            ],
+            "id": "afb33242-766e-4ae0-a8c6-dcab38d8fa6c",
+            "uid": "29146163-afb33242-766e-4ae0-a8c6-dcab38d8fa6c"
+          }
+        ],
+        "id": "b73f2d8b-502a-422a-a48f-eb2b40f0e728",
+        "uid": "29146163-b73f2d8b-502a-422a-a48f-eb2b40f0e728"
+      },
+      {
+        "name": "passCollection",
+        "item": [],
+        "id": "fbf60175-c573-4cde-a1cd-feb464bcd1ac",
+        "uid": "29146163-fbf60175-c573-4cde-a1cd-feb464bcd1ac"
+      },
+      {
+        "name": "role",
+        "item": [],
+        "id": "dea7e025-f4cf-4df6-84af-119240914419",
+        "uid": "29146163-dea7e025-f4cf-4df6-84af-119240914419"
+      },
+      {
+        "name": "session",
+        "item": [],
+        "id": "2cfea425-5572-4c38-8437-30c1df45fb63",
+        "uid": "29146163-2cfea425-5572-4c38-8437-30c1df45fb63"
+      },
+      {
+        "name": "guards",
+        "item": [],
+        "id": "0fe0b204-8fd7-4c09-a3b2-915edf90f5f6",
+        "uid": "29146163-0fe0b204-8fd7-4c09-a3b2-915edf90f5f6"
+      },
+      {
+        "name": "middlewares",
+        "item": [],
+        "id": "9702af64-3b3d-466b-b561-4891000e3769",
+        "uid": "29146163-9702af64-3b3d-466b-b561-4891000e3769"
+      },
+      {
+        "name": "Info",
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "4c12ddd0-6ea3-47cc-aeaf-fdc8da6a20ad",
+              "exec": [
+                "// TOKEN\r",
+                "const createtoken = () => {\r",
+                "    pm.environment.set('token_close_1', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiZDExMTEyMTctOGNhNS00ZTI0LTkxMzQtNjg2OWZkYzIzYWQzIiwidXNlcklkIjoiNGI5YzUwMTQtYjNjMS00YWQzLWIzMjQtNmYwMDMyOTk0MjhhIiwiaWF0IjoxNjkzNDg2ODUwLCJleHAiOjE3MjUwNDQ0NTB9.y1b0DNWe3PCGefWQQKrdhpyVUUcG5V7iHDlLaKBxeS4');\r",
+                "    \r",
+                "    pm.environment.set('token_incorect_1', 'token');\r",
+                "\r",
+                "    pm.environment.set('token_invalid_1', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiZjkyYTI4NjAtYTY3Ni00YzhkLTk1NDYtNGYxYjAyNjQ2ODA1IiwidXNlcklkIjoiNGI5YzUwMTQtYjNjMS00YWQzLWIzMjQtNmYwMDMyOTk0MjhhIiwiaWF0IjoxNjkzNDg0Nzk1LCJleHAiOjE3MjUwNDIzOTV9.82GiIZzuEkFmlaDusQSJvN6yaktSu743nSqzho-aTg8');\r",
+                "    \r",
+                "    pm.environment.set('token_1', '');\r",
+                "    pm.environment.set('token_2', '');\r",
+                "    pm.environment.set('token_3', '');\r",
+                "    pm.environment.set('token_4', '');\r",
+                "    pm.environment.set('token_5', '');\r",
+                "}\r",
+                "\r",
+                "// USER ID\r",
+                "const createUserId = () => {\r",
+                "    pm.environment.set('userId_1', '');\r",
+                "    pm.environment.set('userId_2', '');\r",
+                "    pm.environment.set('userId_3', '');\r",
+                "    pm.environment.set('userId_4', '');\r",
+                "    pm.environment.set('userId_5', '');\r",
+                "}\r",
+                "\r",
+                "// USER NAME\r",
+                "const createUserName = () => {\r",
+                "    pm.environment.set('userName_Invalid_1', 'james');\r",
+                "    pm.environment.set('userName_IsNotExist_1', 'Olivia Wilson');\r",
+                "    pm.environment.set('userName_1', 'Alex');\r",
+                "    pm.environment.set('userName_2', 'Emily Smith');\r",
+                "    pm.environment.set('userName_3', 'Michael Brown');\r",
+                "    pm.environment.set('userName_4', 'Sophia Davis');\r",
+                "    pm.environment.set('userName_5', 'William Johnson');\r",
+                "}\r",
+                "const createUserEditName = () => {\r",
+                "    pm.environment.set('userName_edit_1', 'Taylor');\r",
+                "    pm.environment.set('userName_edit_2', 'John Anderson');\r",
+                "    pm.environment.set('userName_edit_3', 'Emma Martinez');\r",
+                "    pm.environment.set('userName_edit_4', 'Sophia');\r",
+                "    pm.environment.set('userName_edit_5', 'Johnson');\r",
+                "}\r",
+                "\r",
+                "// USER LOGIN\r",
+                "const createUserLogin = () => {\r",
+                "    pm.environment.set('userLogin_Invalid_1', 'JamesM!@#$%^');\r",
+                "    pm.environment.set('userLogin_IsNotExist_1', 'Olivia');\r",
+                "    pm.environment.set('userLogin_1', 'Alex');\r",
+                "    pm.environment.set('userLogin_2', 'Emily');\r",
+                "    pm.environment.set('userLogin_3', 'Michael');\r",
+                "    pm.environment.set('userLogin_4', 'Sophia');\r",
+                "    pm.environment.set('userLogin_5', 'William');\r",
+                "}\r",
+                "\r",
+                "// USER PASSWORD\r",
+                "const createUserPassword = () => {\r",
+                "    pm.environment.set('userPassword_Invalid_1', 'password');\r",
+                "    pm.environment.set('userPassword_IsNotExist_1', 'P@ssw0rd6745');\r",
+                "    pm.environment.set('userPassword_1', 'P@ssw0rd5678');\r",
+                "    pm.environment.set('userPassword_2', 'P@ssw0rd9876');\r",
+                "    pm.environment.set('userPassword_3', 'P@ssw0rd2468');\r",
+                "    pm.environment.set('userPassword_4', 'P@ssw0rd1357');\r",
+                "    pm.environment.set('userPassword_5', 'P@ssw0rd8021');\r",
+                "}\r",
+                "const createUserEditPassword = () => {\r",
+                "    pm.environment.set('userPassword_edit_1', 'P@ssw0rd54538');\r",
+                "    pm.environment.set('userPassword_edit_2', 'P@ssw0rd234566');\r",
+                "    pm.environment.set('userPassword_edit_3', 'P@ssw0rd87e58');\r",
+                "    pm.environment.set('userPassword_edit_4', 'P@ssw0rd890e7');\r",
+                "    pm.environment.set('userPassword_edit_5', 'P@ssw0rd6782#1');\r",
+                "}\r",
+                "\r",
+                "\r",
+                "\r",
+                "\r",
+                "\r",
+                "\r",
+                "createtoken()\r",
+                "createUserName()\r",
+                "createUserLogin()\r",
+                "createUserPassword()\r",
+                "createUserEditName()\r",
+                "createUserEditPassword()\r",
+                "\r",
+                "\r",
+                "\r",
+                "\r",
+                "\r",
+                "\r",
+                ""
+              ],
+              "type": "text/javascript"
+            }
+          }
+        ],
+        "id": "b1ea4c3a-4cc7-4069-aa69-babb8fa283b2",
+        "protocolProfileBehavior": {
+          "disableBodyPruning": true
+        },
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "{{url}}/",
+            "host": [
+              "{{url}}"
+            ],
+            "path": [
+              ""
+            ]
+          }
+        },
+        "response": [],
+        "uid": "29146163-b1ea4c3a-4cc7-4069-aa69-babb8fa283b2"
+      }
+    ],
+    "event": [
+      {
+        "listen": "prerequest",
+        "script": {
+          "id": "c24f45b0-f8aa-4d0a-a237-5b02fbc2adef",
+          "type": "text/javascript",
+          "exec": [
+            ""
+          ]
+        }
+      },
+      {
+        "listen": "test",
+        "script": {
+          "id": "5fe8b372-5ac1-439b-8608-3d125397fd14",
+          "type": "text/javascript",
+          "exec": [
+            "// pm.environment.set('token_2', pm.response.json()['token']);",
+            "",
+            "class checkRes {",
+            "    code = 0;",
+            "    res = pm.response;",
+            "    jsonRes = pm.response.json();",
+            "",
+            "    constructor(code) {",
+            "        this.code = code;",
+            "    }",
+            "",
+            "    keyRes = (keyName) => pm.expect(this.jsonRes).to.have.property(keyName);",
+            "",
+            "    type = (key, type) => pm.expect(typeof this.jsonRes[key] === type).to.be.true;",
+            "    typeArray = (key) => pm.expect(Array.isArray(this.jsonRes[key])).to.be.true;",
+            "",
+            "    dataInKey = (key, data) => pm.expect(this.jsonRes[key]).to.equal(data);",
+            "",
+            "    dataInKeyArray = (key, lenght, data = []) => {",
+            "        var result = true;",
+            "        if (lenght !== this.jsonRes[key].length) return pm.expect(false).to.be.true;",
+            "        this.jsonRes[key].forEach((item, i) => {",
+            "            if (data[i] !== item) result = false;",
+            "        })",
+            "        return pm.expect(result).to.be.true",
+            "    }",
+            "",
+            "    // ",
+            "    status = () => pm.test(`Check statys '${this.code}'`, () => { this.res.to.have.status(this.code) });",
+            "",
+            "    // ",
+            "    testRes = ({ key, data, randomData = false }) => {",
+            "        const { typeIsValid, dataType } = this.checkTypeToRes({ key, data })",
+            "",
+            "        pm.test(`Check key '${key}'`, () => { this.keyRes(key) });",
+            "        pm.test(`Check type '${key}'`, () => { pm.expect(typeIsValid).to.be.true });",
+            "",
+            "        if (randomData) return;",
+            "",
+            "        if (dataType === 'string') {",
+            "            pm.test(`Check data in key '${key}'`, () => { this.dataInKey(key, data) });",
+            "        }",
+            "        if (dataType === 'null') {",
+            "            pm.test(`Check data in key '${key}'`, () => { this.dataInKey(key, data) });",
+            "        }",
+            "        else if (dataType === 'array') {",
+            "            pm.test(`Check data in key '${key}'`, () => { this.dataInKeyArray(key, data.length, data) });",
+            "        }",
+            "    }",
+            "",
+            "    // ",
+            "    testError({ message = '', error = '' }) {",
+            "        this.status();",
+            "",
+            "        pm.test(\"Check key message\", () => { this.keyRes('message') });",
+            "        if (Array.isArray(this.jsonRes['message'])) {",
+            "            pm.test(\"Check data in key message (array)\", () => { this.dataInKeyArray('message', message.length, message) });",
+            "            pm.test(\"Check data type in key message (array)\", () => { this.typeArray('message') });",
+            "        } else {",
+            "            pm.test(\"Check data in key message\", () => { this.dataInKey('message', message) });",
+            "            pm.test(\"Check data type in key message\", () => { this.type('message', 'string') });",
+            "        }",
+            "",
+            "        pm.test(\"Check key error\", () => { this.keyRes('error') });",
+            "        pm.test(\"Check data in key error\", () => { this.dataInKey('error', error) });",
+            "        pm.test(\"Check data type in key error\", () => { this.type('error', 'string') });",
+            "",
+            "        pm.test(\"Check key statusCode\", () => { this.keyRes('statusCode') });",
+            "        pm.test(\"Check data in key statusCode\", () => { this.dataInKey('statusCode', this.code) });",
+            "        pm.test(\"Check data type in key statusCode\", () => { this.type('statusCode', 'number') });",
+            "    }",
+            "",
+            "    // ",
+            "    checkTypeToRes = ({ key, data }) => {",
+            "        let typeIsValid = false;",
+            "        let dataType;",
+            "",
+            "        if (typeof data === 'string' && typeof this.jsonRes[key] === 'string') {",
+            "            typeIsValid = true;",
+            "            dataType = 'string';",
+            "        }",
+            "        else if (typeof data === 'number' && typeof this.jsonRes[key] === 'number') {",
+            "            typeIsValid = true;",
+            "            dataType = 'number';",
+            "        }",
+            "        else if (typeof data === 'boolean' && typeof this.jsonRes[key] === 'boolean') {",
+            "            typeIsValid = true;",
+            "            dataType = 'boolean';",
+            "        }",
+            "        else if (data === null && this.jsonRes[key] === null) {",
+            "            typeIsValid = true;",
+            "            dataType = 'null';",
+            "        }",
+            "        else if (Array.isArray(data) && Array.isArray(this.jsonRes[key])) {",
+            "            typeIsValid = true;",
+            "            dataType = 'array';",
+            "        }",
+            "        else if (typeof data === 'object' && typeof this.jsonRes[key] === 'object') {",
+            "            typeIsValid = true;",
+            "            dataType = 'object';",
+            "        }",
+            "        else { typeIsValid = false }",
+            "",
+            "        return { typeIsValid, dataType }",
+            "    }",
+            "}",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "CheckRes = checkRes"
+          ]
+        }
+      }
+    ]
+  }
+}
