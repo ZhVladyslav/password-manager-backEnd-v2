@@ -13,8 +13,9 @@ import {
 } from '@nestjs/common';
 import { SettingsService } from './settings.service';
 import { Claims } from 'src/config/claims';
-import { CreateDto } from './dto/Create.dto';
 import { SettingsGuard } from 'src/guards/settings.guard';
+import { CreateDto } from '../role/dto/Create.dto';
+import { EditRoleDto } from '../user/dto/editRole.dto';
 
 @Controller('role/setting')
 export class RoleController {
@@ -39,5 +40,14 @@ export class RoleController {
     @Body() { name, claims }: CreateDto, //
   ) {
     return await this.settingsService.create({ name, claims });
+  }
+
+  @UsePipes(new ValidationPipe())
+  @Put('edit-role')
+  @UseGuards(SettingsGuard)
+  async editRoleSetting(
+    @Body() { userId, roleId }: EditRoleDto, //
+  ) {
+    return await this.settingsService.editRole({ id: userId, roleId });
   }
 }

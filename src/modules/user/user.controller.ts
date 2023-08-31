@@ -8,7 +8,6 @@ import { UserToken } from 'src/decorators/userToken';
 import { ClaimsGuard } from 'src/guards/claims.guard';
 import { Claims } from 'src/config/claims';
 import { EditRoleDto } from './dto/editRole.dto';
-import { SettingsGuard } from 'src/guards/settings.guard';
 
 @Controller('user')
 export class UserController {
@@ -44,15 +43,6 @@ export class UserController {
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.SET_USER_ROLE])
   async editRole(
-    @Body() { userId, roleId }: EditRoleDto, //
-  ) {
-    return await this.userService.editRole({ id: userId, roleId });
-  }
-
-  @UsePipes(new ValidationPipe())
-  @Put('edit-role-setting')
-  @UseGuards(SettingsGuard)
-  async editRoleSetting(
     @Body() { userId, roleId }: EditRoleDto, //
   ) {
     return await this.userService.editRole({ id: userId, roleId });
