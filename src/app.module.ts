@@ -6,15 +6,10 @@ import { SessionModule } from './modules/session/session.module';
 import { UserModule } from './modules/user/user.module';
 import { ErrorMiddleware } from './middleware/error.middleware';
 import { RoleModule } from './modules/role/role.module';
+import { SettingsModule } from './modules/settings/settings.module';
 
 @Module({
-  imports: [
-    AuthModule,
-    PassCollectionModule,
-    SessionModule,
-    UserModule,
-    RoleModule,
-  ],
+  imports: [AuthModule, PassCollectionModule, SessionModule, UserModule, RoleModule, SettingsModule],
   exports: [],
   controllers: [AppController],
   providers: [],

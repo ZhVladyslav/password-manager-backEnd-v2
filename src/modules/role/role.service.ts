@@ -1,5 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { Claims } from 'src/config/claims';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { RoleDbService } from './role.db.service';
 import { IMessageRes } from 'src/types/defaultRes.type';
 import { ICreateReq, IDeleteReq, IEditReq, IGetAllRes, IGetByIdReq, IGetByIdRes } from './role.type';
@@ -30,23 +29,16 @@ export class RoleService implements IRoleService {
   }
 
   public async edit({ id, name, claims }: IEditReq): Promise<IMessageRes> {
-    const serverClaims = Object.keys(Claims).map((item) => Claims[item]);
-
-    for (const claimName of claims) {
-      if (!serverClaims.includes(claimName)) throw new BadRequestException('Invalid claim or claims');
-    }
-
+    const findRole = this.databaseService.findById({ id });
+    if (!findRole) throw new NotFoundException('Role not found');
     await this.databaseService.edit({ id, name, claims });
-
     return { message: 'role is edit' };
   }
 
-  public async delete({ id }: IDeleteReq): Promise<IMessageRes> {
+  public async delete({ id, newRoleId }: IDeleteReq): Promise<IMessageRes> {
     const findRole = this.databaseService.findById({ id });
     if (!findRole) throw new NotFoundException('Role not found');
-
-    await this.databaseService.delete({ id });
-
+    await this.databaseService.delete({ id, newRoleId });
     return { message: 'Role is delete' };
   }
 }

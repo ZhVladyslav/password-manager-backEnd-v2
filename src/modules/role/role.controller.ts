@@ -90,12 +90,12 @@ export class RoleController {
   }
 
   @UsePipes(new ValidationPipe())
-  @Delete(':id')
+  @Delete('delete')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.DELETE_ROLE])
   async delete(
-    @Param() { id }: DeleteDto, //
+    @Body() { id, newRoleId }: DeleteDto, //
   ) {
-    return await this.roleService.delete({ id });
+    return await this.roleService.delete({ id, newRoleId });
   }
 }

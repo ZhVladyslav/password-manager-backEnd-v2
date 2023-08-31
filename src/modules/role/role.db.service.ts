@@ -21,45 +21,31 @@ export class RoleDbService implements IRoleDbService {
 
   public async findById({ id }: IGetByIdReq): Promise<IGetByIdRes> {
     const role = await handlerErrorDb(this.databaseService.role.findFirst({ where: { id } }));
-
     const claims = await handlerErrorDb(this.databaseService.claim.findMany({ where: { roleId: id } }));
-
-    return {
-      id: role.id,
-      name: role.name,
-      claims: claims.map((item) => {
-        return { id: item.id, roleId: item.roleId, name: item.name };
-      }),
-    };
+    const claimsToRes = claims.map((item) => ({ id: item.id, name: item.name }));
+    return { id: role.id, name: role.name, claims: claimsToRes };
   }
 
   public async create({ name, claims }: ICreateReq): Promise<void> {
     const newRole = await handlerErrorDb(this.databaseService.role.create({ data: { name } }));
-
     const newClaims = claims.map(async (claimName) => {
       return await handlerErrorDb(this.databaseService.claim.create({ data: { roleId: newRole.id, name: claimName } }));
     });
-
     await Promise.all(newClaims);
   }
 
   public async edit({ id, name, claims }: IEditReq): Promise<void> {
     await handlerErrorDb(this.databaseService.claim.deleteMany({ where: { roleId: id } }));
-
     const newClaims = claims.map(async (claimName) => {
       return await handlerErrorDb(this.databaseService.claim.create({ data: { roleId: id, name: claimName } }));
     });
-
     await Promise.all(newClaims);
-
     await handlerErrorDb(this.databaseService.role.update({ where: { id }, data: { name } }));
   }
 
-  public async delete({ id }: IDeleteReq): Promise<void> {
+  public async delete({ id, newRoleId = null }: IDeleteReq): Promise<void> {
     await handlerErrorDb(this.databaseService.claim.deleteMany({ where: { roleId: id } }));
-
-    await handlerErrorDb(this.databaseService.user.updateMany({ where: { roleId: id }, data: { roleId: null } }));
-
+    await handlerErrorDb(this.databaseService.user.updateMany({ where: { roleId: id }, data: { roleId: newRoleId } }));
     await handlerErrorDb(this.databaseService.role.delete({ where: { id } }));
   }
 }
