@@ -23,9 +23,7 @@ export class AuthService implements IAuthService {
     if (!checkPassword) throw new BadRequestException('Invalid user or password');
 
     const tokenId = uuid.v4();
-
     const token = jwt.generate({ userId: userInDb.id, tokenId });
-
     await this.databaseService.createSession({ userId: userInDb.id, tokenId });
 
     return { token };
@@ -33,10 +31,9 @@ export class AuthService implements IAuthService {
 
   public async registration({ name, login, password }: IRegistrationReq): Promise<IMessageRes> {
     const userInDb = await this.databaseService.findByLogin({ login });
-    if (userInDb) throw new ConflictException('User with this login already exists.');
+    if (userInDb) throw new ConflictException('User with this login already exists');
 
     const passwordHash = await passCheck.generateHash(password);
-
     await this.databaseService.createUser({ name, login, password: passwordHash });
 
     return { message: 'User is create' };
