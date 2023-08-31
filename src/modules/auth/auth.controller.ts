@@ -14,8 +14,8 @@ export class AuthController {
   async login(
     @Body() { login, password }: LoginDto, //
   ) {
-    checkReg(regexConfig.auth.login, 'login', login);
-    checkReg(regexConfig.auth.password, 'password', password);
+    checkReg(regexConfig.user.login, 'login', login);
+    checkReg(regexConfig.user.password, 'password', password);
     return await this.authService.login({ login, password });
   }
 
@@ -24,9 +24,9 @@ export class AuthController {
   async registration(
     @Body() { name, login, password }: RegistrationDto, //
   ) {
-    checkReg(regexConfig.auth.name, 'name', name);
-    checkReg(regexConfig.auth.login, 'login', login);
-    checkReg(regexConfig.auth.password, 'password', password);
+    checkReg(regexConfig.user.name, 'name', name);
+    checkReg(regexConfig.user.login, 'login', login);
+    checkReg(regexConfig.user.password, 'password', password);
     return await this.authService.registration({ name, login, password });
   }
 }

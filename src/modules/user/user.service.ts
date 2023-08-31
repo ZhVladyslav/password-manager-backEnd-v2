@@ -25,7 +25,7 @@ export class UserService implements IUserService {
   async editName({ id, name }: IEditNameReq): Promise<IMessageRes> {
     const user = await this.databaseService.findUserById({ id });
 
-    if (user.name === name) throw new BadRequestException('Error edit user name');
+    if (user.name === name) throw new BadRequestException('This name is already set');
 
     await this.databaseService.editName({ id, name });
 
@@ -34,12 +34,13 @@ export class UserService implements IUserService {
 
   async editPassword({ id, password, newPassword }: IEditPasswordReq): Promise<IMessageRes> {
     const user = await this.databaseService.findUserById({ id });
+    const passwordIsAccess = await passCheck.verify(password, user.password);
 
-    if (!(await passCheck.verify(password, user.password)))
-      throw new BadRequestException('The password is not correct');
-    if (!(await passCheck.verify(password, newPassword))) throw new BadRequestException('The password is already set');
+    if (!passwordIsAccess) throw new BadRequestException('The password is not correct');
+    if (password === newPassword) throw new BadRequestException('The password is already set');
 
-    await this.databaseService.editPassword({ id, newPassword });
+    const newPasswordHash = await passCheck.generateHash(newPassword);
+    await this.databaseService.editPassword({ id, newPassword: newPasswordHash });
 
     return { message: 'Password is edit' };
   }
@@ -51,7 +52,7 @@ export class UserService implements IUserService {
 
     await this.databaseService.editRole({ id, roleId });
 
-    return { message: 'user role is edit' };
+    return { message: 'User role is edit' };
   }
 
   async delete({ id, password }: IDeleteReq): Promise<IMessageRes> {

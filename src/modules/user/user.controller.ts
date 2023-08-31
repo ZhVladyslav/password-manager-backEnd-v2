@@ -8,6 +8,8 @@ import { UserToken } from 'src/decorators/userToken';
 import { ClaimsGuard } from 'src/guards/claims.guard';
 import { Claims } from 'src/config/claims';
 import { EditRoleDto } from './dto/editRole.dto';
+import { checkReg } from 'src/utils/checkReg';
+import { regexConfig } from 'src/config/reg';
 
 @Controller('user')
 export class UserController {
@@ -26,6 +28,7 @@ export class UserController {
     @UserToken() { userId }: IUserToken, //
     @Body() { name }: EditNameDto, //
   ) {
+    checkReg(regexConfig.user.name, 'name', name);
     return await this.userService.editName({ id: userId, name });
   }
 
@@ -35,6 +38,8 @@ export class UserController {
     @UserToken() { userId }: IUserToken, //
     @Body() { password, newPassword }: EditPasswordDto, //
   ) {
+    checkReg(regexConfig.user.password, 'password', password);
+    checkReg(regexConfig.user.password, 'newPassword', newPassword);
     return await this.userService.editPassword({ id: userId, password, newPassword });
   }
 
@@ -54,6 +59,7 @@ export class UserController {
     @UserToken() { userId }: IUserToken, //
     @Body() { password }: DeleteDto, //
   ) {
+    checkReg(regexConfig.user.password, 'password', password);
     return await this.userService.delete({ id: userId, password });
   }
 }
