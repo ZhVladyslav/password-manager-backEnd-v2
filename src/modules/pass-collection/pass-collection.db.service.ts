@@ -33,6 +33,7 @@ export class PassCollectionDbService implements IPassCollectionDbService {
 
   public async findById({ id, userId }: IGetByIdReq): Promise<IGetByIdRes> {
     const res = await handlerErrorDb(this.databaseService.passCollection.findFirst({ where: { userId, id } }));
+    if (!res) return null;
     return { id: res.id, name: res.name, data: res.data };
   }
 

@@ -6,9 +6,7 @@ export interface IGetByIdReq extends Pick<IPassCollection, 'id' | 'userId'> {}
 export interface ICreateReq extends Pick<IPassCollection, 'userId' | 'name' | 'data'> {}
 export interface IEditNameReq extends Pick<IPassCollection, 'id' | 'userId' | 'name'> {}
 export interface IEditDataReq extends Pick<IPassCollection, 'id' | 'userId' | 'data'> {}
-export interface IDeleteReq extends Pick<IPassCollection, 'userId'> {
-  id: string[];
-}
+export interface IDeleteReq extends Pick<IPassCollection, 'id'|'userId'> {}
 export interface IDeleteInDbReq extends Pick<IPassCollection, 'id' | 'userId'> {}
 
 // res

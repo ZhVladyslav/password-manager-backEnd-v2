@@ -40,7 +40,7 @@ export class PassCollectionService implements IPassCollectionService {
     const userPassCollectionList = await this.databaseService.findAll({ userId });
     userPassCollectionList.forEach((passCollection) => {
       if (passCollection.name === name) throw new BadRequestException('The name is used');
-    })
+    });
 
     const res = await this.databaseService.create({ userId, name, data });
     return { id: res.id };
@@ -58,7 +58,7 @@ export class PassCollectionService implements IPassCollectionService {
         if (passCollection.id !== id) throw new BadRequestException('The name is used');
       }
     }
-    if (!passCollectionIsExist) throw new BadRequestException('Collection not found');
+    if (!passCollectionIsExist) throw new NotFoundException('Collection not found');
 
     await this.databaseService.editName({ id, name, userId });
     return { message: 'Name is edit' };
@@ -66,22 +66,15 @@ export class PassCollectionService implements IPassCollectionService {
 
   public async editData({ id, userId, data }: IEditDataReq): Promise<IMessageRes> {
     const passCollection = await this.databaseService.findById({ id, userId });
-    if (!passCollection) throw new BadRequestException('Collection not found');
+    if (!passCollection) throw new NotFoundException('Collection not found');
     await this.databaseService.editData({ id, userId, data });
     return { message: 'Data is edit' };
   }
 
   public async delete({ id, userId }: IDeleteReq): Promise<IMessageRes> {
-    if (id.length === 0) throw new BadRequestException('id not passed');
-
-    const userPassCollectionList = await this.databaseService.findAll({ userId });
-    const deletePassCollectionPromise = userPassCollectionList.map(async (passCollection) => {
-      if (!id.includes(passCollection.id)) return;
-      await this.databaseService.delete({ id: passCollection.id, userId: userId });
-    });
-    await Promise.all(deletePassCollectionPromise);
-
-    if (id.length === 1) return { message: 'Pass collection is delete' };
+    const passCollection = await this.databaseService.findById({ id, userId });
+    if (!passCollection) throw new BadRequestException('Collection is not found');
+    await this.databaseService.delete({ id: passCollection.id, userId: userId });
     return { message: 'Pass collections is delete' };
   }
 }
