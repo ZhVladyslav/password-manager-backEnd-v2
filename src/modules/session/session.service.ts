@@ -24,11 +24,22 @@ export class SessionService implements ISessionService {
   }
 
   public async deleteById({ id, userId }: IDeleteByIdReq): Promise<IMessageRes> {
-    const resFindSession = await this.databaseService.getById({ id, userId });
-    if (!resFindSession) throw new NotFoundException('Session is not found');
+    const allSessionList = await this.databaseService.getAll({ userId });
+    let quantityDelete = 0;
 
-    await this.databaseService.deleteById({ id, userId });
+    for (const i in id) {
+      let idIsExist = false;
+      allSessionList.some((obj) => {
+        if (obj.id === id[i]) idIsExist = true;
+      });
 
-    return { message: 'Session is delete' };
+      if (!idIsExist) continue;
+      await this.databaseService.deleteById({ id: id[i], userId });
+      quantityDelete += 1;
+    }
+
+    if (quantityDelete > 1) return { message: `Delete ${quantityDelete} sessions` };
+    if (quantityDelete === 1) return { message: 'Session is delete' };
+    return { message: 'Session is not delete' };
   }
 }
