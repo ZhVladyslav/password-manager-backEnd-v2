@@ -24,6 +24,13 @@ import { SettingsGuard } from 'src/guards/settings.guard';
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
+  @Get('claims')
+  @UseGuards(ClaimsGuard)
+  @SetMetadata('claims', [Claims.VIEW_CLAIMS])
+  async allClaims() {
+    return Object.keys(Claims).map((item) => Claims[item]);
+  }
+
   @Get('all')
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.VIEW_ROLE])
@@ -41,23 +48,12 @@ export class RoleController {
     return await this.roleService.getById({ id });
   }
 
-  @Get('claims')
-  @UseGuards(ClaimsGuard)
-  @SetMetadata('claims', [Claims.VIEW_CLAIMS])
-  async allClaims() {
-    return Object.keys(Claims).map((item) => Claims[item]);
-  }
-
-  @Get('all-setting')
+  @Get('byName')
   @UseGuards(SettingsGuard)
-  async allSetting() {
+  async byName(
+    // @Body() { name }: ByNameDto, //
+  ) {
     return await this.roleService.getAll();
-  }
-
-  @Get('claims-setting')
-  @UseGuards(SettingsGuard)
-  async allClaimsSetting() {
-    return Object.values(Claims);
   }
 
   @UsePipes(new ValidationPipe())
@@ -71,12 +67,12 @@ export class RoleController {
   }
 
   @UsePipes(new ValidationPipe())
-  @Post('create-setting')
+  @Post('create-admin')
   @UseGuards(SettingsGuard)
   async createSetting(
-    @Body() { name, claims }: CreateDto, //
+    // @Body() { userId, claims }: CreateDto, //
   ) {
-    return await this.roleService.create({ name, claims });
+    // return await this.roleService.create({ name, claims });
   }
 
   @UsePipes(new ValidationPipe())
@@ -84,6 +80,26 @@ export class RoleController {
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.EDIT_ROLE])
   async edit(
+    @Body() { id, name, claims }: EditDto, //
+  ) {
+    return await this.roleService.edit({ id, name, claims });
+  }
+
+  @UsePipes(new ValidationPipe())
+  @Put('edit-on-user')
+  @UseGuards(ClaimsGuard)
+  @SetMetadata('claims', [Claims.EDIT_ROLE])
+  async editOnUser(
+    @Body() { id, name, claims }: EditDto, //
+  ) {
+    return await this.roleService.edit({ id, name, claims });
+  }
+  
+  @UsePipes(new ValidationPipe())
+  @Put('edit-on-all-user')
+  @UseGuards(ClaimsGuard)
+  @SetMetadata('claims', [Claims.EDIT_ROLE])
+  async editOnAllUser(
     @Body() { id, name, claims }: EditDto, //
   ) {
     return await this.roleService.edit({ id, name, claims });
