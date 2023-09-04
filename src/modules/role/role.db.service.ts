@@ -1,51 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { Claims } from 'src/config/claims';
 import { DatabaseService } from 'src/database/database.service';
 import { handlerErrorDb } from 'src/handlers/handlerError.db';
 import { IClaim, IRole } from 'src/types/role.type';
 
-interface IClaimsInRoleRes extends Pick<IClaim, 'id' | 'name'> {}
-
-export interface IClaimsToRoleRes {
-  claims: IClaimsInRoleRes[];
-}
-
-export interface IFindByRoleId extends Pick<IRole, 'id'> {}
-export interface IFindByRoleName extends Pick<IRole, 'name'> {}
-export interface IEditRole extends Pick<IRole, 'name' | 'claims'> {}
-export interface IRoleRes extends Pick<IRole, 'id' | 'name'> {}
-export interface IClaimsToRole extends Pick<IClaim, 'roleId'> {}
-export interface ICreateClaimToRole extends Pick<IClaim, 'roleId' | 'name'> {}
-export interface IDeleteRole extends Pick<IRole, 'id'> {}
-export interface IDeleteAllClaims extends Pick<IClaim, 'roleId'> {}
-//
-//
-//
-
-export interface IGetByNameReq extends Pick<IRole, 'name'> {}
-export interface ICreateReq extends Pick<IRole, 'name' | 'claims'> {}
-export interface IEditReq extends IRole {}
-export interface IDeleteReq extends Pick<IRole, 'id'> {
-  newRoleId: string | null;
-}
-export interface IGetAllRes extends Pick<IRole, 'id' | 'name'> {}
-
-export interface IGetByNameRes extends Pick<IRole, 'id' | 'name'> {
-  claims: IClaimsInRoleRes[];
-}
+interface IRoleRes extends Pick<IRole, 'id' | 'name'> {}
+interface ICreateRole extends Pick<IRole, 'name' | 'claims'> {}
 
 interface IRoleDbService {
   findAll(): Promise<IRoleRes[]>;
-  findById(data: IFindByRoleId): Promise<IRoleRes>;
-  findByName(data: IFindByRoleName): Promise<IRoleRes>;
-  findClaimsForRole(data: IClaimsToRole): Promise<IClaim>;
-
-  create(data: ICreateReq): Promise<void>;
-  edit(data: IEditReq): Promise<void>;
-  delete(data: IDeleteReq): Promise<void>;
+  findById({ id }: { id: string }): Promise<IRoleRes>;
+  findByName({ name }: { name: string }): Promise<IRoleRes>;
+  findClaimsForRole({ roleId }: { roleId: string }): Promise<IClaim[]>;
+  createRole(data: ICreateRole): Promise<void>;
+  createAdmin({ userId }: { userId: string }): Promise<void>;
+  editRole(data: IRole): Promise<void>;
+  deleteRole({ id }: { id: string }): Promise<void>;
 }
 
 @Injectable()
-export class RoleDbService {
+export class RoleDbService implements IRoleDbService {
   constructor(private readonly databaseService: DatabaseService) {}
 
   // find all roles in database
@@ -55,25 +29,30 @@ export class RoleDbService {
   }
 
   // find role by id
-  public async findById({ id }: IFindByRoleId): Promise<IRoleRes> {
+  public async findById({ id }: { id: string }): Promise<IRoleRes> {
     const role = await handlerErrorDb(this.databaseService.role.findFirst({ where: { id } }));
+    if (!role) throw new BadRequestException('Role not found');
     return role;
   }
 
   // find role by name
-  public async findByName({ name }: IFindByRoleName): Promise<IRoleRes> {
+  public async findByName({ name }: { name: string }): Promise<IRoleRes> {
     const role = await handlerErrorDb(this.databaseService.role.findFirst({ where: { name } }));
+    if (!role) throw new BadRequestException('Role not found');
     return role;
   }
 
   // find claims to role
-  public async findClaimsForRole({ roleId }: IClaimsToRole): Promise<IClaim[]> {
+  public async findClaimsForRole({ roleId }: { roleId: string }): Promise<IClaim[]> {
     const claimList = await handlerErrorDb(this.databaseService.claim.findMany({ where: { roleId } }));
     return claimList;
   }
 
   // create role
-  public async createRole({ name, claims }: IEditRole): Promise<void> {
+  public async createRole({ name, claims }: ICreateRole): Promise<void> {
+    // check role
+    const roleList = await this.findByName({ name });
+    if (roleList) throw new BadRequestException('A role with this name already exists');
     // create role
     const role = await handlerErrorDb(this.databaseService.role.create({ data: { name } }));
     // create new claims to role
@@ -81,13 +60,31 @@ export class RoleDbService {
     await Promise.all(newClaims);
   }
 
+  /**
+   * @ERROR not check user id
+   */
   // create admin
+  public async createAdmin({ userId }: { userId: string }): Promise<void> {
+    let adminRole = await this.findByName({ name: 'admin' });
+    if (!adminRole) {
+      const claims = Object.keys(Claims).map((claim) => claim);
+      await this.createRole({ name: 'admin', claims });
+      adminRole = await this.findByName({ name: 'admin' });
+    }
+    if (adminRole) {
+      await handlerErrorDb(
+        this.databaseService.user.update({
+          data: { roleId: adminRole.id },
+          where: { id: userId },
+        }),
+      );
+    }
+  }
 
   // edit role by id
   public async editRole({ id, name, claims }: IRole): Promise<void> {
     // check on exist role
-    const role = await handlerErrorDb(this.findById({ id }));
-    if (!role) return null;
+    await handlerErrorDb(this.findById({ id }));
     // edit role name
     await handlerErrorDb(this.databaseService.role.update({ data: { name }, where: { id } }));
     // delete all claims to role
@@ -98,10 +95,9 @@ export class RoleDbService {
   }
 
   // delete role
-  public async deleteRole({ id }: IFindByRoleId): Promise<void> {
+  public async deleteRole({ id }: { id: string }): Promise<void> {
     // check role on exist
-    const role = await this.findById({ id });
-    if (!role) return;
+    await this.findById({ id });
     // delete all claims
     await this.deleteAllClaim({ roleId: id });
     // delete role
@@ -109,12 +105,12 @@ export class RoleDbService {
   }
 
   // create claim to role
-  private async createClaim({ roleId, name }: ICreateClaimToRole): Promise<void> {
+  private async createClaim({ roleId, name }: { roleId: string; name: string }): Promise<void> {
     await handlerErrorDb(this.databaseService.claim.create({ data: { roleId, name } }));
   }
 
   // delete all claims to role
-  private async deleteAllClaim({ roleId }: IDeleteAllClaims): Promise<void> {
+  private async deleteAllClaim({ roleId }: { roleId: string }): Promise<void> {
     await handlerErrorDb(this.databaseService.claim.deleteMany({ where: { roleId } }));
   }
 }

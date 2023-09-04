@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { SessionDbService } from './session.db.service';
 import { IMessageRes } from 'src/types/defaultRes.type';
 import { IDeleteAllReq, IDeleteByIdReq, IGetAllReq, IGetAllRes } from './session.type';

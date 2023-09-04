@@ -33,7 +33,7 @@ export class RoleController {
 
   @Get('all')
   @UseGuards(ClaimsGuard)
-  @SetMetadata('claims', [Claims.VIEW_ROLE])
+  // @SetMetadata('claims', [Claims.VIEW_ROLE])
   async all() {
     return await this.roleService.getAll();
   }
@@ -45,7 +45,7 @@ export class RoleController {
   async byId(
     @Param() { id }: ByIdDto, //
   ) {
-    return await this.roleService.getById({ id });
+    // return await this.roleService.getById({ id });
   }
 
   @Get('byName')
@@ -53,7 +53,7 @@ export class RoleController {
   async byName(
     // @Body() { name }: ByNameDto, //
   ) {
-    return await this.roleService.getAll();
+    // return await this.roleService.getAll();
   }
 
   @UsePipes(new ValidationPipe())
@@ -63,7 +63,7 @@ export class RoleController {
   async create(
     @Body() { name, claims }: CreateDto, //
   ) {
-    return await this.roleService.create({ name, claims });
+    // return await this.roleService.create({ name, claims });
   }
 
   @UsePipes(new ValidationPipe())
@@ -82,7 +82,7 @@ export class RoleController {
   async edit(
     @Body() { id, name, claims }: EditDto, //
   ) {
-    return await this.roleService.edit({ id, name, claims });
+    // return await this.roleService.edit({ id, name, claims });
   }
 
   @UsePipes(new ValidationPipe())
@@ -92,7 +92,7 @@ export class RoleController {
   async editOnUser(
     @Body() { id, name, claims }: EditDto, //
   ) {
-    return await this.roleService.edit({ id, name, claims });
+    // return await this.roleService.edit({ id, name, claims });
   }
   
   @UsePipes(new ValidationPipe())
@@ -102,7 +102,7 @@ export class RoleController {
   async editOnAllUser(
     @Body() { id, name, claims }: EditDto, //
   ) {
-    return await this.roleService.edit({ id, name, claims });
+    // return await this.roleService.edit({ id, name, claims });
   }
 
   @UsePipes(new ValidationPipe())
@@ -112,6 +112,6 @@ export class RoleController {
   async delete(
     @Body() { id, newRoleId }: DeleteDto, //
   ) {
-    return await this.roleService.delete({ id, newRoleId });
+    // return await this.roleService.delete({ id, newRoleId });
   }
 }

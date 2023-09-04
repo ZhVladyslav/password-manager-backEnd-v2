@@ -1,85 +1,68 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { RoleDbService } from './role.db.service';
 import { IMessageRes } from 'src/types/defaultRes.type';
 import { IClaim, IRole } from 'src/types/role.type';
 
-interface IClaimsInRoleRes extends Pick<IClaim, 'id' | 'name'> {}
-
-export interface IGetAllRes extends Pick<IRole, 'id' | 'name'> {}
-export interface IGetByIdReq extends Pick<IRole, 'id'> {}
-export interface IGetByIdRes extends Pick<IRole, 'id' | 'name'> {
-  claims: IClaimsInRoleRes[];
+interface IRoleAllRes extends Pick<IRole, 'id' | 'name'> {}
+interface IRoleRes extends Pick<IRole, 'id' | 'name'> {
+  claims: string[];
 }
-export interface ICreateReq extends Pick<IRole, 'name' | 'claims'> {}
-export interface IEditReq extends IRole {}
-export interface IDeleteReq extends Pick<IRole, 'id'> {
-  newRoleId: string | null;
-}
+interface ICreateRole extends Pick<IRole, 'name' | 'claims'> {}
 
 interface IRoleService {
-  getAll(): Promise<IGetAllRes[]>;
-  getById(data: IGetByIdReq): Promise<IGetByIdRes>;
-  create(data: ICreateReq): Promise<IMessageRes>;
-  edit(data: IEditReq): Promise<IMessageRes>;
-  delete(data: IDeleteReq): Promise<IMessageRes>;
+  getAll(): Promise<IRoleAllRes[]>;
+  getById({ id }: { id: string }): Promise<IRoleRes>;
+  getByName({ name }: { name: string }): Promise<IRoleRes>;
+  create(data: ICreateRole): Promise<IMessageRes>;
+  // createAdmin
+  edit(data: IRole): Promise<IMessageRes>;
+  // editOnUser
+  // editOnAllUsers
+  delete({ id }: { id: string }): Promise<IMessageRes>;
 }
 
 @Injectable()
 export class RoleService {
-  constructor(private readonly databaseService: RoleDbService) {}
+  constructor(private readonly roleDbService: RoleDbService) {}
 
-  /**
-   * 
-   * **get all
-   * **get by id
-   * **get by name
-   * 
-   * create role
-   * create admin
-   * 
-   * edit role
-   * edit on user
-   * edit on all users
-   * 
-   * delete
-   * 
-   */
-
-  /**
-   public async getAll(): Promise<> {}
-   public async getById(): Promise<> {}
-   public async getByName(): Promise<> {}
-   public async create(): Promise<> {}
-   public async createAdmin(): Promise<> {}
-   public async edit(): Promise<> {}
-   public async editOnUser(): Promise<> {}
-   public async editOnAllUsers(): Promise<> {}
-   */
-
-  public async getAll(): Promise<IGetAllRes[]> {
-    return await this.databaseService.findAll();
+  // get all role
+  public async getAll(): Promise<IRoleAllRes[]> {
+    const roleList = await this.roleDbService.findAll();
+    return roleList;
   }
 
-  // public async getById({ id }: IGetByIdReq): Promise<IGetByIdRes> {
-  //   return await this.databaseService.findById({ id });
-  // }
+  // get role by id
+  public async getById({ id }: { id: string }): Promise<IRoleRes> {
+    const role = await this.roleDbService.findById({ id });
+    const roleClaims = await this.roleDbService.findClaimsForRole({ roleId: role.id });
+    return { ...role, claims: roleClaims.map((claim) => claim.name) };
+  }
 
-  // public async create({ name, claims }: ICreateReq): Promise<IMessageRes> {
-  //   await this.databaseService.create({ name, claims });
-  //   return { message: 'Role is create' };
-  // }
+  // get role by name
+  public async getByName({ name }: { name: string }): Promise<IRoleRes> {
+    const role = await this.roleDbService.findByName({ name });
+    const roleClaims = await this.roleDbService.findClaimsForRole({ roleId: role.id });
+    return { ...role, claims: roleClaims.map((claim) => claim.name) };
+  }
 
-  // public async edit({ id, name, claims }: IEditReq): Promise<IMessageRes> {
-  //   const findRole = this.databaseService.findById({ id });
-  //   if (!findRole) throw new NotFoundException('Role not found');
-  //   await this.databaseService.edit({ id, name, claims });
-  //   return { message: 'role is edit' };
-  // }
+  public async create({ name, claims }: ICreateRole): Promise<IMessageRes> {
+    await this.roleDbService.createRole({ name, claims });
+    return { message: `Role '${name}' is create` };
+  }
 
-  // public async delete({ id, newRoleId }: IDeleteReq): Promise<IMessageRes> {
-  //   const findRole = this.databaseService.findById({ id });
-  //   if (!findRole) throw new NotFoundException('Role not found');
-  //   await this.databaseService.delete({ id, newRoleId });
-  //   return { message: 'Role is delete' };
-  // }
+  public async createAdmin(): Promise<void> {}
+
+  public async edit({ id, name, claims }: IRole): Promise<IMessageRes> {
+    await this.roleDbService.editRole({ id, name, claims });
+    return { message: `Role '${name}' is edit` };
+  }
+
+  public async editOnUser(): Promise<void> {}
+
+  public async editOnAllUsers(): Promise<void> {}
+
+  public async delete({ id }: { id: string }): Promise<IMessageRes> {
+    await this.roleDbService.deleteRole({ id });
+    return { message: 'Role is delete' };
+  }
 }
