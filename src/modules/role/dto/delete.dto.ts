@@ -5,10 +5,4 @@ export class DeleteDto {
   @IsNotEmpty()
   @IsUUID('4')
   id: string;
-
-  @IsOptional()
-  @IsNotEmpty()
-  @IsString()
-  @IsUUID('4')
-  newRoleId: string | null;
 }
