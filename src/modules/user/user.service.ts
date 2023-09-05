@@ -8,7 +8,6 @@ interface IUserService {
   myAccount(data: IGetByIdReq): Promise<IGetByIdRes>;
   editName(data: IEditNameReq): Promise<IMessageRes>;
   editPassword(data: IEditPasswordReq): Promise<IMessageRes>;
-  editRole(data: IEditRoleReq): Promise<IMessageRes>;
   delete(data: IDeleteReq): Promise<IMessageRes>;
 }
 
@@ -17,13 +16,13 @@ export class UserService implements IUserService {
   constructor(private readonly databaseService: UserDbService) {}
 
   async myAccount({ id }: IGetByIdReq): Promise<IGetByIdRes> {
-    const user = await this.databaseService.findUserById({ id });
+    const user = await this.databaseService.findById({ id });
 
     return { id: user.id, name: user.name, roleId: user.roleId };
   }
 
   async editName({ id, name }: IEditNameReq): Promise<IMessageRes> {
-    const user = await this.databaseService.findUserById({ id });
+    const user = await this.databaseService.findById({ id });
 
     if (user.name === name) throw new BadRequestException('This name is already set');
 
@@ -33,7 +32,7 @@ export class UserService implements IUserService {
   }
 
   async editPassword({ id, password, newPassword }: IEditPasswordReq): Promise<IMessageRes> {
-    const user = await this.databaseService.findUserById({ id });
+    const user = await this.databaseService.findById({ id });
     const passwordIsAccess = await passCheck.verify(password, user.password);
 
     if (!passwordIsAccess) throw new BadRequestException('The password is not correct');
@@ -45,18 +44,18 @@ export class UserService implements IUserService {
     return { message: 'Password is edit' };
   }
 
-  public async editRole({ id, roleId }: IEditRoleReq): Promise<IMessageRes> {
-    const user = await this.databaseService.findUserById({ id });
+  // public async editRole({ id, roleId }: IEditRoleReq): Promise<IMessageRes> {
+  //   const user = await this.databaseService.findById({ id });
 
-    if (user.roleId === roleId) throw new BadRequestException('This role is already set');
+  //   if (user.roleId === roleId) throw new BadRequestException('This role is already set');
 
-    await this.databaseService.editRole({ id, roleId });
+  //   await this.databaseService.editRole({ id, roleId });
 
-    return { message: 'User role is edit' };
-  }
+  //   return { message: 'User role is edit' };
+  // }
 
   async delete({ id, password }: IDeleteReq): Promise<IMessageRes> {
-    const user = await this.databaseService.findUserById({ id });
+    const user = await this.databaseService.findById({ id });
 
     if (!(await passCheck.verify(password, user.password)))
       throw new BadRequestException('The password is not correct');

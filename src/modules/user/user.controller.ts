@@ -43,15 +43,15 @@ export class UserController {
     return await this.userService.editPassword({ id: userId, password, newPassword });
   }
 
-  @UsePipes(new ValidationPipe())
-  @Put('edit-role')
-  @UseGuards(ClaimsGuard)
-  @SetMetadata('claims', [Claims.SET_USER_ROLE])
-  async editRole(
-    @Body() { userId, roleId }: EditRoleDto, //
-  ) {
-    return await this.userService.editRole({ id: userId, roleId });
-  }
+  // @UsePipes(new ValidationPipe())
+  // @Put('edit-role')
+  // @UseGuards(ClaimsGuard)
+  // @SetMetadata('claims', [Claims.SET_USER_ROLE])
+  // async editRole(
+  //   @Body() { userId, roleId }: EditRoleDto, //
+  // ) {
+  //   return await this.userService.editRole({ id: userId, roleId });
+  // }
 
   @UsePipes(new ValidationPipe())
   @Delete('delete')

@@ -1,5 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { Claims } from 'src/config/claims';
+import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { handlerErrorDb } from 'src/handlers/handlerError.db';
 import { IClaim, IRole } from 'src/types/role.type';
@@ -12,8 +11,7 @@ interface IRoleDbService {
   findById({ id }: { id: string }): Promise<IRoleRes>;
   findByName({ name }: { name: string }): Promise<IRoleRes>;
   findClaimsForRole({ roleId }: { roleId: string }): Promise<IClaim[]>;
-  createRole(data: ICreateRole): Promise<void>;
-  createAdmin({ userId }: { userId: string }): Promise<void>;
+  createRole(data: ICreateRole): Promise<IRoleRes>;
   editRole(data: IRole): Promise<void>;
   deleteRole({ id }: { id: string }): Promise<void>;
 }
@@ -31,14 +29,14 @@ export class RoleDbService implements IRoleDbService {
   // find role by id
   public async findById({ id }: { id: string }): Promise<IRoleRes> {
     const role = await handlerErrorDb(this.databaseService.role.findFirst({ where: { id } }));
-    if (!role) throw new BadRequestException('Role not found');
+    if (!role) return null;
     return role;
   }
 
   // find role by name
   public async findByName({ name }: { name: string }): Promise<IRoleRes> {
     const role = await handlerErrorDb(this.databaseService.role.findFirst({ where: { name } }));
-    if (!role) throw new BadRequestException('Role not found');
+    if (!role) return null;
     return role;
   }
 
@@ -49,46 +47,22 @@ export class RoleDbService implements IRoleDbService {
   }
 
   // create role
-  public async createRole({ name, claims }: ICreateRole): Promise<void> {
-    // check role
-    const roleList = await this.findByName({ name });
-    if (roleList) throw new BadRequestException('A role with this name already exists');
+  public async createRole({ name, claims }: ICreateRole): Promise<IRoleRes> {
     // create role
     const role = await handlerErrorDb(this.databaseService.role.create({ data: { name } }));
     // create new claims to role
     const newClaims = claims.map((item) => this.createClaim({ roleId: role.id, name: item }));
     await Promise.all(newClaims);
-  }
-
-  /**
-   * @ERROR not check user id
-   */
-  // create admin
-  public async createAdmin({ userId }: { userId: string }): Promise<void> {
-    let adminRole = await this.findByName({ name: 'admin' });
-    if (!adminRole) {
-      const claims = Object.keys(Claims).map((claim) => claim);
-      await this.createRole({ name: 'admin', claims });
-      adminRole = await this.findByName({ name: 'admin' });
-    }
-    if (adminRole) {
-      await handlerErrorDb(
-        this.databaseService.user.update({
-          data: { roleId: adminRole.id },
-          where: { id: userId },
-        }),
-      );
-    }
+    // return created role
+    return role;
   }
 
   // edit role by id
   public async editRole({ id, name, claims }: IRole): Promise<void> {
-    // check on exist role
-    await handlerErrorDb(this.findById({ id }));
     // edit role name
     await handlerErrorDb(this.databaseService.role.update({ data: { name }, where: { id } }));
     // delete all claims to role
-    await handlerErrorDb(this.deleteAllClaim({ roleId: id }));
+    await this.deleteAllClaim({ roleId: id });
     // create new claims to role
     const newClaims = claims.map((item) => this.createClaim({ roleId: id, name: item }));
     await Promise.all(newClaims);
@@ -96,8 +70,6 @@ export class RoleDbService implements IRoleDbService {
 
   // delete role
   public async deleteRole({ id }: { id: string }): Promise<void> {
-    // check role on exist
-    await this.findById({ id });
     // delete all claims
     await this.deleteAllClaim({ roleId: id });
     // delete role

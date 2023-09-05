@@ -14,11 +14,13 @@ import {
 import { RoleService } from './role.service';
 import { Claims } from 'src/config/claims';
 import { ByIdDto } from './dto/byId.dto';
-import { CreateDto } from './dto/Create.dto';
+import { CreateAdminDto } from './dto/createAdmin.dto';
 import { DeleteDto } from './dto/delete.dto';
 import { EditDto } from './dto/edit.dto';
 import { ClaimsGuard } from 'src/guards/claims.guard';
 import { SettingsGuard } from 'src/guards/settings.guard';
+import { ByNameDto } from './dto/byName.dto';
+import { CreateDto } from './dto/create.dto';
 
 @Controller('role')
 export class RoleController {
@@ -28,7 +30,7 @@ export class RoleController {
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.VIEW_CLAIMS])
   async allClaims() {
-    return Object.keys(Claims).map((item) => Claims[item]);
+    return Object.values(Claims);
   }
 
   @Get('all')
@@ -45,15 +47,15 @@ export class RoleController {
   async byId(
     @Param() { id }: ByIdDto, //
   ) {
-    // return await this.roleService.getById({ id });
+    return await this.roleService.getById({ id });
   }
 
-  @Get('byName')
+  @Get('by-name')
   @UseGuards(SettingsGuard)
   async byName(
-    // @Body() { name }: ByNameDto, //
+    @Body() { name }: ByNameDto, //
   ) {
-    // return await this.roleService.getAll();
+    return await this.roleService.getByName({ name });
   }
 
   @UsePipes(new ValidationPipe())
@@ -63,16 +65,16 @@ export class RoleController {
   async create(
     @Body() { name, claims }: CreateDto, //
   ) {
-    // return await this.roleService.create({ name, claims });
+    return await this.roleService.create({ name, claims });
   }
 
   @UsePipes(new ValidationPipe())
   @Post('create-admin')
   @UseGuards(SettingsGuard)
   async createSetting(
-    // @Body() { userId, claims }: CreateDto, //
+    @Body() { userId }: CreateAdminDto, //
   ) {
-    // return await this.roleService.create({ name, claims });
+    return await this.roleService.createAdmin({ userId });
   }
 
   @UsePipes(new ValidationPipe())
@@ -82,7 +84,7 @@ export class RoleController {
   async edit(
     @Body() { id, name, claims }: EditDto, //
   ) {
-    // return await this.roleService.edit({ id, name, claims });
+    return await this.roleService.edit({ id, name, claims });
   }
 
   @UsePipes(new ValidationPipe())
@@ -94,7 +96,7 @@ export class RoleController {
   ) {
     // return await this.roleService.edit({ id, name, claims });
   }
-  
+
   @UsePipes(new ValidationPipe())
   @Put('edit-on-all-user')
   @UseGuards(ClaimsGuard)
@@ -110,8 +112,8 @@ export class RoleController {
   @UseGuards(ClaimsGuard)
   @SetMetadata('claims', [Claims.DELETE_ROLE])
   async delete(
-    @Body() { id, newRoleId }: DeleteDto, //
+    @Body() { id }: DeleteDto, //
   ) {
-    // return await this.roleService.delete({ id, newRoleId });
+    return await this.roleService.delete({ id });
   }
 }

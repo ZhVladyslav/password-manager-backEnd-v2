@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { handlerErrorDb } from 'src/handlers/handlerError.db';
 import { IDeleteReqDb, IEditNameReq, IEditPasswordReqDb, IEditRoleReq, IGetByIdReq, IGetByIdResDb } from './user.type';
 
 interface IUserDbService {
-  findUserById(data: IGetByIdReq): Promise<IGetByIdResDb>;
+  findById(data: IGetByIdReq): Promise<IGetByIdResDb>;
   editName(data: IEditNameReq): Promise<void>;
   editPassword(data: IEditPasswordReqDb): Promise<void>;
   editRole(data: IEditRoleReq): Promise<void>;
@@ -15,13 +15,14 @@ interface IUserDbService {
 export class UserDbService implements IUserDbService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  public async findUserById({ id }: IGetByIdReq): Promise<IGetByIdResDb> {
+  public async findById({ id }: IGetByIdReq): Promise<IGetByIdResDb> {
     const user = await handlerErrorDb(this.databaseService.user.findFirst({ where: { id } }));
-    if (!user) return null;
+    if (!user) throw new BadRequestException('User is not found');
     return user;
   }
 
   public async editName({ id, name }: IEditNameReq): Promise<void> {
+    await this.findById({ id });
     await handlerErrorDb(this.databaseService.user.update({ where: { id }, data: { name } }));
   }
 
