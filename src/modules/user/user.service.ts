@@ -44,15 +44,15 @@ export class UserService implements IUserService {
     return { message: 'Password is edit' };
   }
 
-  // public async editRole({ id, roleId }: IEditRoleReq): Promise<IMessageRes> {
-  //   const user = await this.databaseService.findById({ id });
+  public async editRole({ id, roleId }: IEditRoleReq): Promise<IMessageRes> {
+    const user = await this.databaseService.findById({ id });
+    if (!user) throw new BadRequestException('User is not  found');
+    if (user.roleId === roleId) throw new BadRequestException('This role is already set');
 
-  //   if (user.roleId === roleId) throw new BadRequestException('This role is already set');
+    await this.databaseService.editRole({ id, roleId });
 
-  //   await this.databaseService.editRole({ id, roleId });
-
-  //   return { message: 'User role is edit' };
-  // }
+    return { message: 'User role is edit' };
+  }
 
   async delete({ id, password }: IDeleteReq): Promise<IMessageRes> {
     const user = await this.databaseService.findById({ id });

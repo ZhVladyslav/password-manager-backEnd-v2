@@ -94,7 +94,7 @@ export class RoleController {
   async editOnUser(
     @Body() { id, name, claims }: EditDto, //
   ) {
-    // return await this.roleService.edit({ id, name, claims });
+    // return await this.roleService.editOnUser();
   }
 
   @UsePipes(new ValidationPipe())
@@ -104,7 +104,7 @@ export class RoleController {
   async editOnAllUser(
     @Body() { id, name, claims }: EditDto, //
   ) {
-    // return await this.roleService.edit({ id, name, claims });
+    return await this.roleService.editOnAllUsers();
   }
 
   @UsePipes(new ValidationPipe())
