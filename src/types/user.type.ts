@@ -4,4 +4,5 @@ export interface IUser {
   login: string;
   password: string;
   roleId: string | null;
+  createDate: Date;
 }
