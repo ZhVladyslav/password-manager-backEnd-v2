@@ -1,9 +1,3 @@
-/**
-1 - view
-2 - create
-3 - edit
-*/
-
 export enum Claims {
   // User
   SET_USER_ROLE = 'SET_USER_ROLE',
