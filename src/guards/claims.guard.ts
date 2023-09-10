@@ -1,53 +1,39 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, NotFoundException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { DatabaseService } from 'src/database/database.service';
-import { handlerErrorDb } from 'src/handlers/handlerError.db';
+import { ClaimDbService } from 'src/database/claim.db.service';
+import { UserDbService } from 'src/database/user.db.service';
+import { IUserToken } from 'src/types/userToken.type';
 
 @Injectable()
 export class ClaimsGuard implements CanActivate {
   constructor(
-    private reflector: Reflector,
-    private readonly databaseService: DatabaseService,
+    private readonly reflector: Reflector,
+    private readonly userDbService: UserDbService,
+    private readonly claimDbService: ClaimDbService,
   ) {}
 
-  // find claims by role id
-  async getClaimsByRoleId(roleId: string) {
-    return await handlerErrorDb(this.databaseService.claim.findMany({ where: { roleId } }));
-  }
-
-  // find claims by role id
-  async userByUserId(userId: string) {
-    return await handlerErrorDb(this.databaseService.user.findFirst({ where: { id: userId } }));
-  }
-
-  // ----------------------------------------------------------------------
-
-  //
-  // GUARD
-  //
-
-  // ----------------------------------------------------------------------
-
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const requiredClaims = this.reflector.getAllAndOverride<string[]>('claims', [
-      context.getHandler(),
-      context.getClass(),
-    ]);
+    // claims
+    const requiredClaims: string[] = this.reflector.get('claims', context.getHandler());
 
-    if (!requiredClaims) {
-      return true;
-    }
+    if (requiredClaims.length === 0) return true;
 
-    const userId = context.switchToHttp().getRequest().userToken.userId;
-    const userInDb = await this.userByUserId(userId);
+    // user token
+    const request = context.switchToHttp().getRequest();
+    const { sessionId, userId, tokenId }: IUserToken = request['userToken'];
 
-    if (!userInDb || !userInDb.roleId) {
-      return false;
-    }
+    // user in database
+    const userInDb = await this.userDbService.findById({ id: userId });
+    if (!userInDb) throw new NotFoundException('User is not found');
 
-    const claimsInDb = await this.getClaimsByRoleId(userInDb.roleId);
-    const claims = claimsInDb.map((item) => item.name);
+    // user role claims
+    const userClaimsInDb = await this.claimDbService.findByRoleId({ roleId: userInDb.roleId });
 
-    return requiredClaims.every((claim) => claims.includes(claim));
+    // claims
+    const userClaims = userClaimsInDb.map((item) => item.claim);
+
+    const guardResult = requiredClaims.every((claim) => userClaims.includes(claim));
+
+    return guardResult;
   }
 }
