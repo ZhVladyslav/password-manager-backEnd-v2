@@ -1,6 +1,7 @@
 export interface ISession {
   id: string;
-  tokenId: string;
   userId: string;
+  tokenId: string;
+  createDate: Date;
   expDate: Date;
 }
