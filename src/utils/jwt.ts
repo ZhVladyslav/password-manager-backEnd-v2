@@ -2,9 +2,10 @@ import * as jsonwebtoken from 'jsonwebtoken';
 
 class Jwt {
   //
-  generate = ({ userId, tokenId }: { tokenId: string; userId: string }): string => {
+  generate = ({ sessionId, userId, tokenId }: { sessionId: string; tokenId: string; userId: string }): string => {
     const accessToken = jsonwebtoken.sign(
       {
+        sessionId,
         tokenId,
         userId,
       },
@@ -21,4 +22,4 @@ class Jwt {
   }
 }
 
-export const jwt = new Jwt()
+export const jwt = new Jwt();
