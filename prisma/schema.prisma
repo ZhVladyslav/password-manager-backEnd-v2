@@ -60,12 +60,6 @@ model Claim {
   id             String   @id @default(uuid())
   roleId         String
   claim          String
-  name_en        String
-  name_ua        String
-  name_ru        String
-  description_en String
-  description_ua String
-  description_ru String
   createDate     DateTime @default(now())
   Role           Role     @relation(fields: [roleId], references: [id])
 }
