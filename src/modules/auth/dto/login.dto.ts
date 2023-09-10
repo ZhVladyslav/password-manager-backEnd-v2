@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsString } from 'class-validator';
+import { RegValidation } from 'src/pipes/reg.pipe';
 
 export class LoginDto {
   @IsNotEmpty()
@@ -7,5 +8,6 @@ export class LoginDto {
 
   @IsNotEmpty()
   @IsString()
+  @RegValidation(/^[a-z]$/)
   password: string;
 }

@@ -1,5 +1,4 @@
 import { IsArray, IsNotEmpty, IsString, IsUUID } from 'class-validator';
-import { IsValidClaim } from 'src/pipes/claims.pipe';
 
 export class EditDto {
   @IsNotEmpty()
@@ -14,6 +13,5 @@ export class EditDto {
   @IsArray()
   @IsNotEmpty()
   @IsString({ each: true })
-  @IsValidClaim()
   claims: string[];
 }

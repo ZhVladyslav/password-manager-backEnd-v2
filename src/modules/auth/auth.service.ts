@@ -2,39 +2,44 @@ import { BadRequestException, Injectable, ConflictException } from '@nestjs/comm
 import { password as passCheck } from 'src/utils/password';
 import { uuid } from 'src/utils/uuid';
 import { jwt } from 'src/utils/jwt';
-import { AuthDbService } from './auth.db.service';
-import { IMessageRes } from 'src/types/defaultRes.type';
-import { ILoginReq, ILoginRes, IRegistrationReq } from './auth.type';
-
-interface IAuthService {
-  login(data: ILoginReq): Promise<ILoginRes>;
-  registration(data: IRegistrationReq): Promise<IMessageRes>;
-}
+import { UserDbService } from 'src/database/user.db.service';
+import { SessionDbService } from 'src/database/session.db.service';
 
 @Injectable()
-export class AuthService implements IAuthService {
-  constructor(private readonly databaseService: AuthDbService) {}
+export class AuthService {
+  constructor(
+    private readonly userDbService: UserDbService,
+    private readonly sessionDbService: SessionDbService,
+  ) {}
 
-  public async login({ login, password }: ILoginReq): Promise<ILoginRes> {
-    const userInDb = await this.databaseService.findByLogin({ login });
+  public async login({ login, password }: { login: string; password: string }): Promise<any> {
+    const userInDb = await this.userDbService.findByLogin({ login });
     if (!userInDb) throw new BadRequestException('Invalid user or password');
 
     const checkPassword = await passCheck.verify(password, userInDb.password);
     if (!checkPassword) throw new BadRequestException('Invalid user or password');
 
     const tokenId = uuid.v4();
-    const token = jwt.generate({ userId: userInDb.id, tokenId });
-    await this.databaseService.createSession({ userId: userInDb.id, tokenId });
+    const newSession = await this.sessionDbService.create({ userId: userInDb.id, tokenId, expDate: new Date() });
+    const token = jwt.generate({ sessionId: newSession.id, userId: userInDb.id, tokenId });
 
     return { token };
   }
 
-  public async registration({ name, login, password }: IRegistrationReq): Promise<IMessageRes> {
-    const userInDb = await this.databaseService.findByLogin({ login });
+  public async registration({
+    name,
+    login,
+    password,
+  }: {
+    name: string;
+    login: string;
+    password: string;
+  }): Promise<any> {
+    const userInDb = await this.userDbService.findByLogin({ login });
     if (userInDb) throw new ConflictException('User with this login already exists');
 
     const passwordHash = await passCheck.generateHash(password);
-    await this.databaseService.createUser({ name, login, password: passwordHash });
+    await this.userDbService.create({ name, login, password: passwordHash });
 
     return { message: 'User is create' };
   }

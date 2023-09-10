@@ -5,8 +5,8 @@ export class CreateDto {
   @IsString()
   name: string;
 
-  @IsArray()
-  @IsNotEmpty()
-  @IsString({ each: true })
-  claims: string[];
+  // @IsArray()
+  // @IsNotEmpty()
+  // @IsString({ each: true })
+  // claims: string[];
 }
