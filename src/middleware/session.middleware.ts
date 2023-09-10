@@ -1,35 +1,20 @@
-import { Injectable, NestMiddleware, BadRequestException, NotFoundException } from '@nestjs/common';
-import { DatabaseService } from 'src/database/database.service';
-import { handlerErrorDb } from 'src/handlers/handlerError.db';
+import { Injectable, NestMiddleware, NotFoundException } from '@nestjs/common';
+import { SessionDbService } from 'src/database/session.db.service';
 import { IUserToken } from 'src/types/userToken.type';
 
 @Injectable()
 export class SessionMiddleware implements NestMiddleware {
-  constructor(private readonly databaseService: DatabaseService) {}
-
-  // find session by session label
-  async findSessionByLabel(tokenId: string) {
-    return await handlerErrorDb(this.databaseService.session.findFirst({ where: { tokenId } }));
-  }
-
-  // ----------------------------------------------------------------------
-
-  //
-  // MIDDLEWARE
-  //
-
-  // ----------------------------------------------------------------------
+  constructor(private readonly sessionDbService: SessionDbService) {}
 
   async use(req: any, res: any, next: () => void) {
     // get userToken
-    const userToken = req['userToken'] as IUserToken;
-
-    // find tokenId in token
-    if (!('tokenId' in userToken)) throw new BadRequestException('Invalid token');
+    const { sessionId, userId, tokenId } = req['userToken'] as IUserToken;
 
     // find user session
-    const resFindSession = await this.findSessionByLabel(userToken.tokenId);
+    const resFindSession = await this.sessionDbService.findByTokenId({ tokenId });
     if (!resFindSession) throw new NotFoundException('Session not found');
+
+    // add expire session
 
     next();
   }

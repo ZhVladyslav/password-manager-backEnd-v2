@@ -1,4 +1,4 @@
-import { Injectable, NestMiddleware, UnauthorizedException, BadRequestException } from '@nestjs/common';
+import { Injectable, NestMiddleware, UnauthorizedException } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { IUserToken } from '../types/userToken.type';
 import { jwt } from 'src/utils/jwt';
@@ -17,9 +17,6 @@ export class AuthMiddleware implements NestMiddleware {
 
       // Write user token in request
       req['userToken'] = userToken as IUserToken;
-
-      // find userId in token
-      if (!('userId' in req['userToken'])) throw new BadRequestException('Invalid token');
 
       next();
     } catch (err) {
