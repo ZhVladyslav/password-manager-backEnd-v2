@@ -3,23 +3,22 @@ import { RegistrationDto } from './dto/registration.dto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 
+@UsePipes(new ValidationPipe())
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @UsePipes(new ValidationPipe())
   @Post('login')
   async login(
-    @Body() { login, password }: LoginDto, //
+    @Body() data: LoginDto, //
   ) {
-    return await this.authService.login({ login, password });
+    return await this.authService.login(data);
   }
 
-  @UsePipes(new ValidationPipe())
   @Post('registration')
   async registration(
-    @Body() { name, login, password }: RegistrationDto, //
+    @Body() data: RegistrationDto, //
   ) {
-    return await this.authService.registration({ name, login, password });
+    return await this.authService.registration(data);
   }
 }

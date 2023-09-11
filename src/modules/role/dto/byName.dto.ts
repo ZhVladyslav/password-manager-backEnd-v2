@@ -6,5 +6,5 @@ export class ByNameDto {
   @IsNotEmpty()
   @IsString()
   @RegValidation(regexConfig.role.name)
-  name: string;
+  name_en: string;
 }

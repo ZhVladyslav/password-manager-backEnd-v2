@@ -4,12 +4,15 @@ import { handlerErrorDb } from './handlerError.db';
 import { IClaim } from 'src/types/claim.type';
 
 interface IFindByRoleId extends Pick<IClaim, 'roleId'> {}
-interface ICreate extends Omit<IClaim, 'id' | 'createDate'> {}
+interface ICreate {
+  roleId: string;
+  claims: string[];
+}
 interface IDelete extends Pick<IClaim, 'roleId'> {}
 
 interface IClaimDbService {
   findByRoleId(data: IFindByRoleId): Promise<IClaim[]>;
-  create(data: ICreate[]): Promise<IClaim[]>;
+  create(data: ICreate): Promise<IClaim[]>;
   delete(data: IDelete): Promise<void>;
 }
 
@@ -22,13 +25,11 @@ export class ClaimDbService implements IClaimDbService {
     return claims;
   }
 
-  public async create(data: ICreate[]): Promise<IClaim[]> {
+  public async create({ roleId, claims }: ICreate): Promise<IClaim[]> {
     // createMany not work
-    const promiseCreateClaims = data.map(async (claim) => {
-      const claimDb = await handlerErrorDb(this.databaseService.claim.create({ data: claim }));
-      if (!claimDb) return null;
-      return claimDb;
-    });
+    const promiseCreateClaims = claims.map(
+      async (claim) => await handlerErrorDb(this.databaseService.claim.create({ data: { roleId, claim } })),
+    );
     const newClaimList = await Promise.all(promiseCreateClaims);
     return newClaimList;
   }
