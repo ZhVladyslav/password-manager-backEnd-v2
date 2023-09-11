@@ -12,13 +12,14 @@ import { Claims } from 'src/config/claims';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @ClaimsSet([])
+  @ClaimsSet([Claims.EDIT_ROLE])
   @Get('my-account')
   async myAccount(
     @UserToken() { userId }: IUserToken, //
   ) {
     return await this.userService.myAccount({ id: userId });
   }
+
 
   @UsePipes(new ValidationPipe())
   @Put('edit-role')

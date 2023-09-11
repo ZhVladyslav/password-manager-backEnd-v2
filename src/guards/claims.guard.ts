@@ -16,6 +16,7 @@ export class ClaimsGuard implements CanActivate {
     // claims
     const requiredClaims: string[] = this.reflector.get('claims', context.getHandler());
 
+    if (!requiredClaims) return true;
     if (requiredClaims.length === 0) return true;
 
     // user token
