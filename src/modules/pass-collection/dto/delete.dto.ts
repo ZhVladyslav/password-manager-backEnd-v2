@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
-export class ByIdDto {
+export class DeleteDto {
   @IsNotEmpty()
   @IsString()
   @IsUUID('4')

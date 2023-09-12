@@ -1,10 +1,8 @@
-import { IsNotEmpty, IsString } from 'class-validator';
-import { regexConfig } from 'src/config/reg';
-import { RegValidation } from 'src/pipes/reg.pipe';
+import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 export class DeleteDto {
   @IsNotEmpty()
   @IsString()
-  @RegValidation(regexConfig.user.password)
-  password: string;
+  @IsUUID()
+  id: string;
 }
