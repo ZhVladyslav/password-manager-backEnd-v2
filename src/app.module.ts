@@ -4,9 +4,10 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { ErrorMiddleware } from './middleware/error.middleware';
 import { RoleModule } from './modules/role/role.module';
+import { PassCollectionModule } from './modules/pass-collection/pass-collection.module';
 
 @Module({
-  imports: [AuthModule, UserModule, RoleModule],
+  imports: [AuthModule, UserModule, RoleModule, PassCollectionModule],
   exports: [],
   controllers: [AppController],
   providers: [],
