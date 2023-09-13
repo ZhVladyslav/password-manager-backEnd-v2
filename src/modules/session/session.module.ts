@@ -9,4 +9,4 @@ import { SessionService } from './session.service';
   providers: [SessionService],
   controllers: [SessionController],
 })
-export class PassCollectionModule {}
+export class SessionModule {}

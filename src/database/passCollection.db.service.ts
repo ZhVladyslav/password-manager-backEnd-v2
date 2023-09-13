@@ -5,6 +5,7 @@ import { IPassCollection } from 'src/types/passCollection.type';
 
 interface IFindAll extends Pick<IPassCollection, 'userId'> {}
 interface IFindById extends Pick<IPassCollection, 'id' | 'userId'> {}
+interface IFindByName extends Pick<IPassCollection, 'userId' | 'name'> {}
 interface ICreate extends Pick<IPassCollection, 'userId' | 'version' | 'name' | 'encryptData'> {}
 interface IUpdateName extends Pick<IPassCollection, 'id' | 'userId' | 'name'> {}
 interface IUpdateEncryptData extends Pick<IPassCollection, 'id' | 'userId' | 'encryptData'> {}
@@ -18,6 +19,7 @@ interface IDeleteAll extends Pick<IPassCollection, 'userId'> {}
 interface IPassCollectionDbService {
   findAll(data: IFindAll): Promise<IPassCollection[]>;
   findById(data: IFindById): Promise<IPassCollection>;
+  findByName(data: IFindByName): Promise<IPassCollection>;
   create(data: ICreate): Promise<IPassCollection>;
   updateName(data: IUpdateName): Promise<IPassCollection>;
   updateEncryptDate(data: IUpdateEncryptData): Promise<IPassCollection>;
@@ -42,6 +44,16 @@ export class PassCollectionDbService implements IPassCollectionDbService {
     const passCollection = await handlerErrorDb(
       this.databaseService.passCollection.findFirst({
         where: { id, userId },
+      }),
+    );
+    if (!passCollection) return null;
+    return passCollection;
+  }
+
+  public async findByName({ userId, name }: IFindByName): Promise<IPassCollection> {
+    const passCollection = await handlerErrorDb(
+      this.databaseService.passCollection.findFirst({
+        where: { userId, name },
       }),
     );
     if (!passCollection) return null;

@@ -1,9 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { IMessageRes } from 'src/types/defaultRes.type';
-import { Claims } from 'src/config/claims';
 import { RoleDbService } from 'src/database/role.db.service';
 import { ClaimDbService } from 'src/database/claim.db.service';
-import { IUser } from 'src/types/user.type';
 import { IRole } from 'src/types/role.type';
 import { IClaim } from 'src/types/claim.type';
 
