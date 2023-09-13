@@ -1,4 +1,5 @@
-import { BadRequestException, Injectable, ConflictException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { SessionDbService } from 'src/database/session.db.service';
 
 interface IService {
   id: string;
@@ -17,17 +18,18 @@ interface ISessionService {
 
 @Injectable()
 export class SessionService implements ISessionService {
-  constructor(private readonly sessionService: SessionService) {}
+  constructor(private readonly sessionService: SessionDbService) {}
 
   public async all({ userId }: IAll): Promise<any> {
-    return '';
+    return await this.sessionService.findAll({ userId });
   }
 
   public async byId({ id, userId }: IById): Promise<any> {
-    return '';
+    return await this.sessionService.findById({ id, userId });
   }
 
   public async delete({ id, userId }: IDelete): Promise<{ message: string }> {
-    return { message: '' };
+    await this.sessionService.deleteById({ id, userId });
+    return { message: 'Session is delete' };
   }
 }

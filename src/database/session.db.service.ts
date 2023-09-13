@@ -4,10 +4,10 @@ import { handlerErrorDb } from './handlerError.db';
 import { ISession } from 'src/types/session.type';
 
 interface IFindAll extends Pick<ISession, 'userId'> {}
-interface IFindById extends Pick<ISession, 'id'> {}
+interface IFindById extends Pick<ISession, 'id' | 'userId'> {}
 interface IFindByTokenId extends Pick<ISession, 'tokenId'> {}
 interface ICreate extends Pick<ISession, 'userId' | 'tokenId' | 'expDate'> {}
-interface IDeleteById extends Pick<ISession, 'id' > {}
+interface IDeleteById extends Pick<ISession, 'id' | 'userId'> {}
 interface IDeleteAll extends Pick<ISession, 'userId'> {}
 
 interface ISessionDbService {
@@ -32,10 +32,10 @@ export class SessionDbService implements ISessionDbService {
     return session;
   }
 
-  public async findById({ id }: IFindById): Promise<ISession> {
+  public async findById({ id, userId }: IFindById): Promise<ISession> {
     const session = await handlerErrorDb(
       this.databaseService.session.findFirst({
-        where: { id },
+        where: { id, userId },
       }),
     );
     if (!session) return null;
@@ -62,10 +62,10 @@ export class SessionDbService implements ISessionDbService {
     return session;
   }
 
-  public async deleteById({ id }: IDeleteById): Promise<ISession> {
+  public async deleteById({ id, userId }: IDeleteById): Promise<ISession> {
     const session = await handlerErrorDb(
       this.databaseService.session.delete({
-        where: { id },
+        where: { id, userId },
       }),
     );
     if (!session) return null;
