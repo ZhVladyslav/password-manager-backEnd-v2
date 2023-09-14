@@ -17,8 +17,8 @@ interface IEditEncryptData extends Pick<IService, 'id' | 'userId' | 'encryptData
 interface IDelete extends Pick<IService, 'id' | 'userId'> {}
 
 interface IPassCollectionService {
-  all(data: IAll): Promise<IPassCollection[]>;
-  byId(data: IById): Promise<IPassCollection>;
+  getAll(data: IAll): Promise<IPassCollection[]>;
+  getById(data: IById): Promise<IPassCollection>;
   create(data: ICreate): Promise<{ message: string }>;
   editName(data: IEditName): Promise<{ message: string }>;
   editEncryptData(data: IEditEncryptData): Promise<{ message: string }>;
@@ -29,11 +29,11 @@ interface IPassCollectionService {
 export class PassCollectionService implements IPassCollectionService {
   constructor(private readonly passCollectionService: PassCollectionDbService) {}
 
-  public async all({ userId }: IAll): Promise<IPassCollection[]> {
+  public async getAll({ userId }: IAll): Promise<IPassCollection[]> {
     return await this.passCollectionService.findAll({ userId });
   }
 
-  public async byId({ id, userId }: IById): Promise<IPassCollection> {
+  public async getById({ id, userId }: IById): Promise<IPassCollection> {
     const passCollectionIdDb = await this.passCollectionService.findById({ id, userId });
     if (!passCollectionIdDb) throw new NotFoundException('Password collections not found');
     return passCollectionIdDb;
@@ -47,24 +47,21 @@ export class PassCollectionService implements IPassCollectionService {
   }
 
   public async editName({ id, userId, name }: IEditName): Promise<{ message: string }> {
-    const passCollectionInDb = await this.passCollectionService.findById({ id, userId });
-    if (!passCollectionInDb) throw new NotFoundException('Password collection is not found');
+    const passCollectionInDb = await this.getById({ id, userId });
     if (name === passCollectionInDb.name) throw new BadRequestException('This name is already set');
-    const updatePassCollection = await this.passCollectionService.updateName({ id, userId, name });
+    await this.passCollectionService.updateName({ id, userId, name });
     return { message: 'Password collection name is edit' };
   }
 
   public async editEncryptData({ id, userId, encryptData }: IEditEncryptData): Promise<{ message: string }> {
-    const passCollectionInDb = await this.passCollectionService.findById({ id, userId });
-    if (!passCollectionInDb) throw new NotFoundException('Password collection is not found');
-    const updatePassCollection = await this.passCollectionService.updateEncryptDate({ id, userId, encryptData });
+    await this.getById({ id, userId });
+    await this.passCollectionService.updateEncryptDate({ id, userId, encryptData });
     return { message: 'Encrypt data in password collection is edit' };
   }
 
   public async delete({ id, userId }: IDelete): Promise<{ message: string }> {
-    const passCollectionInDb = await this.passCollectionService.findById({ id, userId });
-    if (!passCollectionInDb) throw new NotFoundException('Password collection is not found');
-    const deletePassCollection = await this.passCollectionService.deleteById({ id, userId });
+    await this.getById({ id, userId });
+    await this.passCollectionService.deleteById({ id, userId });
     return { message: 'Password collection is delete' };
   }
 }

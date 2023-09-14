@@ -20,7 +20,7 @@ export class UserController {
   async myAccount(
     @UserToken() { userId }: IUserToken, //
   ) {
-    return await this.userService.myAccount({ id: userId });
+    return await this.userService.getById({ id: userId });
   }
 
   @Put('edit-name')

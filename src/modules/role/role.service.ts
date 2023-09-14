@@ -47,59 +47,44 @@ export class RoleService implements IRoleService {
     return roleList;
   }
 
+  private async getByIdPrivate({ id }: IGetById): Promise<IRole> {
+    const role = await this.roleDbService.findById({ id });
+    if (!role) throw new BadRequestException('Role is not found');
+    return role;
+  }
+
   public async getById({ id }: IGetById): Promise<IGetByIdRes> {
     const role = await this.roleDbService.findById({ id });
     if (!role) throw new BadRequestException('Role is not found');
-
     const roleClaims = await this.claimDbService.findByRoleId({ roleId: role.id });
-
     return { ...role, claims: roleClaims };
   }
 
   public async getByName({ name_en }: IGetByName): Promise<IGetByNameRes> {
     const role = await this.roleDbService.findByName({ name_en });
     if (!role) throw new BadRequestException('Role is not found');
-
     const roleClaims = await this.claimDbService.findByRoleId({ roleId: role.id });
-
     return { ...role, claims: roleClaims };
   }
 
-  public async create({
-    name_en,
-    name_ua,
-    name_ru,
-    description_en,
-    description_ua,
-    description_ru,
-    claims,
-  }: ICreate): Promise<{ message: string }> {
-    const newRole = await this.roleDbService.create({
-      name_en,
-      name_ua,
-      name_ru,
-      description_en,
-      description_ua,
-      description_ru,
-    });
+  public async create(data: ICreate): Promise<{ message: string }> {
+    const { name_en, name_ua, name_ru, description_en, description_ua, description_ru, claims } = data;
+    const dataToCreate = { name_en, name_ua, name_ru, description_en, description_ua, description_ru };
 
+    const roleInDb = await this.roleDbService.findByName({ name_en });
+    if (roleInDb) throw new BadRequestException('This role name already is set');
+
+    const newRole = await this.roleDbService.create(dataToCreate);
     await this.claimDbService.create({ roleId: newRole.id, claims });
-
     return { message: `Role '${name}' is create` };
   }
 
-  public async edit({
-    id,
-    name_en,
-    name_ua,
-    name_ru,
-    description_en,
-    description_ua,
-    description_ru,
-    claims,
-  }: IEdit): Promise<{ message: string }> {
-    await this.roleDbService.update({ id, name_en, name_ua, name_ru, description_en, description_ua, description_ru });
+  public async edit(data: IEdit): Promise<{ message: string }> {
+    const { id, claims } = data;
+    const { name_en, name_ua, name_ru, description_en, description_ua, description_ru } = data;
 
+    await this.getByIdPrivate({ id });
+    await this.roleDbService.update({ id, name_en, name_ua, name_ru, description_en, description_ua, description_ru });
     await this.claimDbService.delete({ roleId: id });
     await this.claimDbService.create({ roleId: id, claims });
 
@@ -107,6 +92,7 @@ export class RoleService implements IRoleService {
   }
 
   public async delete({ id }: IDelete): Promise<{ message: string }> {
+    await this.getByIdPrivate({ id });
     await this.claimDbService.delete({ roleId: id });
     await this.roleDbService.delete({ id });
 

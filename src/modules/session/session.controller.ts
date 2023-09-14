@@ -14,7 +14,7 @@ export class SessionController {
   async all(
     @UserToken() { userId }: IUserToken, //
   ) {
-    return await this.sessionService.all({ userId });
+    return await this.sessionService.getAll({ userId });
   }
 
   @Post('by-id')
@@ -22,7 +22,7 @@ export class SessionController {
     @UserToken() { userId }: IUserToken, //
     @Body() { id }: ByIdDto, //
   ) {
-    return await this.sessionService.byId({ id, userId });
+    return await this.sessionService.getById({ id, userId });
   }
 
   @Post('delete')
