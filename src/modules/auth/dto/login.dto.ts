@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
-import { regexConfig } from 'src/config/reg';
-import { RegValidation } from 'src/pipes/reg.pipe';
+import { regexConfig } from '../../../config/reg';
+import { RegValidation } from '../../../pipes/reg.pipe';
 
 export class LoginDto {
   @IsNotEmpty()

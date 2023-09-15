@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, ConflictException } from '@nestjs/common';
-import { passCheck } from 'src/utils/password';
-import { uuid } from 'src/utils/uuid';
-import { jwt } from 'src/utils/jwt';
-import { UserDbService } from 'src/database/user.db.service';
-import { SessionDbService } from 'src/database/session.db.service';
+import { passCheck } from '../../utils/password';
+import { uuid } from '../../utils/uuid';
+import { jwt } from '../../utils/jwt';
+import { UserDbService } from '../../database/user.db.service';
+import { SessionDbService } from '../../database/session.db.service';
 
 interface IAuth {
   name: string;
