@@ -17,14 +17,14 @@ export class RoleController {
     return await this.roleService.getAll();
   }
 
-  @Get('byId')
+  @Get('by-id')
   async byId(
     @Body() { id }: ByIdDto, //
   ) {
     return await this.roleService.getById({ id });
   }
 
-  @Get('byName')
+  @Get('by-name')
   async byName(
     @Body() { name_en }: ByNameDto, //
   ) {

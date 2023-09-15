@@ -17,7 +17,7 @@ export class PassCollectionController {
   async all(
     @UserToken() { userId }: IUserToken, //
   ) {
-    return await this.passCollectionService.all({ userId });
+    return await this.passCollectionService.getAll({ userId });
   }
 
   @Post('by-id')
@@ -25,7 +25,7 @@ export class PassCollectionController {
     @UserToken() { userId }: IUserToken, //
     @Body() { id }: ByIdDto, //
   ) {
-    return await this.passCollectionService.byId({ id, userId });
+    return await this.passCollectionService.getById({ id, userId });
   }
 
   @Post('create')
