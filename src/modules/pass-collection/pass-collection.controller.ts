@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, UsePipes, ValidationPipe, Param } from '@nestjs/common';
 import { PassCollectionService } from './pass-collection.service';
 import { ByIdDto } from './dto/byId.dto';
 import { UserToken } from 'src/decorators/userToken';
@@ -8,26 +8,27 @@ import { EditNameDto } from './dto/editName.dto';
 import { EditEncryptDataDto } from './dto/editEncryptData.dto';
 import { DeleteDto } from '../user/dto/delete.dto';
 
-@UsePipes(new ValidationPipe())
 @Controller('pass-collection')
 export class PassCollectionController {
   constructor(private readonly passCollectionService: PassCollectionService) {}
 
-  @Post('all')
+  @Get('all')
   async all(
     @UserToken() { userId }: IUserToken, //
   ) {
     return await this.passCollectionService.getAll({ userId });
   }
 
-  @Post('by-id')
+  // @UsePipes(new ValidationPipe())
+  @Get('by-id')
   async byId(
     @UserToken() { userId }: IUserToken, //
-    @Body() { id }: ByIdDto, //
+    @Param() { id }: ByIdDto, //
   ) {
     return await this.passCollectionService.getById({ id, userId });
   }
 
+  @UsePipes(new ValidationPipe())
   @Post('create')
   async create(
     @UserToken() { userId }: IUserToken, //
@@ -36,7 +37,8 @@ export class PassCollectionController {
     return await this.passCollectionService.create({ userId, name, encryptData });
   }
 
-  @Post('edit-name')
+  @UsePipes(new ValidationPipe())
+  @Put('edit-name')
   async editName(
     @UserToken() { userId }: IUserToken, //
     @Body() { id, name }: EditNameDto, //
@@ -44,7 +46,8 @@ export class PassCollectionController {
     return await this.passCollectionService.editName({ id, userId, name });
   }
 
-  @Post('edit-encrypt-data')
+  @UsePipes(new ValidationPipe())
+  @Put('edit-encrypt-data')
   async editEncryptData(
     @UserToken() { userId }: IUserToken, //
     @Body() { id, encryptData }: EditEncryptDataDto, //
@@ -52,7 +55,8 @@ export class PassCollectionController {
     return await this.passCollectionService.editEncryptData({ id, userId, encryptData });
   }
 
-  @Post('delete')
+  @UsePipes(new ValidationPipe())
+  @Delete('delete')
   async delete(
     @UserToken() { userId }: IUserToken, //
     @Body() { id }: DeleteDto, //
