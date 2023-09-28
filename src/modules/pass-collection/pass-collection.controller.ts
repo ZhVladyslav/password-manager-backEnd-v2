@@ -55,7 +55,7 @@ export class PassCollectionController {
     return await this.passCollectionService.editEncryptData({ id, userId, encryptData });
   }
 
-  @UsePipes(new ValidationPipe())
+  // @UsePipes(new ValidationPipe())
   @Delete('delete')
   async delete(
     @UserToken() { userId }: IUserToken, //
