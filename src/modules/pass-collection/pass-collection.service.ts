@@ -19,7 +19,7 @@ interface IDelete extends Pick<IService, 'id' | 'userId'> {}
 interface IPassCollectionService {
   getAll(data: IAll): Promise<IPassCollection[]>;
   getById(data: IById): Promise<IPassCollection>;
-  create(data: ICreate): Promise<{ message: string }>;
+  create(data: ICreate): Promise<{ id: string }>;
   editName(data: IEditName): Promise<{ message: string }>;
   editEncryptData(data: IEditEncryptData): Promise<{ message: string }>;
   delete(data: IDelete): Promise<{ message: string }>;
@@ -39,11 +39,11 @@ export class PassCollectionService implements IPassCollectionService {
     return passCollectionIdDb;
   }
 
-  public async create({ userId, name, encryptData }: ICreate): Promise<{ message: string }> {
+  public async create({ userId, name, encryptData }: ICreate): Promise<{ id: string }> {
     const passCollectionInDb = await this.passCollectionService.findByName({ userId, name });
     if (passCollectionInDb) throw new BadRequestException('This name already is use');
     const newPassCollection = await this.passCollectionService.create({ userId, name, encryptData, version: 'v1' });
-    return { message: 'Password collection is create' };
+    return { id: newPassCollection.id };
   }
 
   public async editName({ id, userId, name }: IEditName): Promise<{ message: string }> {
