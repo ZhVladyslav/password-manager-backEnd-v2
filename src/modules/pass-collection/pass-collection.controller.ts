@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put, UsePipes, ValidationPipe, Param } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, UsePipes, ValidationPipe, Param, Req, Query } from '@nestjs/common';
 import { PassCollectionService } from './pass-collection.service';
 import { ByIdDto } from './dto/byId.dto';
 import { UserToken } from 'src/decorators/userToken';
@@ -6,7 +6,7 @@ import { IUserToken } from 'src/types/userToken.type';
 import { CreateDto } from './dto/create.dto';
 import { EditNameDto } from './dto/editName.dto';
 import { EditEncryptDataDto } from './dto/editEncryptData.dto';
-import { DeleteDto } from '../user/dto/delete.dto';
+import { DeleteDto } from './dto/delete.dto';
 
 @Controller('pass-collection')
 export class PassCollectionController {
@@ -19,11 +19,11 @@ export class PassCollectionController {
     return await this.passCollectionService.getAll({ userId });
   }
 
-  // @UsePipes(new ValidationPipe())
+  @UsePipes(new ValidationPipe())
   @Get('by-id')
   async byId(
     @UserToken() { userId }: IUserToken, //
-    @Param() { id }: ByIdDto, //
+    @Query() { id }: ByIdDto, //
   ) {
     return await this.passCollectionService.getById({ id, userId });
   }
@@ -55,7 +55,7 @@ export class PassCollectionController {
     return await this.passCollectionService.editEncryptData({ id, userId, encryptData });
   }
 
-  // @UsePipes(new ValidationPipe())
+  @UsePipes(new ValidationPipe())
   @Delete('delete')
   async delete(
     @UserToken() { userId }: IUserToken, //
