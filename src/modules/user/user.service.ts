@@ -3,6 +3,7 @@ import { UserDbService } from 'src/database/user.db.service';
 import { IMessageRes } from 'src/types/defaultRes.type';
 import { IUser } from 'src/types/user.type';
 import { passCheck } from 'src/utils/password';
+import { SessionService } from '../session/session.service';
 
 interface IService {
   id: string;
@@ -29,7 +30,10 @@ interface IUserService {
 
 @Injectable()
 export class UserService implements IUserService {
-  constructor(private readonly userDbService: UserDbService) {}
+  constructor(
+    private readonly userDbService: UserDbService,
+    private readonly sessionService: SessionService,
+  ) {}
 
   public async getById({ id }: IById): Promise<IUser> {
     const userInDb = await this.userDbService.findById({ id });
@@ -55,6 +59,7 @@ export class UserService implements IUserService {
 
     const newEncryptPassword = await passCheck.generateHash(newPassword);
     await this.userDbService.updatePassword({ id, password: newEncryptPassword });
+    await this.sessionService.deleteAll({ userId: id });
 
     return { message: 'User password is edit' };
   }

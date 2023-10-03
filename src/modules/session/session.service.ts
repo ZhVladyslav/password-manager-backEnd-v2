@@ -10,11 +10,13 @@ interface IService {
 interface IAll extends Pick<IService, 'userId'> {}
 interface IById extends Pick<IService, 'id' | 'userId'> {}
 interface IDelete extends Pick<IService, 'id' | 'userId'> {}
+interface IDeleteAll extends Pick<IService, 'userId'> {}
 
 interface ISessionService {
   getAll(data: IAll): Promise<ISession[]>;
   getById(data: IById): Promise<ISession>;
   delete(data: IDelete): Promise<{ message: string }>;
+  deleteAll(data: IDeleteAll): Promise<{ message: string }>;
 }
 
 @Injectable()
@@ -35,5 +37,10 @@ export class SessionService implements ISessionService {
     await this.getById({ id, userId });
     await this.sessionService.deleteById({ id, userId });
     return { message: 'Session is delete' };
+  }
+
+  public async deleteAll({ userId }: IDeleteAll): Promise<{ message: string }> {
+    await this.sessionService.deleteAll({ userId });
+    return { message: 'Sessions is delete' };
   }
 }
