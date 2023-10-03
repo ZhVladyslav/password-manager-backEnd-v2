@@ -1,4 +1,4 @@
-import { Injectable, NestMiddleware, NotFoundException } from '@nestjs/common';
+import { Injectable, NestMiddleware, UnauthorizedException } from '@nestjs/common';
 import { SessionDbService } from 'src/database/session.db.service';
 import { IUserToken } from 'src/types/userToken.type';
 
@@ -12,7 +12,7 @@ export class SessionMiddleware implements NestMiddleware {
 
     // find user session
     const resFindSession = await this.sessionDbService.findByTokenId({ tokenId });
-    if (!resFindSession) throw new NotFoundException('Session not found');
+    if (!resFindSession) throw new UnauthorizedException('Session not found');
 
     // add expire session
 
