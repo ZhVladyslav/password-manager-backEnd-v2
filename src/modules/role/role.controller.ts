@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { Claims } from 'src/config/claims';
 import { ByIdDto } from './dto/byId.dto';
@@ -19,7 +19,7 @@ export class RoleController {
 
   @Get('by-id')
   async byId(
-    @Body() { id }: ByIdDto, //
+    @Query() { id }: ByIdDto, //
   ) {
     return await this.roleService.getById({ id });
   }
