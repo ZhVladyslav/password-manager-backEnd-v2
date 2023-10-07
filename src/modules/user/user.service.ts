@@ -4,6 +4,7 @@ import { IMessageRes } from 'src/types/defaultRes.type';
 import { IUser } from 'src/types/user.type';
 import { passCheck } from 'src/utils/password';
 import { SessionService } from '../session/session.service';
+import { PassCollectionDbService } from 'src/database/passCollection.db.service';
 
 interface IService {
   id: string;
@@ -33,6 +34,7 @@ export class UserService implements IUserService {
   constructor(
     private readonly userDbService: UserDbService,
     private readonly sessionService: SessionService,
+    private readonly passCollectionService: PassCollectionDbService,
   ) {}
 
   public async getById({ id }: IById): Promise<IUser> {
@@ -79,6 +81,8 @@ export class UserService implements IUserService {
     const checkUserPassword = await passCheck.verify(password, userInDb.password);
     if (!checkUserPassword) throw new BadRequestException('Error password');
 
+    await this.sessionService.deleteAll({ userId: id });
+    await this.passCollectionService.deleteAll({ userId: id });
     await this.userDbService.delete({ id });
 
     return { message: 'User is delete' };

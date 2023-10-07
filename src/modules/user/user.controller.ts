@@ -1,4 +1,4 @@
-import { Controller, Get, Put, Body, UsePipes, ValidationPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Put, Body, UsePipes, ValidationPipe, UseGuards, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { IUserToken } from 'src/types/userToken.type';
 import { UserToken } from 'src/decorators/userToken';
@@ -48,7 +48,7 @@ export class UserController {
     return await this.userService.editRole({ id: userId, roleId });
   }
 
-  @Put('delete')
+  @Delete('delete')
   async delete(
     @UserToken() { userId }: IUserToken, //
     @Body() { password }: DeleteDto, //
