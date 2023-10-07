@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Post, UsePipes, ValidationPipe, Delete } from '@nestjs/common';
 import { UserToken } from 'src/decorators/userToken';
 import { IUserToken } from 'src/types/userToken.type';
 import { SessionService } from './session.service';
@@ -25,7 +25,14 @@ export class SessionController {
     return await this.sessionService.getById({ id, userId });
   }
 
-  @Post('delete')
+  @Delete('logout')
+  async logout(
+    @UserToken() { userId, sessionId }: IUserToken, //
+  ) {
+    return await this.sessionService.delete({ id: sessionId, userId });
+  }
+
+  @Delete('delete')
   async delete(
     @UserToken() { userId }: IUserToken, //
     @Body() { id }: DeleteDto, //
