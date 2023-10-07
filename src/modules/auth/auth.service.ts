@@ -50,7 +50,7 @@ export class AuthService implements IAuthService {
 
   public async registration({ name, login, password }: IAuth): Promise<{ message: string }> {
     const userInDb = await this.userDbService.findByLogin({ login });
-    if (userInDb) throw new ConflictException('User with this login already exists');
+    if (userInDb) throw new BadRequestException('User with this login already exists');
 
     const passwordHash = await passCheck.generateHash(password);
 
