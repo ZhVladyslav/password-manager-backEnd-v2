@@ -76,7 +76,7 @@ export class RoleService implements IRoleService {
 
     const newRole = await this.roleDbService.create(dataToCreate);
     await this.claimDbService.create({ roleId: newRole.id, claims });
-    return { message: `Role '${name}' is create` };
+    return { message: `Role '${name_en}' is create` };
   }
 
   public async edit(data: IEdit): Promise<{ message: string }> {
