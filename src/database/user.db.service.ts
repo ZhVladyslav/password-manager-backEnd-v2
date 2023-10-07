@@ -18,7 +18,7 @@ interface IUserDbService {
   updateName(data: IUpdateName): Promise<IUser>;
   updatePassword(data: IUpdatePassword): Promise<IUser>;
   updateRole(data: IUpdateRole): Promise<IUser>;
-  delete(data: IDelete): Promise<IUser>;
+  delete(data: IDelete): Promise<void>;
 }
 
 @Injectable()
@@ -88,13 +88,11 @@ export class UserDbService implements IUserDbService {
     return user;
   }
 
-  public async delete({ id }: IDelete): Promise<IUser> {
+  public async delete({ id }: IDelete): Promise<void> {
     const user = await handlerErrorDb(
       this.databaseService.user.delete({
         where: { id },
       }),
-    );
-    if (!user) return null;
-    return user;
+    )
   }
 }
