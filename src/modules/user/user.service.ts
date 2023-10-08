@@ -3,8 +3,8 @@ import { UserDbService } from 'src/database/user.db.service';
 import { IMessageRes } from 'src/types/defaultRes.type';
 import { IUser } from 'src/types/user.type';
 import { passCheck } from 'src/utils/password';
-import { SessionService } from '../session/session.service';
 import { PassCollectionDbService } from 'src/database/passCollection.db.service';
+import { SessionDbService } from 'src/database/session.db.service';
 
 interface IService {
   id: string;
@@ -33,7 +33,7 @@ interface IUserService {
 export class UserService implements IUserService {
   constructor(
     private readonly userDbService: UserDbService,
-    private readonly sessionService: SessionService,
+    private readonly sessionService: SessionDbService,
     private readonly passCollectionService: PassCollectionDbService,
   ) {}
 
