@@ -12,6 +12,7 @@ import {
 } from 'src/types/session.type';
 
 interface ISessionDbService {
+  findAllToAllUsers(): Promise<ISession[]>;
   findAll(data: ISessionDbFindAll): Promise<ISession[]>;
   findById(data: ISessionDbFindById): Promise<ISession>;
   findByTokenId(data: ISessionDbFindByTokenId): Promise<ISession>;
@@ -23,6 +24,11 @@ interface ISessionDbService {
 @Injectable()
 export class SessionDbService implements ISessionDbService {
   constructor(private readonly databaseService: DatabaseService) {}
+
+  public async findAllToAllUsers(): Promise<ISession[]> {
+    const session = await handlerErrorDb(this.databaseService.session.findMany());
+    return session;
+  }
 
   public async findAll({ userId }: ISessionDbFindAll): Promise<ISession[]> {
     const session = await handlerErrorDb(this.databaseService.session.findMany({ where: { userId } }));

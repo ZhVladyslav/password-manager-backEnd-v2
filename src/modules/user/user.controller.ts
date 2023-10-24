@@ -1,4 +1,4 @@
-import { Controller, Get, Put, Body, UsePipes, ValidationPipe, UseGuards, Delete } from '@nestjs/common';
+import { Controller, Get, Put, Body, UsePipes, ValidationPipe, UseGuards, Delete, SetMetadata } from '@nestjs/common';
 import { UserService } from './user.service';
 import { IUserToken } from 'src/types/userToken.type';
 import { UserToken } from 'src/decorators/userToken';
@@ -6,6 +6,7 @@ import { ClaimsGuard } from 'src/guards/claims.guard';
 import { DeleteDto } from './dto/delete.dto';
 import { EditPasswordDto } from './dto/editPassword.dto';
 import { EditNameDto } from './dto/editName.dto';
+import { Claims } from 'src/config/claims';
 
 @UseGuards(ClaimsGuard)
 @UsePipes(new ValidationPipe())
@@ -13,6 +14,7 @@ import { EditNameDto } from './dto/editName.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @SetMetadata('claims', [Claims.DELETE_ROLE_TO_USER])
   @Get('user-list')
   async getUserList() {
     return await this.userService.getAll();

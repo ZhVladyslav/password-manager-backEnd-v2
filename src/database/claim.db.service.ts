@@ -4,6 +4,7 @@ import { handlerErrorDb } from './handlerError.db';
 import { IClaim, IClaimDbCreate, IClaimDbDelete, IClaimDbFindByRoleId } from 'src/types/claim.type';
 
 interface IClaimDbService {
+  findAll(): Promise<IClaim[]>;
   findByRoleId(data: IClaimDbFindByRoleId): Promise<IClaim[]>;
   create(data: IClaimDbCreate): Promise<IClaim[]>;
   delete(data: IClaimDbDelete): Promise<void>;
@@ -12,6 +13,11 @@ interface IClaimDbService {
 @Injectable()
 export class ClaimDbService implements IClaimDbService {
   constructor(private readonly databaseService: DatabaseService) {}
+
+  public async findAll(): Promise<IClaim[]> {
+    const claims = await handlerErrorDb(this.databaseService.claim.findMany());
+    return claims;
+  }
 
   public async findByRoleId({ roleId }: IClaimDbFindByRoleId): Promise<IClaim[]> {
     const claims = await handlerErrorDb(this.databaseService.claim.findMany({ where: { roleId } }));

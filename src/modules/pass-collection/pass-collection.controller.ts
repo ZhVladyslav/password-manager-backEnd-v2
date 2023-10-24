@@ -8,6 +8,7 @@ import { EditNameDto } from './dto/editName.dto';
 import { EditEncryptDataDto } from './dto/editEncryptData.dto';
 import { DeleteDto } from './dto/delete.dto';
 
+@UsePipes(new ValidationPipe())
 @Controller('pass-collection')
 export class PassCollectionController {
   constructor(private readonly passCollectionService: PassCollectionService) {}
@@ -19,7 +20,6 @@ export class PassCollectionController {
     return await this.passCollectionService.getAll({ userId });
   }
 
-  @UsePipes(new ValidationPipe())
   @Get('by-id')
   async byId(
     @UserToken() { userId }: IUserToken, //
@@ -28,7 +28,6 @@ export class PassCollectionController {
     return await this.passCollectionService.getById({ id, userId });
   }
 
-  @UsePipes(new ValidationPipe())
   @Post('create')
   async create(
     @UserToken() { userId }: IUserToken, //
@@ -37,7 +36,6 @@ export class PassCollectionController {
     return await this.passCollectionService.create({ userId, name, encryptData });
   }
 
-  @UsePipes(new ValidationPipe())
   @Put('edit-name')
   async editName(
     @UserToken() { userId }: IUserToken, //
@@ -46,7 +44,6 @@ export class PassCollectionController {
     return await this.passCollectionService.editName({ id, userId, name });
   }
 
-  @UsePipes(new ValidationPipe())
   @Put('edit-encrypt-data')
   async editEncryptData(
     @UserToken() { userId }: IUserToken, //
@@ -55,7 +52,6 @@ export class PassCollectionController {
     return await this.passCollectionService.editEncryptData({ id, userId, encryptData });
   }
 
-  @UsePipes(new ValidationPipe())
   @Delete('delete')
   async delete(
     @UserToken() { userId }: IUserToken, //
