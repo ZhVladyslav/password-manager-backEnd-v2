@@ -9,18 +9,15 @@ export interface IRoleToUser {
 */
 
 // FIND
-export interface IRoleToUserDbFindById extends Pick<IRoleToUser, 'id'> {}
-export interface IRoleToUserDbFindByUserId extends Pick<IRoleToUser, 'userId'> {}
+export interface IRoleToUser_FindById extends Pick<IRoleToUser, 'id'> {}
+export interface IRoleToUser_FindByUserId extends Pick<IRoleToUser, 'userId'> {}
 
 // CREATE
-export interface IRoleToUserDbCreate extends Pick<IRoleToUser, 'roleId' | 'userId'> {}
+export interface IRoleToUser_Create extends Pick<IRoleToUser, 'roleId' | 'userId'> {}
 
 // UPDATE
-export interface IRoleToUserDbUpdate extends Pick<IRoleToUser, 'id' | 'roleId'> {}
+export interface IRoleToUser_Update extends Pick<IRoleToUser, 'id' | 'roleId'> {}
 
 // DELETE
-export interface IRoleToUserDbDelete extends Pick<IRoleToUser, 'id'> {}
-
-/**
-  service interfaces
-*/
+export interface IRoleToUser_Delete extends Pick<IRoleToUser, 'id'> {}
+export interface IRoleToUser_DeleteByRoleId extends Pick<IRoleToUser, 'roleId'> {}
