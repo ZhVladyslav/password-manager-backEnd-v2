@@ -20,16 +20,12 @@ interface IEditName extends Pick<IService, 'id' | 'name'> {}
 interface IEditPassword extends Pick<IService, 'id' | 'password'> {
   newPassword: string;
 }
-interface ICreateRoleToUser extends Pick<IService, 'roleId' | 'userId'> {}
-interface IEditRoleToUser extends Pick<IService, 'userId' | 'roleId'> {}
 interface IDelete extends Pick<IService, 'id' | 'password'> {}
 
 interface IUserService {
   getById(data: IById): Promise<IUser>;
   editName(data: IEditName): Promise<{ message: string }>;
   editPassword(data: IEditPassword): Promise<{ message: string }>;
-  createRoleToUser(data: ICreateRoleToUser): Promise<{ message: string }>;
-  editRoleToUser(data: IEditRoleToUser): Promise<{ message: string }>;
   delete(data: IDelete): Promise<{ message: string }>;
 }
 
@@ -78,24 +74,6 @@ export class UserService implements IUserService {
     await this.sessionService.deleteAll({ userId: id });
 
     return { message: 'User password is edit' };
-  }
-
-  public async createRoleToUser({ roleId, userId }: ICreateRoleToUser): Promise<IMessageRes> {
-    const roleToUser = await this.roleDbService.findRoleToUserByUser({ userId });
-    if (roleToUser) throw new BadRequestException('This user already have role');
-
-    await this.roleDbService.createRoleToUser({ roleId, userId });
-
-    return { message: 'User role is edit' };
-  }
-
-  public async editRoleToUser({ userId, roleId }: IEditRoleToUser): Promise<IMessageRes> {
-    const roleToUser = await this.roleDbService.findRoleToUserByUser({ userId });
-    if (!roleToUser) throw new BadRequestException('Role to user is not exist');
-
-    await this.roleDbService.updateRoleToUser({ id: roleToUser.id, roleId });
-
-    return { message: 'User role is edit' };
   }
 
   public async delete({ id, password }: IDelete) {

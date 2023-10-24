@@ -40,31 +40,18 @@ export class RoleController {
   async create(
     @Body() { name_en, name_ua, name_ru, description_en, description_ua, description_ru, claims }: CreateDto, //
   ) {
-    return await this.roleService.create({
-      name_en,
-      name_ua,
-      name_ru,
-      description_en,
-      description_ua,
-      description_ru,
-      claims,
-    });
+    const name = { name_en, name_ua, name_ru };
+    const description = { description_en, description_ua, description_ru };
+    return await this.roleService.create({ ...name, ...description, claims });
   }
 
   @Put('edit')
   async edit(
     @Body() { id, name_en, name_ua, name_ru, description_en, description_ua, description_ru, claims }: EditDto, //
   ) {
-    return await this.roleService.edit({
-      id,
-      name_en,
-      name_ua,
-      name_ru,
-      description_en,
-      description_ua,
-      description_ru,
-      claims,
-    });
+    const name = { name_en, name_ua, name_ru };
+    const description = { description_en, description_ua, description_ru };
+    return await this.roleService.edit({ id, ...name, ...description, claims });
   }
 
   @Delete('delete')

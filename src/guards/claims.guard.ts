@@ -1,6 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext, NotFoundException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ClaimDbService } from 'src/database/claim.db.service';
+import { RoleToUserDbService } from 'src/database/roleToUser.db.service';
 import { UserDbService } from 'src/database/user.db.service';
 import { IUserToken } from 'src/types/userToken.type';
 
@@ -9,6 +10,7 @@ export class ClaimsGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
     private readonly userDbService: UserDbService,
+    private readonly roleToUserDbService: RoleToUserDbService,
     private readonly claimDbService: ClaimDbService,
   ) {}
 
@@ -27,8 +29,12 @@ export class ClaimsGuard implements CanActivate {
     const userInDb = await this.userDbService.findById({ id: userId });
     if (!userInDb) throw new NotFoundException('User is not found');
 
-    // user role claims
-    const userClaimsInDb = await this.claimDbService.findByRoleId({ roleId: userInDb.roleId });
+    // role to user
+    const roleToUserDb = await this.roleToUserDbService.findByUserId({ userId });
+    if (!roleToUserDb) throw new NotFoundException('User not have role');
+
+    // role to user
+    const userClaimsInDb = await this.claimDbService.findByRoleId({ roleId: roleToUserDb.roleId });
 
     // claims
     const userClaims = userClaimsInDb.map((item) => item.claim);
