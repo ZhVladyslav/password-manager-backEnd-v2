@@ -1,32 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from './database.service';
 import { handlerErrorDb } from './handlerError.db';
-import { IClaim } from 'src/types/claim.type';
-
-interface IFindByRoleId extends Pick<IClaim, 'roleId'> {}
-interface ICreate {
-  roleId: string;
-  claims: string[];
-}
-interface IDelete extends Pick<IClaim, 'roleId'> {}
+import { IClaim, IClaimDbCreate, IClaimDbDelete, IClaimDbFindByRoleId } from 'src/types/claim.type';
 
 interface IClaimDbService {
-  findByRoleId(data: IFindByRoleId): Promise<IClaim[]>;
-  create(data: ICreate): Promise<IClaim[]>;
-  delete(data: IDelete): Promise<void>;
+  findByRoleId(data: IClaimDbFindByRoleId): Promise<IClaim[]>;
+  create(data: IClaimDbCreate): Promise<IClaim[]>;
+  delete(data: IClaimDbDelete): Promise<void>;
 }
 
 @Injectable()
 export class ClaimDbService implements IClaimDbService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  public async findByRoleId({ roleId }: IFindByRoleId): Promise<IClaim[]> {
+  public async findByRoleId({ roleId }: IClaimDbFindByRoleId): Promise<IClaim[]> {
     const claims = await handlerErrorDb(this.databaseService.claim.findMany({ where: { roleId } }));
     return claims;
   }
 
-  public async create({ roleId, claims }: ICreate): Promise<IClaim[]> {
-    // createMany not work
+  public async create({ roleId, claims }: IClaimDbCreate): Promise<IClaim[]> {
     const promiseCreateClaims = claims.map(
       async (claim) => await handlerErrorDb(this.databaseService.claim.create({ data: { roleId, claim } })),
     );
@@ -34,7 +26,7 @@ export class ClaimDbService implements IClaimDbService {
     return newClaimList;
   }
 
-  public async delete({ roleId }: IDelete): Promise<void> {
+  public async delete({ roleId }: IClaimDbDelete): Promise<void> {
     await handlerErrorDb(this.databaseService.claim.deleteMany({ where: { roleId } }));
   }
 }

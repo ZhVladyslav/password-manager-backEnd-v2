@@ -1,82 +1,55 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from './database.service';
 import { handlerErrorDb } from './handlerError.db';
-import { ISession } from 'src/types/session.type';
-
-interface IFindAll extends Pick<ISession, 'userId'> {}
-interface IFindById extends Pick<ISession, 'id' | 'userId'> {}
-interface IFindByTokenId extends Pick<ISession, 'tokenId'> {}
-interface ICreate extends Pick<ISession, 'userId' | 'tokenId' | 'expDate'> {}
-interface IDeleteById extends Pick<ISession, 'id' | 'userId'> {}
-interface IDeleteAll extends Pick<ISession, 'userId'> {}
+import {
+  ISession,
+  ISessionDbCreate,
+  ISessionDbDeleteAll,
+  ISessionDbDeleteById,
+  ISessionDbFindAll,
+  ISessionDbFindById,
+  ISessionDbFindByTokenId,
+} from 'src/types/session.type';
 
 interface ISessionDbService {
-  findAll(data: IFindAll): Promise<ISession[]>;
-  findById(data: IFindById): Promise<ISession>;
-  findByTokenId(data: IFindByTokenId): Promise<ISession>;
-  create(data: ICreate): Promise<ISession>;
-  deleteById(data: IDeleteById): Promise<ISession>;
-  deleteAll(data: IDeleteAll): Promise<void>;
+  findAll(data: ISessionDbFindAll): Promise<ISession[]>;
+  findById(data: ISessionDbFindById): Promise<ISession>;
+  findByTokenId(data: ISessionDbFindByTokenId): Promise<ISession>;
+  create(data: ISessionDbCreate): Promise<ISession>;
+  deleteById(data: ISessionDbDeleteById): Promise<ISession>;
+  deleteAll(data: ISessionDbDeleteAll): Promise<void>;
 }
 
 @Injectable()
 export class SessionDbService implements ISessionDbService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  public async findAll({ userId }: IFindAll): Promise<ISession[]> {
-    const session = await handlerErrorDb(
-      this.databaseService.session.findMany({
-        where: { userId },
-      }),
-    );
+  public async findAll({ userId }: ISessionDbFindAll): Promise<ISession[]> {
+    const session = await handlerErrorDb(this.databaseService.session.findMany({ where: { userId } }));
     return session;
   }
 
-  public async findById({ id, userId }: IFindById): Promise<ISession> {
-    const session = await handlerErrorDb(
-      this.databaseService.session.findFirst({
-        where: { id, userId },
-      }),
-    );
-    if (!session) return null;
-    return session;
+  public async findById({ id, userId }: ISessionDbFindById): Promise<ISession> {
+    const session = await handlerErrorDb(this.databaseService.session.findFirst({ where: { id, userId } }));
+    return !session ? null : session;
   }
 
-  public async findByTokenId({ tokenId }: IFindByTokenId): Promise<ISession> {
-    const session = await handlerErrorDb(
-      this.databaseService.session.findFirst({
-        where: { tokenId },
-      }),
-    );
-    if (!session) return null;
-    return session;
+  public async findByTokenId({ tokenId }: ISessionDbFindByTokenId): Promise<ISession> {
+    const session = await handlerErrorDb(this.databaseService.session.findFirst({ where: { tokenId } }));
+    return !session ? null : session;
   }
 
-  public async create({ userId, tokenId, expDate }: ICreate): Promise<ISession> {
-    const session = await handlerErrorDb(
-      this.databaseService.session.create({
-        data: { userId, tokenId, expDate },
-      }),
-    );
-    if (!session) return null;
-    return session;
+  public async create({ userId, tokenId, expDate }: ISessionDbCreate): Promise<ISession> {
+    const session = await handlerErrorDb(this.databaseService.session.create({ data: { userId, tokenId, expDate } }));
+    return !session ? null : session;
   }
 
-  public async deleteById({ id, userId }: IDeleteById): Promise<ISession> {
-    const session = await handlerErrorDb(
-      this.databaseService.session.delete({
-        where: { id, userId },
-      }),
-    );
-    if (!session) return null;
-    return session;
+  public async deleteById({ id, userId }: ISessionDbDeleteById): Promise<ISession> {
+    const session = await handlerErrorDb(this.databaseService.session.delete({ where: { id, userId } }));
+    return !session ? null : session;
   }
 
-  public async deleteAll({ userId }: IDeleteAll): Promise<void> {
-    await handlerErrorDb(
-      this.databaseService.session.deleteMany({
-        where: { userId },
-      }),
-    );
+  public async deleteAll({ userId }: ISessionDbDeleteAll): Promise<void> {
+    await handlerErrorDb(this.databaseService.session.deleteMany({ where: { userId } }));
   }
 }

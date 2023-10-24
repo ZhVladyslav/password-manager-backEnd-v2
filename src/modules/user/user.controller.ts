@@ -16,6 +16,11 @@ import { EditNameDto } from './dto/editName.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Get('user-list')
+  async getUserList() {
+    return await this.userService.getAll();
+  }
+
   @Get('my-account')
   async myAccount(
     @UserToken() { userId }: IUserToken, //
@@ -40,12 +45,21 @@ export class UserController {
   }
 
   @ClaimsSet([Claims.EDIT_ROLE])
-  @Put('edit-role')
-  async editRole(
+  @Put('create-role-to-user')
+  async createRoleToUser(
     @UserToken() { userId }: IUserToken, //
     @Body() { roleId }: EditRoleDto, //
   ) {
-    return await this.userService.editRole({ id: userId, roleId });
+    return await this.userService.createRoleToUser({ roleId, userId });
+  }
+
+  @ClaimsSet([Claims.EDIT_ROLE])
+  @Put('edit-role-to-user')
+  async editRoleToUser(
+    @UserToken() { userId }: IUserToken, //
+    @Body() { roleId }: EditRoleDto, //
+  ) {
+    return await this.userService.editRoleToUser({ userId, roleId });
   }
 
   @Delete('delete')

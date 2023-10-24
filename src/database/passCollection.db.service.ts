@@ -1,37 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from './database.service';
 import { handlerErrorDb } from './handlerError.db';
-import { IPassCollection } from 'src/types/passCollection.type';
+import {
+  IPassCollection,
+  IPassCollectionDbCreate,
+  IPassCollectionDbDeleteAll,
+  IPassCollectionDbDeleteById,
+  IPassCollectionDbFindAll,
+  IPassCollectionDbFindById,
+  IPassCollectionDbFindByName,
+  IPassCollectionDbUpdateData,
+  IPassCollectionDbUpdateName,
+} from 'src/types/passCollection.type';
 
-interface IFindAll extends Pick<IPassCollection, 'userId'> {}
-interface IFindById extends Pick<IPassCollection, 'id' | 'userId'> {}
-interface IFindByName extends Pick<IPassCollection, 'userId' | 'name'> {}
-interface ICreate extends Pick<IPassCollection, 'userId' | 'version' | 'name' | 'encryptData'> {}
-interface IUpdateName extends Pick<IPassCollection, 'id' | 'userId' | 'name'> {}
-interface IUpdateEncryptData extends Pick<IPassCollection, 'id' | 'userId' | 'encryptData'> {}
-interface IDeleteById extends Pick<IPassCollection, 'id' | 'userId'> {}
-interface IDeleteAll extends Pick<IPassCollection, 'userId'> {}
-
-/**
- * @ToDo
- * add update version
- */
 interface IPassCollectionDbService {
-  findAll(data: IFindAll): Promise<IPassCollection[]>;
-  findById(data: IFindById): Promise<IPassCollection>;
-  findByName(data: IFindByName): Promise<IPassCollection>;
-  create(data: ICreate): Promise<IPassCollection>;
-  updateName(data: IUpdateName): Promise<IPassCollection>;
-  updateEncryptDate(data: IUpdateEncryptData): Promise<IPassCollection>;
-  deleteById(data: IDeleteById): Promise<IPassCollection>;
-  deleteAll(data: IDeleteAll): Promise<void>;
+  findAll(data: IPassCollectionDbFindAll): Promise<IPassCollection[]>;
+  findById(data: IPassCollectionDbFindById): Promise<IPassCollection>;
+  findByName(data: IPassCollectionDbFindByName): Promise<IPassCollection>;
+  create(data: IPassCollectionDbCreate): Promise<IPassCollection>;
+  updateName(data: IPassCollectionDbUpdateName): Promise<IPassCollection>;
+  updateEncryptDate(data: IPassCollectionDbUpdateData): Promise<IPassCollection>;
+  deleteById(data: IPassCollectionDbDeleteById): Promise<IPassCollection>;
+  deleteAll(data: IPassCollectionDbDeleteAll): Promise<void>;
 }
 
 @Injectable()
 export class PassCollectionDbService implements IPassCollectionDbService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  public async findAll({ userId }: IFindAll): Promise<IPassCollection[]> {
+  public async findAll({ userId }: IPassCollectionDbFindAll): Promise<IPassCollection[]> {
     const passCollection = await handlerErrorDb(
       this.databaseService.passCollection.findMany({
         where: { userId },
@@ -40,69 +37,63 @@ export class PassCollectionDbService implements IPassCollectionDbService {
     return passCollection;
   }
 
-  public async findById({ id, userId }: IFindById): Promise<IPassCollection> {
+  public async findById({ id, userId }: IPassCollectionDbFindById): Promise<IPassCollection> {
     const passCollection = await handlerErrorDb(
       this.databaseService.passCollection.findFirst({
         where: { id, userId },
       }),
     );
-    if (!passCollection) return null;
-    return passCollection;
+    return !passCollection ? null : passCollection;
   }
 
-  public async findByName({ userId, name }: IFindByName): Promise<IPassCollection> {
+  public async findByName({ userId, name }: IPassCollectionDbFindByName): Promise<IPassCollection> {
     const passCollection = await handlerErrorDb(
       this.databaseService.passCollection.findFirst({
         where: { userId, name },
       }),
     );
-    if (!passCollection) return null;
-    return passCollection;
+    return !passCollection ? null : passCollection;
   }
 
-  public async create({ userId, name, version, encryptData }: ICreate): Promise<IPassCollection> {
+  public async create({ userId, name, version, encryptData }: IPassCollectionDbCreate): Promise<IPassCollection> {
     const passCollection = await handlerErrorDb(
       this.databaseService.passCollection.create({
         data: { userId, version, name, encryptData },
       }),
     );
-    if (!passCollection) return null;
-    return passCollection;
+    return !passCollection ? null : passCollection;
   }
 
-  public async updateName({ id, userId, name }: IUpdateName): Promise<IPassCollection> {
+  public async updateName({ id, userId, name }: IPassCollectionDbUpdateName): Promise<IPassCollection> {
     const passCollection = await handlerErrorDb(
       this.databaseService.passCollection.update({
         where: { id, userId },
         data: { name },
       }),
     );
-    if (!passCollection) return null;
-    return passCollection;
+    return !passCollection ? null : passCollection;
   }
 
-  public async updateEncryptDate({ id, userId, encryptData }: IUpdateEncryptData): Promise<IPassCollection> {
+  public async updateEncryptDate({ id, userId, encryptData }: IPassCollectionDbUpdateData): Promise<IPassCollection> {
     const passCollection = await handlerErrorDb(
       this.databaseService.passCollection.update({
         where: { id, userId },
         data: { encryptData },
       }),
     );
-    if (!passCollection) return null;
-    return passCollection;
+    return !passCollection ? null : passCollection;
   }
 
-  public async deleteById({ id, userId }: IDeleteById): Promise<IPassCollection> {
+  public async deleteById({ id, userId }: IPassCollectionDbDeleteById): Promise<IPassCollection> {
     const passCollection = await handlerErrorDb(
       this.databaseService.passCollection.delete({
         where: { id, userId },
       }),
     );
-    if (!passCollection) return null;
-    return passCollection;
+    return !passCollection ? null : passCollection;
   }
 
-  public async deleteAll({ userId }: IDeleteAll): Promise<void> {
+  public async deleteAll({ userId }: IPassCollectionDbDeleteAll): Promise<void> {
     await handlerErrorDb(
       this.databaseService.passCollection.deleteMany({
         where: { userId },
