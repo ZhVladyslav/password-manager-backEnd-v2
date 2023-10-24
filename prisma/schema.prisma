@@ -15,11 +15,10 @@ model User {
   name           String
   login          String           @unique
   password       String
-  roleId         String?
   createDate     DateTime         @default(now())
   PassCollection PassCollection[]
   Session        Session[]
-  Role           Role?            @relation(fields: [roleId], references: [id])
+  RoleToUser     RoleToUser[]
 }
 
 model PassCollection {
@@ -43,31 +42,31 @@ model Session {
 }
 
 model Role {
-  id             String   @id @default(uuid())
+  id             String       @id @default(uuid())
   name_en        String
   name_ua        String
   name_ru        String
   description_en String
   description_ua String
   description_ru String
-  createDate     DateTime @default(now())
-  lastUpdate     DateTime @updatedAt
+  createDate     DateTime     @default(now())
+  lastUpdate     DateTime     @updatedAt
   Claim          Claim[]
-  User           User[]
+  RoleToUser     RoleToUser[]
 }
 
 model Claim {
-  id             String   @id @default(uuid())
-  roleId         String
-  claim          String
-  createDate     DateTime @default(now())
-  Role           Role     @relation(fields: [roleId], references: [id])
+  id         String   @id @default(uuid())
+  roleId     String
+  claim      String
+  createDate DateTime @default(now())
+  Role       Role     @relation(fields: [roleId], references: [id])
 }
 
-model Error {
-  id         String   @id @default(uuid())
-  name       String
-  route      String
-  status     Boolean
-  createDate DateTime @default(now())
+model RoleToUser {
+  id     String @id @default(uuid())
+  roleId String
+  userId String
+  Role   Role   @relation(fields: [roleId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
 }

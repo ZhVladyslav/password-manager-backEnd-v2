@@ -4,9 +4,7 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "login" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "roleId" TEXT,
-    "createDate" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+    "createDate" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- CreateTable
@@ -49,23 +47,17 @@ CREATE TABLE "Claim" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "roleId" TEXT NOT NULL,
     "claim" TEXT NOT NULL,
-    "name_en" TEXT NOT NULL,
-    "name_ua" TEXT NOT NULL,
-    "name_ru" TEXT NOT NULL,
-    "description_en" TEXT NOT NULL,
-    "description_ua" TEXT NOT NULL,
-    "description_ru" TEXT NOT NULL,
     "createDate" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT "Claim_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
-CREATE TABLE "Error" (
+CREATE TABLE "RoleToUser" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "name" TEXT NOT NULL,
-    "route" TEXT NOT NULL,
-    "status" BOOLEAN NOT NULL,
-    "createDate" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    "roleId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    CONSTRAINT "RoleToUser_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "RoleToUser_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateIndex
