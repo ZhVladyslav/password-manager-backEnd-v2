@@ -83,7 +83,7 @@ export class RoleService implements IRoleService {
     const { name_en, name_ua, name_ru, description_en, description_ua, description_ru, claims } = data;
     const dataToCreate = { name_en, name_ua, name_ru, description_en, description_ua, description_ru };
 
-    const roleInDb = await this.checkRoleByName({ name_en });
+    const roleInDb = await this.roleDbService.findByName({ name_en });
     if (roleInDb) throw new BadRequestException('This role name already is set');
 
     const newRole = await this.roleDbService.create(dataToCreate);
