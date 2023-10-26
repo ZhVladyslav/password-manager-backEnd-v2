@@ -21,3 +21,4 @@ export interface IRoleToUser_Update extends Pick<IRoleToUser, 'id' | 'roleId'> {
 // DELETE
 export interface IRoleToUser_Delete extends Pick<IRoleToUser, 'id'> {}
 export interface IRoleToUser_DeleteByRoleId extends Pick<IRoleToUser, 'roleId'> {}
+export interface IRoleToUser_DeleteByUserId extends Pick<IRoleToUser, 'userId'> {}

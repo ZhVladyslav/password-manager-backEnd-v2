@@ -7,9 +7,10 @@ import { RoleModule } from './modules/role/role.module';
 import { PassCollectionModule } from './modules/pass-collection/pass-collection.module';
 import { SessionModule } from './modules/session/session.module';
 import { RoleToUserModule } from './modules/roleToUser/roleToUser.module';
+import { AdminModule } from './modules/admin/admin.module';
 
 @Module({
-  imports: [AuthModule, UserModule, RoleModule, RoleToUserModule, PassCollectionModule, SessionModule],
+  imports: [AuthModule, UserModule, RoleModule, RoleToUserModule, PassCollectionModule, SessionModule, AdminModule],
   exports: [],
   controllers: [AppController],
   providers: [],

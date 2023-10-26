@@ -6,6 +6,7 @@ import {
   IRoleToUser_Create,
   IRoleToUser_Delete,
   IRoleToUser_DeleteByRoleId,
+  IRoleToUser_DeleteByUserId,
   IRoleToUser_FindById,
   IRoleToUser_FindByUserId,
   IRoleToUser_Update,
@@ -18,6 +19,8 @@ interface IRoleToUserDbService {
   create(data: IRoleToUser_Create): Promise<IRoleToUser>;
   update(data: IRoleToUser_Update): Promise<IRoleToUser>;
   delete(data: IRoleToUser_Delete): Promise<void>;
+  deleteByRoleId(data: IRoleToUser_DeleteByRoleId): Promise<void>;
+  deleteByUserId(data: IRoleToUser_DeleteByUserId): Promise<void>;
 }
 
 @Injectable()
@@ -57,5 +60,9 @@ export class RoleToUserDbService implements IRoleToUserDbService {
 
   public async deleteByRoleId({ roleId }: IRoleToUser_DeleteByRoleId): Promise<void> {
     await handlerErrorDb(this.databaseService.roleToUser.deleteMany({ where: { roleId } }));
+  }
+
+  public async deleteByUserId({ userId }: IRoleToUser_DeleteByUserId): Promise<void> {
+    await handlerErrorDb(this.databaseService.roleToUser.deleteMany({ where: { userId } }));
   }
 }
