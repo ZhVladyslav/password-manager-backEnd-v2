@@ -3,11 +3,10 @@ import { RoleDbService } from 'src/database/role.db.service';
 import { RoleToUserDbService } from 'src/database/roleToUser.db.service';
 import {
   IRoleToUser,
-  IRoleToUser_Create,
-  IRoleToUser_Delete,
+  IRoleToUser_DeleteByUserId,
   IRoleToUser_FindById,
   IRoleToUser_FindByUserId,
-  IRoleToUser_Update,
+  IRoleToUser_Set,
 } from 'src/types/roleToUser.type';
 import { UserDbService } from 'src/database/user.db.service';
 
@@ -15,9 +14,8 @@ interface IRoleToUserService {
   getAll(): Promise<IRoleToUser[]>;
   getById(data: IRoleToUser_FindById): Promise<IRoleToUser>;
   getByUserId(data: IRoleToUser_FindByUserId): Promise<IRoleToUser>;
-  create(data: IRoleToUser_Create): Promise<{ message: string }>;
-  edit(data: IRoleToUser_Update): Promise<{ message: string }>;
-  delete(data: IRoleToUser_Delete): Promise<{ message: string }>;
+  set(data: IRoleToUser_Set): Promise<{ message: string }>;
+  delete(data: IRoleToUser_DeleteByUserId): Promise<{ message: string }>;
 }
 
 @Injectable()
@@ -68,29 +66,25 @@ export class RoleToUserService implements IRoleToUserService {
     return roleToUser;
   }
 
-  public async create({ roleId, userId }: IRoleToUser_Create): Promise<{ message: string }> {
+  public async set({ roleId, userId }: IRoleToUser_Set): Promise<{ message: string }> {
     await this.checkUserById({ id: userId });
     await this.checkRoleById({ id: roleId });
 
-    const roleToUser = await this.roleToUserDbService.create({ roleId, userId });
-    if (!roleToUser) throw new BadRequestException('This id is not correct');
+    const getByUserId = await this.roleToUserDbService.findByUserId({ userId });
+    if (!getByUserId) {
+      await this.roleToUserDbService.create({ roleId, userId });
+      return { message: 'Role to user is created' };
+    }
 
-    return { message: 'Role to user is created' };
+    await this.roleToUserDbService.update({ id: getByUserId.id, roleId });
+    return { message: 'Role to user is update' };
   }
 
-  public async edit({ id, roleId }: IRoleToUser_Update): Promise<{ message: string }> {
-    await this.checkRoleById({ id: roleId });
-    await this.checkRoleToUserById({ id });
+  public async delete({ userId }: IRoleToUser_DeleteByUserId): Promise<{ message: string }> {
+    const findRoleToUser = await this.roleToUserDbService.findByUserId({ userId });
+    if (!findRoleToUser) throw new BadRequestException('This id is not correct');
 
-    const roleToUser = await this.roleToUserDbService.update({ id, roleId });
-    if (!roleToUser) throw new BadRequestException('This id is not correct');
-    return { message: 'Role to user is created' };
-  }
-
-  public async delete({ id }: IRoleToUser_Delete): Promise<{ message: string }> {
-    await this.checkRoleToUserById({ id });
-
-    await this.roleToUserDbService.delete({ id });
+    await this.roleToUserDbService.deleteByUserId({ userId });
     return { message: 'Role to user is deleted' };
   }
 }

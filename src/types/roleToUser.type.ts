@@ -14,6 +14,7 @@ export interface IRoleToUser_FindByUserId extends Pick<IRoleToUser, 'userId'> {}
 
 // CREATE
 export interface IRoleToUser_Create extends Pick<IRoleToUser, 'roleId' | 'userId'> {}
+export interface IRoleToUser_Set extends Pick<IRoleToUser, 'roleId' | 'userId'> {}
 
 // UPDATE
 export interface IRoleToUser_Update extends Pick<IRoleToUser, 'id' | 'roleId'> {}

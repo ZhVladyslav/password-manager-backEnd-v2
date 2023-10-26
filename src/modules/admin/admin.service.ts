@@ -22,14 +22,12 @@ export class AdminService {
     private readonly roleDbService: RoleDbService,
     private readonly roleToUserDbService: RoleToUserDbService,
     private readonly sessionService: SessionDbService,
-    private readonly claimDbService: ClaimDbService,
   ) {}
 
   public async getUserList(): Promise<any> {
     const usersInDb = await this.userDbService.findAll();
     const rolesToUsersInDb = await this.roleToUserDbService.findAll();
     const rolesInDb = await this.roleDbService.findAll();
-    const claimsInDb = await this.claimDbService.findAll();
     const sessionsInDb = await this.sessionService.findAllToAllUsers();
 
     const result = [];
@@ -43,13 +41,13 @@ export class AdminService {
           role_id: null,
           createDate: usersInDb[i].createDate,
         },
-        sessions: [],
+        sessionsQuantity: 0,
         roleToUser: null,
         role: null,
       };
 
       // find role to user
-      const roleToUserInfo = rolesToUsersInDb.find((item) => item.id === userId);
+      const roleToUserInfo = rolesToUsersInDb.find((item) => item.userId === userId);
       if (roleToUserInfo) {
         userInfo.roleToUser = roleToUserInfo;
 
@@ -57,15 +55,14 @@ export class AdminService {
         const roleInfo = rolesInDb.find((item) => item.id === roleToUserInfo.roleId);
         if (roleInfo) {
           userInfo.role = roleInfo;
-
-          // find claims
-          const claims = claimsInDb.map((item) => item.roleId === roleInfo.id);
-          userInfo.role.claims = claims;
+          userInfo.user.role_id = roleInfo.id;
         }
       }
 
       // find sessions
-      userInfo.sessions = sessionsInDb.map((item) => item.userId === userId && item);
+      sessionsInDb.forEach((item) => {
+        if (item.userId === userId) userInfo.sessionsQuantity += 1;
+      });
 
       // push result
       result.push(userInfo);
@@ -99,9 +96,6 @@ export class AdminService {
       if (roleInfo) {
         userInfo.role = roleInfo;
       }
-
-      const claimsInDb = await this.claimDbService.findByRoleId({ roleId: roleToUserInfo.roleId });
-      userInfo.role.claims = claimsInDb.map((item) => item.roleId === roleInfo.id);
     }
 
     // find sessions

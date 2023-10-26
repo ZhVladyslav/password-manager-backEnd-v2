@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UsePipes, ValidationPipe, Delete } from '@nestjs/common';
+import { Body, Controller, Post, UsePipes, ValidationPipe, Delete, Get } from '@nestjs/common';
 import { UserToken } from 'src/decorators/userToken';
 import { IUserToken } from 'src/types/userToken.type';
 import { SessionService } from './session.service';
@@ -10,7 +10,7 @@ import { DeleteDto } from './dto/delete.dto';
 export class SessionController {
   constructor(private readonly sessionService: SessionService) {}
 
-  @Post('all')
+  @Get('all')
   async all(
     @UserToken() { userId }: IUserToken, //
   ) {

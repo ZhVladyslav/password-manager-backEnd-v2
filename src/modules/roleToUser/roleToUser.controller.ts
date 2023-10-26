@@ -13,12 +13,11 @@ import {
 } from '@nestjs/common';
 import { RoleToUserService } from './roleToUser.service';
 import { ByIdDto } from './dto/byId.dto';
-import { DeleteDto } from './dto/delete.dto';
-import { EditDto } from './dto/edit.dto';
+import { SetDto } from './dto/set.dto';
 import { ByUserIdDto } from './dto/byUserId.dto';
-import { CreateDto } from './dto/create.dto';
 import { Claims } from 'src/config/claims';
 import { ClaimsGuard } from 'src/guards/claims.guard';
+import { DeleteDto } from './dto/delete.dto';
 
 @UseGuards(ClaimsGuard)
 @UsePipes(new ValidationPipe())
@@ -49,26 +48,18 @@ export class RoleToUserController {
   }
 
   @SetMetadata('claims', [Claims.CREATE_ROLE_TO_USER])
-  @Post('create')
+  @Post('set')
   async create(
-    @Body() { roleId, userId }: CreateDto, //
+    @Body() { roleId, userId }: SetDto, //
   ) {
-    return await this.roleToUserService.create({ roleId, userId });
-  }
-
-  @SetMetadata('claims', [Claims.EDIT_ROLE_TO_USER])
-  @Put('edit')
-  async edit(
-    @Body() { id, roleId }: EditDto, //
-  ) {
-    return await this.roleToUserService.edit({ id, roleId });
+    return await this.roleToUserService.set({ roleId, userId });
   }
 
   @SetMetadata('claims', [Claims.DELETE_ROLE_TO_USER])
   @Delete('delete')
   async delete(
-    @Body() { id }: DeleteDto, //
+    @Body() { userId }: DeleteDto, //
   ) {
-    return await this.roleToUserService.delete({ id });
+    return await this.roleToUserService.delete({ userId });
   }
 }
