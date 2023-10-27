@@ -42,7 +42,7 @@ export class RoleToUserController {
   @SetMetadata('claims', [Claims.VIEW_ROLE_TO_USER_BY_USER_ID])
   @Get('by-user-id')
   async byUserId(
-    @Body() { userId }: ByUserIdDto, //
+    @Query() { userId }: ByUserIdDto, //
   ) {
     return await this.roleToUserService.getByUserId({ userId });
   }
