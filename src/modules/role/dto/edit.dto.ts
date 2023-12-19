@@ -19,10 +19,6 @@ export class EditDto {
   // @RegValidation(regexConfig.role.name)
   name_ua: string;
 
-  @IsNotEmpty()
-  @IsString()
-  // @RegValidation(regexConfig.role.name)
-  name_ru: string;
 
   @IsNotEmpty()
   @IsString()
@@ -34,10 +30,6 @@ export class EditDto {
   // @RegValidation(regexConfig.role.name)
   description_ua: string;
 
-  @IsNotEmpty()
-  @IsString()
-  // @RegValidation(regexConfig.role.name)
-  description_ru: string;
 
   @IsArray()
   @IsNotEmpty()

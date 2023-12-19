@@ -57,20 +57,20 @@ export class RoleController {
   @SetMetadata('claims', [Claims.CREATE_ROLE])
   @Post('create')
   async create(
-    @Body() { name_en, name_ua, name_ru, description_en, description_ua, description_ru, claims }: CreateDto, //
+    @Body() { name_en, name_ua,  description_en, description_ua,  claims }: CreateDto, //
   ) {
-    const name = { name_en, name_ua, name_ru };
-    const description = { description_en, description_ua, description_ru };
+    const name = { name_en, name_ua, };
+    const description = { description_en, description_ua,  };
     return await this.roleService.create({ ...name, ...description, claims });
   }
 
   @SetMetadata('claims', [Claims.EDIT_ROLE])
   @Put('edit')
   async edit(
-    @Body() { id, name_en, name_ua, name_ru, description_en, description_ua, description_ru, claims }: EditDto, //
+    @Body() { id, name_en, name_ua,  description_en, description_ua,  claims }: EditDto, //
   ) {
-    const name = { name_en, name_ua, name_ru };
-    const description = { description_en, description_ua, description_ru };
+    const name = { name_en, name_ua };
+    const description = { description_en, description_ua };
     return await this.roleService.edit({ id, ...name, ...description, claims });
   }
 

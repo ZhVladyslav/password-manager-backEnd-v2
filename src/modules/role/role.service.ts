@@ -80,8 +80,8 @@ export class RoleService implements IRoleService {
   }
 
   public async create(data: ICreate): Promise<{ message: string }> {
-    const { name_en, name_ua, name_ru, description_en, description_ua, description_ru, claims } = data;
-    const dataToCreate = { name_en, name_ua, name_ru, description_en, description_ua, description_ru };
+    const { name_en, name_ua,  description_en, description_ua,  claims } = data;
+    const dataToCreate = { name_en, name_ua,  description_en, description_ua,  };
 
     const roleInDb = await this.roleDbService.findByName({ name_en });
     if (roleInDb) throw new BadRequestException('This role name already is set');
@@ -93,11 +93,11 @@ export class RoleService implements IRoleService {
 
   public async edit(data: IEdit): Promise<{ message: string }> {
     const { id, claims } = data;
-    const { name_en, name_ua, name_ru, description_en, description_ua, description_ru } = data;
+    const { name_en, name_ua,  description_en, description_ua,  } = data;
 
     await this.checkRoleById({ id });
 
-    await this.roleDbService.update({ id, name_en, name_ua, name_ru, description_en, description_ua, description_ru });
+    await this.roleDbService.update({ id, name_en, name_ua,  description_en, description_ua,  });
     await this.claimDbService.delete({ roleId: id });
     await this.claimDbService.create({ roleId: id, claims });
 

@@ -44,8 +44,8 @@ export class RoleDbService implements IRoleDbService {
   }
 
   public async update(data: IRoleDbUpdate): Promise<IRole> {
-    const { id, name_en, name_ua, name_ru, description_en, description_ua, description_ru } = data;
-    const updateData = { name_en, name_ua, name_ru, description_en, description_ua, description_ru };
+    const { id, name_en, name_ua,  description_en, description_ua,  } = data;
+    const updateData = { name_en, name_ua,  description_en, description_ua,  };
 
     const role = await handlerErrorDb(this.databaseService.role.update({ where: { id }, data: updateData }));
     return !role ? null : role;
