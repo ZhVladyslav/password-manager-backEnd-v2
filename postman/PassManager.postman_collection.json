@@ -1,0 +1,1218 @@
+{
+	"info": {
+		"_postman_id": "77a71001-403e-4b9d-97f0-c1877328ddda",
+		"name": "PassManager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29146163"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var test = pm.test;\r",
+									"var expect = pm.expect;\r",
+									"var response = pm.response;\r",
+									"var jsonResponse = response.json();\r",
+									"\r",
+									"test(\"status code is 200\", function () {\r",
+									"    pm.environment.set('token', jsonResponse.token);\r",
+									"    response.to.have.status(200);\r",
+									"});\r",
+									"pm.environment.get(\"variable_key\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"iv\": \"Iv3dhNmNNAmHbauIEIJJLaEQ+6cXNv4N04HG2ZNpaKUCMsuTleHJvzFrNP+BCoHnMiJBPONnSzsbTNV0rgnspYjfMTUZyrVOir0wb/HKf35lXX7XMXZDi/9ESWbJv2ZmqB7FWMbwqASCgaxxqwR1NbAL1FAUF+FhHaQQQNePRWF0Tq+URefg2eq+UAhvrjHwZ5NNUi3YqRMmsdB4ePl3ZL6OT8i9PH5I4jV//rxuE7HJOgzDVjkHMXAUuru1drb5rHMSU8tbD5cHCjAFmr+hzo/yGguBbosy1tJuc7er/Z0HwemwSu9EsW8WyX/pcmAiPxTxWKxTchqfiwSVbZVsPg==\",\r\n    \"key\": \"JrpUe3kWl/XvzAMTX+YEf88JL7nc4aO6hO5cBjFeBH3tcVD2xXxZuoZggcxjYHHWp46f9CiBOlLgNJ86vUqJxtDh4Lf/y1jpxIAyE+zPqFcHUuLN5o6ESriA3Sci026QdHgU/064zkVpUWqT54mkrI/up+/UNvYlX2BV7g4t2JehDx4TfrOHCkzp5preu2M0r4NoDJApfcyC8faQLdFqNIT21wTVjy7qgUqSaxXZqdtRuQxMD0SnN2VX7jz1S98CYn8miTDyanTe0T05FRRvED3SwKh+/PYg3QaM8uBDLC+ocScnaeBkXguYByaKDa5g2x4qqyBVuusIzL+IhFk2Kw==\",\r\n    \"data\": \"nFj7u/eZyrozGPtBjg636GZxeUAa8wVZsU7f6Ja6lRpKqYZlIJH3chgX6xS4cYFfa/DxjnPX3wFIztUJ6rhkxW48isTWTH4eMVTcppzD6Uw=\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"demo\",\r\n    \"login\": \"demos\",\r\n    \"password\": \"demo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/registration",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registration Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/auth/rsa-key",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"rsa-key"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registration Copy 3",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/decrypt/encrypt-rsa-key",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"decrypt",
+								"encrypt-rsa-key"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registration Copy 4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"iv\": \"aCn4OZ0R29SdPpzvdTx926S1cBmCRnX925tEUH1i5Azs+QXaXOEVeGv/3QXUnREJSVGKGfd4I/Qb3R+DoNZJSm6M4gDkiY+yoM1QVA7z7T8erlqAxUtloiW2a3C3zk/RZ1JpMMQvKIx2pOpjt0OWVO/s91HfqXVpVC1L2ggMs7gMpHGVr1+UmZlFvmmYNy2FxQCVEMJiqEquGhurVYqJUb3nJWFR5S2bJR2b/4w86w7xqXT2cxTCFq20/K7eT6i9gMem4DG46PlNBI/NrRLt3/jAHWm3VBPJK7/26l64rcwVzMaTIYPB1ZBIlqvvXDf+oJ9+Eru7EAzZAm3qwFG9GQ==\",\r\n    \"key\": \"Mj+W5dp9QZV6/TaRpUoqStk8HHQOTLANOQet5AEs3khR+ykYZI5BPPycOSR7f+Hfyj9SGOqhs9d3MyukdhgdjEL+aFtCtrPoxE1MeE4MnldiD5VMIQbqIfBBnifTCH3+LKJck+yJxq+VQmJoCvKo6zO/PCXo3S4GqwPDTpUofAIG6lsUwKog64XM4Q0Qk6n5IMpBZOcy6rh3L3NsyOIg9nFEE36dTTJitfEQkFp64Llm1YcREVVMVRSQi2ABPFaJlo044SFMawZVaiAGTJ3GtKlg1mE7kCAsFRxy0j7kYn+8ZfknkUv7xTfLk4oq4Y3xo8qU4V5mTQCLVHDLmf1JNQ==\",\r\n    \"data\": \"ISd1CHaTzrr7jlYDuz37IQoa+okEZwFkdiqV9ygy/rsgLw8M7l2GPcrTwgMK4NItMKK1WMzSjkTdSZvTqz0FRA==\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/crypt-info",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"crypt-info"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "PassCollection",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"11qwe\",\r\n    \"data\": \"qwe\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/pass-collection/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/pass-collection/all",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"qwe\",\r\n    \"data\": \"qwe\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/pass-collection/b7cee0b9-d0ce-4f14-b955-ec2287d95118",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								"b7cee0b9-d0ce-4f14-b955-ec2287d95118"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"qwe\",\r\n    \"data\": \"qwe\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/pass-collection/dea646b4-9d2a-4b19-bc18-673ae3f27765",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								"dea646b4-9d2a-4b19-bc18-673ae3f27765"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit name",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"dea646b4-9d2a-4b19-bc18-673ae3f27765\",\r\n    \"name\": \"qweasds\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/pass-collection/edit-name",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								"edit-name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit data",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"dea646b4-9d2a-4b19-bc18-673ae3f27765\",\r\n    \"data\": \"dakgdajd skjhagsd kjhas dkaj\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/pass-collection/edit-data",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								"edit-data"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Session",
+			"item": [
+				{
+					"name": "all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_dev}}/session/all",
+							"host": [
+								"{{url_dev}}"
+							],
+							"path": [
+								"session",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_dev}}/session/3b694719-9bc8-4155-b4fc-4972115c95f2",
+							"host": [
+								"{{url_dev}}"
+							],
+							"path": [
+								"session",
+								"3b694719-9bc8-4155-b4fc-4972115c95f2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "my account",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/my-account",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"my-account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit name",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/edit-name",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"edit-name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\": \"demo\",\r\n    \"password\": \"1111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_dev}}/user/edit-password",
+							"host": [
+								"{{url_dev}}"
+							],
+							"path": [
+								"user",
+								"edit-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"0e9cd9d5-23b4-4716-a631-a3988b838a85\",\r\n    \"roleId\": \"null\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/edit-role",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"edit-role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"demo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Config",
+			"item": [
+				{
+					"name": "all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_dev}}/config",
+							"host": [
+								"{{url_dev}}"
+							],
+							"path": [
+								"config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_dev}}/config",
+							"host": [
+								"{{url_dev}}"
+							],
+							"path": [
+								"config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"6f359dc5-53b9-4342-8d43-03c8843035ed\",\r\n    \"name\": \"test rename\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_dev}}/config",
+							"host": [
+								"{{url_dev}}"
+							],
+							"path": [
+								"config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"6f359dc5-53b9-4342-8d43-03c8843035ed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_dev}}/config",
+							"host": [
+								"{{url_dev}}"
+							],
+							"path": [
+								"config"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Statistics",
+			"item": [
+				{
+					"name": "users list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_dev}}/statistics/users",
+							"host": [
+								"{{url_dev}}"
+							],
+							"path": [
+								"statistics",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Settings server",
+			"item": [
+				{
+					"name": "add admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"651a2cbb-43a9-4eb7-a453-3c39539b4e23\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_dev}}/settings-server/add-admin",
+							"host": [
+								"{{url_dev}}"
+							],
+							"path": [
+								"settings-server",
+								"add-admin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Issue",
+			"item": [
+				{
+					"name": "Comment",
+					"item": [
+						{
+							"name": "comment",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"issueId\": \"3be70b6a-974a-404d-aabd-1990d7b71e7f\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_dev}}/issue-comment",
+									"host": [
+										"{{url_dev}}"
+									],
+									"path": [
+										"issue-comment"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "comment",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"issueId\": \"3be70b6a-974a-404d-aabd-1990d7b71e7f\",\r\n    \"comment\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/issue-comment",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"issue-comment"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "all community",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_dev}}/issue/all-community",
+							"host": [
+								"{{url_dev}}"
+							],
+							"path": [
+								"issue",
+								"all-community"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all community not fixed",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_dev}}/issue/all-community-not-fixed",
+							"host": [
+								"{{url_dev}}"
+							],
+							"path": [
+								"issue",
+								"all-community-not-fixed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all community fixed",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_dev}}/issue/all-community-fixed",
+							"host": [
+								"{{url_dev}}"
+							],
+							"path": [
+								"issue",
+								"all-community-fixed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "complete",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"ce294dc0-0bc4-4ea4-b92b-e58a0ffc1e8d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/issue/complete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"issue",
+								"complete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_dev}}/issue/my",
+							"host": [
+								"{{url_dev}}"
+							],
+							"path": [
+								"issue",
+								"my"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"\",\r\n    \"description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_dev}}/issue/create",
+							"host": [
+								"{{url_dev}}"
+							],
+							"path": [
+								"issue",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Role",
+			"item": [
+				{
+					"name": "all claims",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/claims",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"claims"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all roles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/all",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all roles Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "c8e1fc35-becb-4e20-8fc0-289825a8e8c1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"asd\",\r\n    \"claims\": [\r\n        \"VIEW_SETTINGS_SERVER\", \"CREATE_SETTINGS_SERVER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/role/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"c8e1fc35-becb-4e20-8fc0-289825a8e8c1\",\r\n    \"name\": \"asd\",\r\n    \"claims\": [\r\n        \"VIEW_SETTINGS_SERVER\",\r\n        \"CREATE_SETTINGS_SERVER\",\r\n        \"SET_USER_ROLE\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/role/edit",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all roles Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/a6c6280f-f806-4542-baea-fc25c379ee39",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"a6c6280f-f806-4542-baea-fc25c379ee39"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_dev}}",
+					"host": [
+						"{{url_dev}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{token}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

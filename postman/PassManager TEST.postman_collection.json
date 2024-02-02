@@ -1,0 +1,2658 @@
+{
+	"info": {
+		"_postman_id": "1eec4cea-f5d5-473a-ba4a-7516ec0d4a60",
+		"name": "PassManager TEST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29146163"
+	},
+	"item": [
+		{
+			"name": "USER and AUTH",
+			"item": [
+				{
+					"name": "registration (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(201)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"User is create\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_1_LOGIN}}\",\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_1_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/registration",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registration (user is exist)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(409)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"User with this login already exists.\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Conflict\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_1_LOGIN}}\",\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_1_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/registration",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.environment.set('token_LOGIN', pm.response.json().token);\r",
+									"    pm.response.to.have.status(201)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"token\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_1_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login (user not exist)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(400)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid user or password\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Bad Request\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"{{login_2_LOGIN}}\",\r\n    \"password\": \"{{password_1_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login (invalid password)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(400)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid user or password\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Bad Request\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_2_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my account (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"roleId\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"name_1_LOGIN\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/my-account",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"my-account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my account (invalid token)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(400)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid token\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Bad Request\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{invalidToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/my-account",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"my-account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit name (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Name is edit\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_2_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/edit-name",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"edit-name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit name (duplicate data)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(400)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Error edit user name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Bad Request\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_2_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/edit-name",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"edit-name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit password (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Password is edit\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\": \"{{password_1_LOGIN}}\",\r\n    \"newPassword\": \"{{password_2_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/edit-password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"edit-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.environment.set('token_LOGIN', pm.response.json().token);\r",
+									"    pm.response.to.have.status(201)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"token\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_2_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit password (duplicate data)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(400)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"The password is already set\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Bad Request\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\": \"{{password_2_LOGIN}}\",\r\n    \"newPassword\": \"{{password_2_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/edit-password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"edit-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit password (invalid password)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(400)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"The password is not correct\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Bad Request\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\": \"{{password_1_LOGIN}}\",\r\n    \"newPassword\": \"{{password_2_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/edit-password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"edit-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"User is delete\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_2_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user (invalid session)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(404)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Session not found\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Not Found\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_2_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user (invalid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(401)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"User is not authorized\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Unauthorized\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_2_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "SESSIONS",
+			"item": [
+				{
+					"name": "registration (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(201)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"User is create\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_1_LOGIN}}\",\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_1_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/registration",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.environment.set('token_LOGIN', pm.response.json().token);\r",
+									"    pm.response.to.have.status(201)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"token\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_1_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.environment.set('token_LOGIN', pm.response.json().token);\r",
+									"    pm.response.to.have.status(201)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"token\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_1_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all session (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.environment.set('session_id', pm.response.json()[0].id);\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"userId\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"tokenId\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/session/all",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"session",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete session (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Session is delete\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/session/delete/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"session",
+								"delete",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{session_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete session (invalid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(404)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Session is not found\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Not Found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/session/delete/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"session",
+								"delete",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{session_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"User is delete\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_1_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PASS_COLLECTION",
+			"item": [
+				{
+					"name": "registration (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(201)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"User is create\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_1_LOGIN}}\",\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_1_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/registration",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.environment.set('token_LOGIN', pm.response.json().token);\r",
+									"    pm.response.to.have.status(201)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"token\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_1_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create passCollection (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"   pm.response.to.have.status(201)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"passCollection is create\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_1_PassCollection}}\",\r\n    \"data\": \"{{data_1_PassCollection}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/pass-collection/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all passCollection (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.environment.set('passCollection_id', pm.response.json()[0].id);\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.not.have.property(\"data\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"name_1_PassCollection\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/pass-collection/all",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "by id passCollection (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"name_1_PassCollection\"));\r",
+									"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"data_1_PassCollection\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/pass-collection/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{passCollection_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit name passCollection (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Name is edit\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{passCollection_id}}\",\r\n    \"name\": \"{{name_2_PassCollection}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/pass-collection/edit-name",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								"edit-name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit name passCollection (invalid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(400)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"The name is already set\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Bad Request\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{passCollection_id}}\",\r\n    \"name\": \"{{name_2_PassCollection}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/pass-collection/edit-name",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								"edit-name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit data passCollection (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Data is edit\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{passCollection_id}}\",\r\n    \"data\": \"{{data_2_PassCollection}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/pass-collection/edit-data",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								"edit-data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit data passCollection (invalid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(400)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"The data is already set\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Bad Request\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{passCollection_id}}\",\r\n    \"data\": \"{{data_2_PassCollection}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/pass-collection/edit-data",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								"edit-data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete passCollection (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Pass collection is delete\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": [\r\n        \"{{passCollection_id}}\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/pass-collection/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete passCollection (invalid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(500)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"DB error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Internal Server Error\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": [\r\n        \"{{passCollection_id}}\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/pass-collection/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "by id passCollection (invalid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(404)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Collection not found\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Not Found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/pass-collection/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pass-collection",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{passCollection_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"User is delete\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_1_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ROLE (only setting server env)",
+			"item": [
+				{
+					"name": "registration (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(201)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"User is create\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_1_LOGIN}}\",\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_1_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/registration",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.environment.set('token_LOGIN', pm.response.json().token);\r",
+									"    pm.response.to.have.status(201)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"token\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_1_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get claims (SERVER SETTING)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/claims-setting",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"claims-setting"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user info (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.environment.set('user_id', pm.response.json().id);\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"roleId\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"name_1_LOGIN\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/my-account",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"my-account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create role (SERVER SETTING)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(201)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Role is create\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Admin\",\r\n    \"claims\": [\r\n        \"SET_USER_ROLE\",\r\n        \"VIEW_SETTINGS_SERVER\",\r\n        \"CREATE_SETTINGS_SERVER\",\r\n        \"EDIT_SETTINGS_SERVER\",\r\n        \"VIEW_STATISTICS\",\r\n        \"VIEW_ROLE\",\r\n        \"CREATE_ROLE\",\r\n        \"EDIT_ROLE\",\r\n        \"DELETE_ROLE\",\r\n        \"VIEW_CLAIMS\",\r\n        \"EDIT_ISSUE\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/role/create-setting",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"create-setting"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all role (SERVER SETTING)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.environment.set('role_id', pm.response.json()[0].id);\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Admin\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/role/all-setting",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"all-setting"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set user role (SERVER SETTING) Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"user role is edit\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"{{user_id}}\",\r\n    \"roleId\": \"{{role_id}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/edit-role-setting",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"edit-role-setting"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ROLE (if admin login)",
+			"item": [
+				{
+					"name": "get claims (valid admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/claims",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"claims"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create role (valid admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(201)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Role is create\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Seccond admin\",\r\n    \"claims\": [\r\n        \"SET_USER_ROLE\",\r\n        \"VIEW_SETTINGS_SERVER\",\r\n        \"CREATE_SETTINGS_SERVER\",\r\n        \"EDIT_SETTINGS_SERVER\",\r\n        \"VIEW_STATISTICS\",\r\n        \"VIEW_ROLE\",\r\n        \"CREATE_ROLE\",\r\n        \"EDIT_ROLE\",\r\n        \"DELETE_ROLE\",\r\n        \"VIEW_CLAIMS\",\r\n        \"EDIT_ISSUE\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/role/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get role (valid admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.environment.set('role_id_test', pm.response.json()[1].id);\r",
+									"\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.not.have.property(\"claims\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Admin\");\r",
+									"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"role_id\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/all",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit role (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"role is edit\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{role_id_test}}\",\r\n    \"name\": \"Seccond admin new name\",\r\n    \"claims\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/role/edit",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user info (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.environment.set('user_id', pm.response.json().id);\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"roleId\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"role_id\"));\r",
+									"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"name_1_LOGIN\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/my-account",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"my-account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete role (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Role is delete\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"\",\r\n    \"newRoleId\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/role",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete role (valid ADMIN)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Role is delete\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{role_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user info (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.environment.set('user_id', pm.response.json().id);\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"roleId\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(null);\r",
+									"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"name_1_LOGIN\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/my-account",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"my-account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create role (invalid valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(403)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Forbidden resource\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Forbidden\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Seccond admin\",\r\n    \"claims\": [\r\n        \"SET_USER_ROLE\",\r\n        \"VIEW_SETTINGS_SERVER\",\r\n        \"CREATE_SETTINGS_SERVER\",\r\n        \"EDIT_SETTINGS_SERVER\",\r\n        \"VIEW_STATISTICS\",\r\n        \"VIEW_ROLE\",\r\n        \"CREATE_ROLE\",\r\n        \"EDIT_ROLE\",\r\n        \"DELETE_ROLE\",\r\n        \"VIEW_CLAIMS\",\r\n        \"EDIT_ISSUE\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/role/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get claims (invalid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(403)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"statusCode\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"Forbidden resource\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Forbidden\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/claims",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"claims"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\");\r",
+									"\r",
+									"    pm.expect(pm.response.text()).to.include(\"User is delete\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_LOGIN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"{{login_1_LOGIN}}\",\r\n    \"password\": \"{{password_1_LOGIN}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

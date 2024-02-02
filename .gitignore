@@ -41,3 +41,8 @@ env
 # 
 package-lock
 package-lock.json
+
+# database
+dev.db
+dev.db-journal
+migrations
